@@ -20,9 +20,9 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
      */
     public PanelRealizarPedidoCliente() {
         initComponents();
-        
+
         //imagen de fondo
-        setImagenFondo("src/imagenes/logo,png", PanelFondo);
+        setImagenFondo("src/main/java/imagenes/logo.png", PanelFondo);
     }
 
     /**
@@ -39,7 +39,12 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
             protected void paintComponent(java.awt.Graphics g) {
                 super.paintComponent(g);
                 if (imagenFondo != null) {
+                    //scomoda imagen al tamaño del panel
                     g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    // Si la imagen sigue fallando
+                    g.setColor(java.awt.Color.RED);
+                    g.drawString("Imagen no encontrada :)", 10, 20);
                 }
             }
         };
@@ -63,12 +68,20 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
     private javax.swing.JPanel PanelFondo;
     // End of variables declaration//GEN-END:variables
 
-    //metodo para poner la imagen de fondo
-    public void setImagenFondo(String ruta_imagen, JPanel panel1){
-	//creamos y asignamos la imagen
+    //metodo para poner la imagen de fondo DEFINITIVO
+    public void setImagenFondo(String ruta_imagen, JPanel panel1) {
         panel1.setOpaque(false);
-        imagenFondo = new ImageIcon(ruta_imagen).getImage();
+        try {
+            java.io.File archivo = new java.io.File(ruta_imagen);
+            
+            this.imagenFondo = javax.imageio.ImageIO.read(archivo);
+            
+        } catch (java.io.IOException e) {
+            System.err.println("Error al leer la imagen: " + e.getMessage());
+        }
+
+        panel1.revalidate();
         panel1.repaint();
-}
-    
+    }
+
 }

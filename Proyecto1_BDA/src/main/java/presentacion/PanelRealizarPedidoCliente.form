@@ -28,7 +28,7 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="PanelFondo">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xa;    @Override&#xa;    protected void paintComponent(java.awt.Graphics g) {&#xa;        super.paintComponent(g);&#xa;        if (imagenFondo != null) {&#xa;            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xa;    @Override&#xa;    protected void paintComponent(java.awt.Graphics g) {&#xa;        super.paintComponent(g);&#xa;        if (imagenFondo != null) {&#xa;            //scomoda imagen al tama&#xf1;o del panel&#xa;            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);&#xa;        } else {&#xa;            // Si la imagen sigue fallando&#xa;            g.setColor(java.awt.Color.RED);&#xa;            g.drawString(&quot;Imagen no encontrada :)&quot;, 10, 20);&#xa;        }&#xa;    }&#xa;}"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
