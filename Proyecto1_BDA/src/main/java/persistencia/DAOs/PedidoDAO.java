@@ -14,15 +14,16 @@ import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
+import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
 /**
  *
  * @author Dayanara Peralta G
  */
-public class PedidoDAO implements IPedidoDAO{
+public class PedidoDAO implements IPedidoDAO {
     private IConexionBD conexion;
-    private static final Logger LOG = Logger.getLogger(UsuarioDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(PedidoDAO.class.getName());
     
     /**
      *
@@ -35,7 +36,7 @@ public class PedidoDAO implements IPedidoDAO{
     //van a cambiar el estado a menos de que har el registro del pedido se tome como cambio de estado
     //y de igual manera lo de la hora recoleccion
     @Override
-    public int agregarPedido(String notas, float costo, String estado, LocalDateTime hora_recoleccion, Integer id_cliente) throws PersistenciaException {
+    public Pedido agregarPedido(Pedido pedido) throws PersistenciaException {
         String comandoSQL = """
                             insert into pedidos(
                             	notas, costo, estado, hora_preparacion, hora_recoleccion, hora_cambio_estado, id_cliente
@@ -45,14 +46,14 @@ public class PedidoDAO implements IPedidoDAO{
                             """;
         try(Connection cone = this.conexion.crearConexion();
                 PreparedStatement ps = cone.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS);){
-            ps.setString(1, notas);
-            ps.setFloat(2, costo);
-            ps.setString(3, estado);
+            ps.setString(1, pedido.getNotas());
+            ps.setFloat(2, pedido.getCosto());
+            ps.setString(3, pedido.getEstado());
             ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));//al final lo voy a poner como que se hace ahora aunque no sea verdad pq 
             //no se puede dejar null
-            ps.setTimestamp(5, Timestamp.valueOf(hora_recoleccion));
+            ps.setTimestamp(5, Timestamp.valueOf(pedido.getHora_recoleccion()));
             ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));//la misma cosa no se deja null
-            ps.setInt(7, id_cliente);
+            ps.setInt(7, pedido.getId_cliente());
             
             int filasReg = ps.executeUpdate();
             if (filasReg != 1){
@@ -62,13 +63,30 @@ public class PedidoDAO implements IPedidoDAO{
             
             try(ResultSet rs = ps.getGeneratedKeys()){
                 if(!rs.next()){
-                    LOG.warning("Se agrego pero no se pudo obtener el numero de pedido");
-                    throw new PersistenciaException("Error al obtener el numero de pedido");
+                    LOG.warning("Se agregó pero no se pudo obtener el número de pedido");
+                    throw new PersistenciaException("Error al obtener el número de pedido");
                 }
-                return rs.getInt(1);
+                return pedido;
             }
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
         }                    
     }
+    
+    @Override
+    public Pedido consultarPedido(int numeroPedido) throws PersistenciaException {
+        return null;
+    }
+
+    @Override
+    public Pedido cancelarPedidio(int numeroPedido) throws PersistenciaException {
+        return null;
+    }
+
+    @Override
+    public Pedido actualizarEstadoPedido(int numeroPedido) throws PersistenciaException {
+        return null;
+    }
+   
 }
+    

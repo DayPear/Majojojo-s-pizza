@@ -5,7 +5,10 @@
 package negocio.fabrica;
 
 import negocio.BOs.IPedidoBO;
+import negocio.BOs.IProgramadoBO;
 import negocio.BOs.PedidoBO;
+import negocio.BOs.ProgramadoBO;
+import persistencia.fabrica.FabricaDAO;
 
 /**
  *
@@ -21,7 +24,7 @@ public class FabricaBOs {
     }
     
     public IProgramadoBO obtenerProgramadoBO(){
-        IProgramado programado = new ProgramadoBO(FabricaDAO.obtenerProgramadoDAO());
+        IProgramadoBO programado = new ProgramadoBO(FabricaDAO.obtenerProgramadoDAO());
         return programado;
     }
     

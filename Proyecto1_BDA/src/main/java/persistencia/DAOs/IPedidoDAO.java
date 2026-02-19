@@ -13,7 +13,14 @@ import persistencia.excepciones.PersistenciaException;
  * @author Dayanara Peralta G
  */
 public interface IPedidoDAO {
-    public int agregarPedido(String notas, float costo, String estado, LocalDateTime hora_recoleccion, Integer id_cliente) throws PersistenciaException;
+    
+    Pedido agregarPedido(Pedido pedido) throws PersistenciaException;
+    
+    Pedido consultarPedido(int numeroPedido) throws PersistenciaException;
+    
+    Pedido cancelarPedidio(int numeroPedido) throws PersistenciaException;
+    
+    Pedido actualizarEstadoPedido(int numeroPedido) throws PersistenciaException;
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();
 }

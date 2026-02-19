@@ -7,6 +7,8 @@ package negocio.BOs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.excepciones.NegocioException;
+import persistencia.DAOs.IPedidoDAO;
+import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
 /**
@@ -18,7 +20,7 @@ public class PedidoBO implements IPedidoBO {
     private final IPedidoDAO pedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
     
-    public PedidoBO(IPedidoBO pedido){
+    public PedidoBO(IPedidoDAO pedido){
         this.pedidoDAO = pedido;
     }
     
@@ -45,7 +47,7 @@ public class PedidoBO implements IPedidoBO {
     
     @Override
     public Pedido consultarPedido(int numeroPedido) throws NegocioException {
-        if(int < 1){
+        if(numeroPedido < 1){
             LOG.log(Level.WARNING, "El número pedido no puede ser menor a 1.");
             throw new NegocioException("El número de pedido está mal.");
         }
@@ -65,7 +67,8 @@ public class PedidoBO implements IPedidoBO {
     }
     
     @Override
-    public Pedido cancelarPedido(int numeroPedido) throws NegocioException {}
+    public Pedido cancelarPedido(int numeroPedido) throws NegocioException {
+        return null;
+    }
 }
     
-}

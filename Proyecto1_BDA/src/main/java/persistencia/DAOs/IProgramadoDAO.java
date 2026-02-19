@@ -4,17 +4,17 @@
  */
 package persistencia.DAOs;
 
-import persistencia.dominio.Usuario;
+import persistencia.dominio.Programado;
 import persistencia.excepciones.PersistenciaException;
 
 /**
  *
- * @author Dayanara Peralta G
+ * @author maria
  */
-public interface IUsuarioDAO {
+public interface IProgramadoDAO {
     
-    Usuario consultarUsuario(Integer idUsuario) throws PersistenciaException;
+    Programado agregarProgramado(Programado programado) throws PersistenciaException;
     
-    Usuario agregarUsuario(Usuario usuario) throws PersistenciaException;
+    Programado consultarProgramado(int numeroProgramado) throws PersistenciaException;
     
 }
