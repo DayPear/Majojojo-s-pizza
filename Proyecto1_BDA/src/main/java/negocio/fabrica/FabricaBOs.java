@@ -18,7 +18,11 @@ public class FabricaBOs {
     public IPedidoBO obtenerPedidoBO(){
         IPedidoBO pedido = new PedidoBO(FabricaDAO.obtenerPedidoDAO());
         return pedido;
+    }
     
+    public IProgramadoBO obtenerProgramadoBO(){
+        IProgramado programado = new ProgramadoBO(FabricaDAO.obtenerProgramadoDAO());
+        return programado;
     }
     
 }
