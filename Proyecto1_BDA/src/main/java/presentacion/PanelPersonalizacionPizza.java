@@ -4,17 +4,25 @@
  */
 package presentacion;
 
+import java.awt.Image;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+
 /**
  *
  * @author hp
  */
 public class PanelPersonalizacionPizza extends javax.swing.JPanel {
-
+    //guardar la imagen de fondo
+    private Image imagenFondo;
     /**
      * Creates new form PanelPersonalizacionPizza
      */
     public PanelPersonalizacionPizza() {
         initComponents();
+        //imagen de fondo
+        setImagenFondo("src/main/java/imagenes/logo.png", PanelFondo);
+        
     }
 
     /**
@@ -26,19 +34,68 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelFondo = new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                if (imagenFondo != null) {
+                    //scomoda imagen al tamaño del panel
+                    g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    // Si la imagen sigue fallando
+                    g.setColor(java.awt.Color.RED);
+                    g.drawString("Imagen no encontrada :)", 10, 20);
+                }
+            }
+
+        };
+
+        setMaximumSize(new java.awt.Dimension(1000, 800));
+        setMinimumSize(new java.awt.Dimension(1000, 800));
+        setPreferredSize(new java.awt.Dimension(1000, 800));
+
+        javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
+        PanelFondo.setLayout(PanelFondoLayout);
+        PanelFondoLayout.setHorizontalGroup(
+            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        PanelFondoLayout.setVerticalGroup(
+            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelFondo;
     // End of variables declaration//GEN-END:variables
+
+//metodo para poner la imagen de fondo DEFINITIVO
+    public void setImagenFondo(String ruta_imagen, JPanel panel1) {
+        panel1.setOpaque(false);
+        try {
+            java.io.File archivo = new java.io.File(ruta_imagen);
+            
+            this.imagenFondo = javax.imageio.ImageIO.read(archivo);
+            
+        } catch (java.io.IOException e) {
+            System.err.println("Error al leer la imagen: " + e.getMessage());
+        }
+
+        panel1.revalidate();
+        panel1.repaint();
+    }
+
 }

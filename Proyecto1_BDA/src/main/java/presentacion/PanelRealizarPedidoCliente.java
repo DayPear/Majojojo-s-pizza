@@ -225,6 +225,7 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
     private void botonLaDuranguenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDuranguenseActionPerformed
         // TODO add your handling code here:
+  
     }//GEN-LAST:event_botonLaDuranguenseActionPerformed
 
     private void botonLaDoblePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDoblePActionPerformed

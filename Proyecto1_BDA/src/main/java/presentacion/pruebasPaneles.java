@@ -18,12 +18,12 @@ public class pruebasPaneles {
      */
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            javax.swing.JFrame ventana = new javax.swing.JFrame("Prueba de Panel con Fondo");
+            javax.swing.JFrame ventana = new javax.swing.JFrame("pedido cliente");
             
             ventana.setResizable(false);
 
             // Creamos una instancia del panel
-            PanelRealizarPedidoCliente panelTonto = new PanelRealizarPedidoCliente();
+            PanelPersonalizacionPizza panelTonto = new PanelPersonalizacionPizza();
             panelTonto.setPreferredSize(new java.awt.Dimension(1000, 800)); //tamaño sugerido
             ventana.add(panelTonto);
             ventana.pack(); //ajusta la ventana al tamaño del panel
