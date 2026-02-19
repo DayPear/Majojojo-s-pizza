@@ -1,8 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package presentacion;
+
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -10,11 +12,17 @@ package presentacion;
  */
 public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
+    //guardar la imagen de fondo
+    private Image imagenFondo;
+
     /**
      * Creates new form PanelRealizarPedidoCliente
      */
     public PanelRealizarPedidoCliente() {
         initComponents();
+        
+        //imagen de fondo
+        setImagenFondo("src/imagenes/logo,png", PanelFondo);
     }
 
     /**
@@ -26,19 +34,41 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelFondo = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                if (imagenFondo != null) {
+                    g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+
+        PanelFondo.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelFondo;
     // End of variables declaration//GEN-END:variables
+
+    //metodo para poner la imagen de fondo
+    public void setImagenFondo(String ruta_imagen, JPanel panel1){
+	//creamos y asignamos la imagen
+        panel1.setOpaque(false);
+        imagenFondo = new ImageIcon(ruta_imagen).getImage();
+        panel1.repaint();
+}
+    
 }
