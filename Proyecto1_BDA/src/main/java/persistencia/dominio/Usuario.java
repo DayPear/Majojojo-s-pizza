@@ -9,21 +9,12 @@ package persistencia.dominio;
  * @author Dayanara Peralta G
  */
 public class Usuario {
-    /*
-     Le pregunte a chat cual seria el equivalente de enum de sql en java 
-     y me dijo que se podia hacer esto
-     pero que segun se tenia que hacer en clase en la capa de negocio
-    */
-    public enum Rol{
-        COCINERO,
-        CAJERO,
-        CLIENTE
-    }
+    
     private Integer id;
     private String nombres;
     private String apellido_paterno;
     private String apellido_materno;
-    private Rol rol;
+    private String rol;
     private String correo;
     private String contrasenia;
 
@@ -43,7 +34,7 @@ public class Usuario {
      * @param correo
      * @param contrasenia
      */
-    public Usuario(Integer id, String nombres, String apellido_paterno, String apellido_materno, Rol rol, String correo, String contrasenia) {
+    public Usuario(Integer id, String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, String contrasenia) {
         this.id = id;
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
@@ -62,7 +53,7 @@ public class Usuario {
      * @param correo
      * @param contrasenia
      */
-    public Usuario(String nombres, String apellido_paterno, String apellido_materno, Rol rol, String correo, String contrasenia) {
+    public Usuario(String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, String contrasenia) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -139,7 +130,7 @@ public class Usuario {
      *
      * @return
      */
-    public Rol getRol() {
+    public String getRol() {
         return rol;
     }
 
@@ -147,7 +138,7 @@ public class Usuario {
      *
      * @param rol
      */
-    public void setRol(Rol rol) {
+    public void setRol(String rol) {
         this.rol = rol;
     }
 
