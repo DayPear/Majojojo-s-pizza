@@ -48,24 +48,222 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
                 }
             }
         };
+        panelTitulo = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        panelBotonesPizzas = new javax.swing.JPanel();
+        botonLaDuranguense = new javax.swing.JButton();
+        botonLaDobleP = new javax.swing.JButton();
+        botonReinaIsabel = new javax.swing.JButton();
+        botonFermentada = new javax.swing.JButton();
+        boton8Hoyos = new javax.swing.JButton();
+        botonInfantil = new javax.swing.JButton();
+        botonAtras = new javax.swing.JButton();
 
-        PanelFondo.setLayout(new java.awt.BorderLayout());
+        PanelFondo.setMaximumSize(new java.awt.Dimension(800, 600));
+        PanelFondo.setMinimumSize(new java.awt.Dimension(800, 600));
+        PanelFondo.setPreferredSize(new java.awt.Dimension(800, 600));
+
+        panelTitulo.setOpaque(false);
+        panelTitulo.setLayout(new javax.swing.BoxLayout(panelTitulo, javax.swing.BoxLayout.LINE_AXIS));
+
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(1, 114, 160));
+        jLabel1.setText("¡Seleccione una pizza!");
+
+        panelBotonesPizzas.setOpaque(false);
+
+        botonLaDuranguense.setBackground(new java.awt.Color(216, 162, 60));
+        botonLaDuranguense.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        botonLaDuranguense.setText("La Duranguense");
+        botonLaDuranguense.setPreferredSize(new java.awt.Dimension(150, 150));
+        botonLaDuranguense.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonLaDuranguenseActionPerformed(evt);
+            }
+        });
+
+        botonLaDobleP.setBackground(new java.awt.Color(216, 162, 60));
+        botonLaDobleP.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        botonLaDobleP.setText("La Doble P");
+        botonLaDobleP.setPreferredSize(new java.awt.Dimension(150, 150));
+        botonLaDobleP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonLaDoblePActionPerformed(evt);
+            }
+        });
+
+        botonReinaIsabel.setBackground(new java.awt.Color(216, 162, 60));
+        botonReinaIsabel.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        botonReinaIsabel.setText("Reina Isabel");
+        botonReinaIsabel.setPreferredSize(new java.awt.Dimension(150, 150));
+        botonReinaIsabel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReinaIsabelActionPerformed(evt);
+            }
+        });
+
+        botonFermentada.setBackground(new java.awt.Color(216, 162, 60));
+        botonFermentada.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        botonFermentada.setText("fermentada");
+        botonFermentada.setPreferredSize(new java.awt.Dimension(150, 150));
+        botonFermentada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFermentadaActionPerformed(evt);
+            }
+        });
+
+        boton8Hoyos.setBackground(new java.awt.Color(216, 162, 60));
+        boton8Hoyos.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        boton8Hoyos.setText(" 8 Hoyos ");
+        boton8Hoyos.setPreferredSize(new java.awt.Dimension(150, 150));
+        boton8Hoyos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton8HoyosActionPerformed(evt);
+            }
+        });
+
+        botonInfantil.setBackground(new java.awt.Color(216, 162, 60));
+        botonInfantil.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        botonInfantil.setText("Infantil");
+        botonInfantil.setPreferredSize(new java.awt.Dimension(150, 150));
+        botonInfantil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInfantilActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBotonesPizzasLayout = new javax.swing.GroupLayout(panelBotonesPizzas);
+        panelBotonesPizzas.setLayout(panelBotonesPizzasLayout);
+        panelBotonesPizzasLayout.setHorizontalGroup(
+            panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesPizzasLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonLaDuranguense, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonFermentada, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonReinaIsabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton8Hoyos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonLaDobleP, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonInfantil, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48))
+        );
+        panelBotonesPizzasLayout.setVerticalGroup(
+            panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesPizzasLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonLaDuranguense, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonLaDobleP, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonReinaIsabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelBotonesPizzasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonFermentada, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton8Hoyos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonInfantil, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        botonAtras.setBackground(new java.awt.Color(216, 162, 60));
+        botonAtras.setText("atras");
+        botonAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAtrasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
+        PanelFondo.setLayout(PanelFondoLayout);
+        PanelFondoLayout.setHorizontalGroup(
+            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGap(688, 688, 688)
+                .addComponent(panelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createSequentialGroup()
+                .addContainerGap(198, Short.MAX_VALUE)
+                .addComponent(panelBotonesPizzas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(195, 195, 195))
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(botonAtras))
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelFondoLayout.setVerticalGroup(
+            PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGap(125, 125, 125)
+                .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(panelBotonesPizzas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(135, 135, 135)
+                .addComponent(botonAtras)
+                .addGap(62, 62, 62))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonLaDuranguenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDuranguenseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonLaDuranguenseActionPerformed
+
+    private void botonLaDoblePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDoblePActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonLaDoblePActionPerformed
+
+    private void botonReinaIsabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReinaIsabelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonReinaIsabelActionPerformed
+
+    private void botonFermentadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFermentadaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonFermentadaActionPerformed
+
+    private void boton8HoyosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton8HoyosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boton8HoyosActionPerformed
+
+    private void botonInfantilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInfantilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonInfantilActionPerformed
+
+    private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAtrasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelFondo;
+    private javax.swing.JButton boton8Hoyos;
+    private javax.swing.JButton botonAtras;
+    private javax.swing.JButton botonFermentada;
+    private javax.swing.JButton botonInfantil;
+    private javax.swing.JButton botonLaDobleP;
+    private javax.swing.JButton botonLaDuranguense;
+    private javax.swing.JButton botonReinaIsabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel panelBotonesPizzas;
+    private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables
 
     //metodo para poner la imagen de fondo DEFINITIVO

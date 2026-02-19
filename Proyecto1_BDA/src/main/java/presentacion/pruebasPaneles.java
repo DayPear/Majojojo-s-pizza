@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author hp
+ * @author danna piña
  */
 public class pruebasPaneles {
 
@@ -19,17 +19,19 @@ public class pruebasPaneles {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
             javax.swing.JFrame ventana = new javax.swing.JFrame("Prueba de Panel con Fondo");
+            
+            ventana.setResizable(false);
 
             // Creamos una instancia del panel
             PanelRealizarPedidoCliente panelTonto = new PanelRealizarPedidoCliente();
-            panelTonto.setPreferredSize(new java.awt.Dimension(800, 600)); //tamaño sugerido
+            panelTonto.setPreferredSize(new java.awt.Dimension(1000, 800)); //tamaño sugerido
             ventana.add(panelTonto);
             ventana.pack(); //ajusta la ventana al tamaño del panel
 
             // Configuraciones
             ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
             ventana.add(panelTonto); 
-            ventana.setSize(900, 700); 
+            ventana.setSize(1000, 800); 
             ventana.setLocationRelativeTo(null); 
             ventana.setVisible(true); 
         });
