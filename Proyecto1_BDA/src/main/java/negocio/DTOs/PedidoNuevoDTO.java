@@ -4,10 +4,16 @@
  */
 package negocio.DTOs;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author maria
  */
 public class PedidoNuevoDTO {
+    
+    private String notas;
+    private float costo;
+    private LocalDate hora_recoleccion;
     
 }

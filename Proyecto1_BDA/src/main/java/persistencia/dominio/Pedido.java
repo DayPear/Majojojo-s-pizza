@@ -4,7 +4,7 @@
  */
 package persistencia.dominio;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,32 +15,26 @@ public class Pedido {
     private String notas;
     private float costo;
     private String estado;
-    private LocalDateTime hora_preparacion;
-    private LocalDateTime hora_recoleccion;
-    private LocalDateTime hoara_cambio_estado;
+    private LocalDate hora_recoleccion;
     private Integer id_cliente;
 
     public Pedido() {
     }
 
-    public Pedido(Integer numero_pedido, String notas, float costo, String estado, LocalDateTime hora_preparacion, LocalDateTime hora_recoleccion, LocalDateTime hoara_cambio_estado, Integer id_cliente) {
+    public Pedido(Integer numero_pedido, String notas, float costo, String estado, LocalDate hora_recoleccion, Integer id_cliente) {
         this.numero_pedido = numero_pedido;
         this.notas = notas;
         this.costo = costo;
         this.estado = estado;
-        this.hora_preparacion = hora_preparacion;
         this.hora_recoleccion = hora_recoleccion;
-        this.hoara_cambio_estado = hoara_cambio_estado;
         this.id_cliente = id_cliente;
     }
 
-    public Pedido(String notas, float costo, String estado, LocalDateTime hora_preparacion, LocalDateTime hora_recoleccion, LocalDateTime hoara_cambio_estado, Integer id_cliente) {
+    public Pedido(String notas, float costo, String estado,  LocalDate hora_recoleccion, Integer id_cliente) {
         this.notas = notas;
         this.costo = costo;
         this.estado = estado;
-        this.hora_preparacion = hora_preparacion;
         this.hora_recoleccion = hora_recoleccion;
-        this.hoara_cambio_estado = hoara_cambio_estado;
         this.id_cliente = id_cliente;
     }
 
@@ -76,28 +70,12 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public LocalDateTime getHora_preparacion() {
-        return hora_preparacion;
-    }
-
-    public void setHora_preparacion(LocalDateTime hora_preparacion) {
-        this.hora_preparacion = hora_preparacion;
-    }
-
-    public LocalDateTime getHora_recoleccion() {
+    public LocalDate getHora_recoleccion() {
         return hora_recoleccion;
     }
 
-    public void setHora_recoleccion(LocalDateTime hora_recoleccion) {
+    public void setHora_recoleccion(LocalDate hora_recoleccion) {
         this.hora_recoleccion = hora_recoleccion;
-    }
-
-    public LocalDateTime getHoara_cambio_estado() {
-        return hoara_cambio_estado;
-    }
-
-    public void setHoara_cambio_estado(LocalDateTime hoara_cambio_estado) {
-        this.hoara_cambio_estado = hoara_cambio_estado;
     }
 
     public Integer getId_cliente() {
@@ -110,7 +88,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "numero_pedido=" + numero_pedido + ", notas=" + notas + ", costo=" + costo + ", estado=" + estado + ", hora_preparacion=" + hora_preparacion + ", hora_recoleccion=" + hora_recoleccion + ", hoara_cambio_estado=" + hoara_cambio_estado + ", id_cliente=" + id_cliente + '}';
+        return "Pedido{" + "numero_pedido=" + numero_pedido + ", notas=" + notas + ", costo=" + costo + ", estado=" + estado + ", hora_recoleccion=" + hora_recoleccion + ", id_cliente=" + id_cliente + '}';
     }
     
 }
