@@ -91,6 +91,7 @@ public class PedidoDAO implements IPedidoDAO {
                     throw new PersistenciaException("No existe el pedido con el número proporcionado.");
                 }
             }
+            
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
         }
@@ -99,6 +100,20 @@ public class PedidoDAO implements IPedidoDAO {
 
     @Override
     public Pedido cancelarPedidio(int numeroPedido) throws PersistenciaException {
+        String comandoSQL = """
+                            update pedidos 
+                            set estado = 'Cancelado' where numero_pedido = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, numeroPedido);
+            if(ps.executeUpdate() == 0){
+                LOG.log(Level.WARNING, "No se canceló el pedido.");
+                throw new PersistenciaException("No se pudo cancelar el pedido.");
+            }
+            
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
         return null;
     }
 
