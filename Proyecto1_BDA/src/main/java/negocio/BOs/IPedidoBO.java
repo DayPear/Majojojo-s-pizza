@@ -17,5 +17,6 @@ public interface IPedidoBO {
     
     public Pedido consultarPedido(int numeroPedido) throws NegocioException;
     
-    public Pedido cancelarPedido(int numeroPedido) throws NegocioException;
+    public Pedido cancelarPedido(Pedido pedido) throws NegocioException;
+    
 }

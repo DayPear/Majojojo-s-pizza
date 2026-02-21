@@ -18,9 +18,9 @@ public interface IPedidoDAO {
     
     Pedido consultarPedido(int numeroPedido) throws PersistenciaException;
     
-    Pedido cancelarPedidio(int numeroPedido) throws PersistenciaException;
+    Pedido cancelarPedido(int numero_pedido) throws PersistenciaException;
     
-    Pedido actualizarEstadoPedido(int numeroPedido) throws PersistenciaException;
+    Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException;
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();
 }
