@@ -59,7 +59,7 @@ public class UsuarioDAO implements IUsuarioDAO{
                 String apellido_materno = rs.getString("apellido_paterno");
                 String rol = rs.getString("rol");
                 String correo = rs.getString("correo");
-                String contrasenia = rs.getString("contrasenia");
+                int contrasenia = rs.getInt("contrasenia");
                 Usuario usu = new Usuario(id, nombres, apellido_paterno, apellido_materno, rol, correo, contrasenia);
                 return usu;
             }

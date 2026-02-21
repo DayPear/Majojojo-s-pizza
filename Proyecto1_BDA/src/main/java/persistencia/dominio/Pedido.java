@@ -14,29 +14,30 @@ public class Pedido {
     private Integer numero_pedido;
     private String notas;
     private float costo;
-    private String estado;
-    private LocalDate hora_recoleccion;
+    private String hora_recoleccion;
     private Integer id_cliente;
+    private String estado_actual;
+    private String estado_viejo;
 
     public Pedido() {
     }
 
-    public Pedido(Integer numero_pedido, String notas, float costo, String estado, LocalDate hora_recoleccion, Integer id_cliente) {
+    public Pedido(Integer numero_pedido, String notas, float costo, String hora_recoleccion, Integer id_cliente, String estado_actual, String estado_viejo) {
         this.numero_pedido = numero_pedido;
         this.notas = notas;
         this.costo = costo;
-        this.estado = estado;
         this.hora_recoleccion = hora_recoleccion;
         this.id_cliente = id_cliente;
+        this.estado_actual = estado_actual;
+        this.estado_viejo = estado_viejo;
     }
 
-    public Pedido(String notas, float costo, String estado,  LocalDate hora_recoleccion, Integer id_cliente) {
+    public Pedido(String notas, float costo, Integer id_cliente) {
         this.notas = notas;
         this.costo = costo;
-        this.estado = estado;
-        this.hora_recoleccion = hora_recoleccion;
         this.id_cliente = id_cliente;
-    }
+        this.estado_actual = "Pendiente";
+    }  
 
     public Integer getNumero_pedido() {
         return numero_pedido;
@@ -62,19 +63,11 @@ public class Pedido {
         this.costo = costo;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public LocalDate getHora_recoleccion() {
+    public String getHora_recoleccion() {
         return hora_recoleccion;
     }
 
-    public void setHora_recoleccion(LocalDate hora_recoleccion) {
+    public void setHora_recoleccion(String hora_recoleccion) {
         this.hora_recoleccion = hora_recoleccion;
     }
 
@@ -86,9 +79,25 @@ public class Pedido {
         this.id_cliente = id_cliente;
     }
 
+    public String getEstado_actual() {
+        return estado_actual;
+    }
+
+    public void setEstado_actual(String estado_nuevo) {
+        this.estado_actual = estado_nuevo;
+    }
+
+    public String getEstado_viejo() {
+        return estado_viejo;
+    }
+
+    public void setEstado_viejo(String estado_viejo) {
+        this.estado_viejo = estado_viejo;
+    }
+
     @Override
     public String toString() {
-        return "Pedido{" + "numero_pedido=" + numero_pedido + ", notas=" + notas + ", costo=" + costo + ", estado=" + estado + ", hora_recoleccion=" + hora_recoleccion + ", id_cliente=" + id_cliente + '}';
+        return "Pedido{" + "número_pedido=" + numero_pedido + ", notas=" + notas + ", costo=" + costo + ", hora_recolección=" + hora_recoleccion + ", id_cliente=" + id_cliente + ", estado_nuevo=" + estado_actual + ", estado_viejo=" + estado_viejo + '}';
     }
     
 }

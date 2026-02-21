@@ -33,7 +33,7 @@ public class Proyecto1_BDA {
             Pedido newPedido = ped.agregarPedido(pe);
             System.out.println("Registron pedido correcto, numero pedido: " + newPedido);
         } catch (PersistenciaException ex) {
-            System.out.println("No se establecio la conexion");
+            System.out.println("No se estableció la conexion");
             Logger.getLogger(Proyecto1_BDA.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

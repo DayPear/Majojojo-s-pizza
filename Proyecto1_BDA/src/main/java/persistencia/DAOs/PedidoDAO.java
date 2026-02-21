@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
@@ -41,30 +42,22 @@ public class PedidoDAO implements IPedidoDAO {
     public Pedido agregarPedido(Pedido pedido) throws PersistenciaException {
         String comandoSQL = """
                             insert into pedidos(
-                            	notas, costo, estado, hora_recoleccion, id_cliente
+                            	notas, costo, id_cliente
                             ) values(
-                            	?, ?, ?, ?, ?, 
+                            	?, ?, ?
                             );
                             """;
         try(Connection cone = this.conexion.crearConexion();
                 PreparedStatement ps = cone.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS);){
             ps.setString(1, pedido.getNotas());
             ps.setFloat(2, pedido.getCosto());
-            ps.setString(3, pedido.getEstado());
-            if(pedido.getHora_recoleccion() != null){
-                Date fecha = Date.valueOf(pedido.getHora_recoleccion());
-                ps.setDate(4, fecha);
-            } else { // por si aún no hay hora de recolección
-                ps.setDate(4, null);
-            }
-            ps.setInt(5, pedido.getId_cliente());
+            ps.setInt(3, pedido.getId_cliente());
             //hacer una tablita de los registros de cambios de estados?
             int filasReg = ps.executeUpdate();
             if (filasReg != 1){
                 LOG.warning("No se pudo agregar el pedido ");
                 throw new PersistenciaException("No se pudo agregar pedido");
-            }
-            
+            }            
             try(ResultSet rs = ps.getGeneratedKeys()){
                 if(!rs.next()){
                     LOG.warning("Se agregó pero no se pudo obtener el número de pedido");
@@ -80,7 +73,7 @@ public class PedidoDAO implements IPedidoDAO {
     @Override
     public Pedido consultarPedido(int numeroPedido) throws PersistenciaException {
         String comandoSQL = """
-                            select numero_pedido, notas, costo, estado, hora_preparacion, hora_recolecion, hora_cambio_estado, id_cliente
+                            select numero_pedido, notas, costo, hora_recoleccion, id_cliente, estado_actual, estado_viejo
                             from pedidos where numero_pedido = ?
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
@@ -90,35 +83,55 @@ public class PedidoDAO implements IPedidoDAO {
                     LOG.log(Level.WARNING, "No se encontró el Pedido con número:" + numeroPedido);
                     throw new PersistenciaException("No existe el pedido con el número proporcionado.");
                 }
+                return extraerPedido(rs);
             }
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
         }
-        return null;
     }
 
     @Override
-    public Pedido cancelarPedidio(int numeroPedido) throws PersistenciaException {
-        return null;
+    public Pedido cancelarPedido(int numero_pedido) throws PersistenciaException {
+        String comandoSQL = """
+                            call actualizar_estado_pedido(?, 'Cancelado')
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, numero_pedido);
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo cancelar el pedido.");
+                    throw new PersistenciaException("No se canceló el pedido.");
+                }
+                LOG.log(Level.INFO, "Se canceló el pedido");
+                return extraerPedido(rs);
+            }
+            // cómo para q regresé un objeto?
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
 
     @Override
-    public Pedido actualizarEstadoPedido(int numeroPedido) throws PersistenciaException {
+    public Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException {
         return null;
     }
     
     private Pedido extraerPedido(ResultSet rs) throws SQLException {
-
         Pedido p = new Pedido();
         p.setNumero_pedido(rs.getInt("numero_pedido"));
         p.setNotas(rs.getString("notas"));
         p.setCosto(rs.getFloat("costo"));
-        p.setEstado(rs.getString("estado"));
-        
-        rs.getDate("hora_recoleccion");
-        Date fecha = rs.getDate("fecha_ingreso");
-        p.setHora_recoleccion(fecha != null ? fecha.toLocalDate() : null);
-
+        Timestamp hora_recoleccion = rs.getTimestamp("hora_recoleccion");
+        if(hora_recoleccion == null){
+            p.setHora_recoleccion(null);
+        } else {
+            LocalDateTime hr = hora_recoleccion.toLocalDateTime();
+            String hora = hr.getHour() + ":" + hr.getMinute() + ":" + hr.getSecond();
+            p.setHora_recoleccion(hora);
+        }
+        p.setEstado_actual(rs.getString("estado_actual"));
+        p.setEstado_viejo(rs.getString("estado_viejo"));
+        p.setId_cliente(rs.getInt("id_cliente"));
         return p;
     }
    
