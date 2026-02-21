@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import persistencia.DAOs.PedidoDAO;
 import persistencia.conexion.ConexionBD;
 import persistencia.conexion.IConexionBD;
+import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
 /**
@@ -25,10 +26,11 @@ public class Proyecto1_BDA {
             //Connection cone = conexion.crearConexion();
             IConexionBD cone = new ConexionBD();
             PedidoDAO ped = new PedidoDAO(cone);
+            Pedido pe = new Pedido("Maziso de queso", 199.99f, "Pendiente",null, 3);
             /*if(cone != null){
                 System.out.println("Conexion exitosa");
             }*/
-            int newPedido = ped.agregarPedido("Maziso de queso", 199.99f, "Pendiente", LocalDateTime.now().plusMinutes(30), 3);
+            Pedido newPedido = ped.agregarPedido(pe);
             System.out.println("Registron pedido correcto, numero pedido: " + newPedido);
         } catch (PersistenciaException ex) {
             System.out.println("No se establecio la conexion");
