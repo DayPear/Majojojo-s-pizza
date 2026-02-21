@@ -16,7 +16,7 @@ public class Usuario {
     private String apellido_materno;
     private String rol;
     private String correo;
-    private String contrasenia;
+    private Integer contrasenia;
 
     /**
      *
@@ -34,7 +34,7 @@ public class Usuario {
      * @param correo
      * @param contrasenia
      */
-    public Usuario(Integer id, String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, String contrasenia) {
+    public Usuario(Integer id, String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, Integer contrasenia) {
         this.id = id;
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
@@ -53,7 +53,7 @@ public class Usuario {
      * @param correo
      * @param contrasenia
      */
-    public Usuario(String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, String contrasenia) {
+    public Usuario(String nombres, String apellido_paterno, String apellido_materno, String rol, String correo, Integer contrasenia) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -162,7 +162,7 @@ public class Usuario {
      *
      * @return
      */
-    public String getContrasenia() {
+    public Integer getContrasenia() {
         return contrasenia;
     }
 
@@ -170,7 +170,7 @@ public class Usuario {
      *
      * @param contrasenia
      */
-    public void setContrasenia(String contrasenia) {
+    public void setContrasenia(Integer contrasenia) {
         this.contrasenia = contrasenia;
     }
 

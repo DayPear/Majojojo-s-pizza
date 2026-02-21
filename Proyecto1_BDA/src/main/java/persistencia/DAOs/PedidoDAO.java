@@ -93,7 +93,7 @@ public class PedidoDAO implements IPedidoDAO {
     @Override
     public Pedido cancelarPedido(int numero_pedido) throws PersistenciaException {
         String comandoSQL = """
-                            call cancelar_pedido(?)?
+                            call actualizar_estado_pedido(?, 'Cancelado')
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setInt(1, numero_pedido);
