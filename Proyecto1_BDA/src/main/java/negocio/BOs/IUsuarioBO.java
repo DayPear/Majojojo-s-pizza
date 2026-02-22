@@ -14,9 +14,9 @@ import persistencia.dominio.Usuario;
  */
 public interface IUsuarioBO {
     
-    UsuarioNuevoDTO registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
+    Usuario registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
     
-    UsuarioNuevoDTO validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
+    Usuario validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
     
-    UsuarioNuevoDTO consultarUsuario(int idUsuario) throws NegocioException;
+    Usuario consultarUsuario(int idUsuario) throws NegocioException;
 }

@@ -26,7 +26,7 @@ public class UsuarioBO implements IUsuarioBO {
     }
     
     @Override
-    public UsuarioNuevoDTO registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
+    public Usuario registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
         Usuario usu = new Usuario();
         if(usuario.getNombres() == null || usuario.getNombres().isBlank() || usuario.getNombres().isEmpty()){
             LOG.log(Level.WARNING, "Nombre inválido para el registro.");
@@ -73,7 +73,7 @@ public class UsuarioBO implements IUsuarioBO {
                 LOG.log(Level.WARNING, "El usuario no se pudo insertar.");
                 throw new NegocioException("No se hizo la insersión de usuario.");
             }
-            return usuario;
+            return u;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas con la insersión del usuario.");
             throw new NegocioException(pe.getMessage(), pe);
@@ -81,12 +81,12 @@ public class UsuarioBO implements IUsuarioBO {
     }
     
     @Override
-    public UsuarioNuevoDTO validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
+    public Usuario validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
         return null;
     }
     
     @Override
-    public UsuarioNuevoDTO consultarUsuario(int idUsuario) throws NegocioException {
+    public Usuario consultarUsuario(int idUsuario) throws NegocioException {
         if(idUsuario < 1){
             LOG.log(Level.SEVERE, "El ID del usuario no puede ser 0 o menor.");
             throw new NegocioException("Problemas con el ID del usuario.");
@@ -98,7 +98,7 @@ public class UsuarioBO implements IUsuarioBO {
                 throw new NegocioException("No se encontró al usuario");
             }
             // aún no sé q hacer con la contra del usuario para devolver el hash code a un string.
-            return new UsuarioNuevoDTO(u.getNombres(), u.getApellido_paterno(), u.getApellido_materno(), u.getRol(), u.getCorreo(), u.getContrasenia().toString());
+            return u;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas para consultar al usuario.");
             throw new NegocioException(pe.getMessage(), pe);
