@@ -54,7 +54,7 @@ public class PedidoDAO implements IPedidoDAO {
             ps.setInt(3, pedido.getId_cliente());
             //hacer una tablita de los registros de cambios de estados?
             int filasReg = ps.executeUpdate();
-            if (filasReg != 1){
+            if (filasReg == 0){
                 LOG.warning("No se pudo agregar el pedido ");
                 throw new PersistenciaException("No se pudo agregar pedido");
             }            
@@ -63,6 +63,7 @@ public class PedidoDAO implements IPedidoDAO {
                     LOG.warning("Se agregó pero no se pudo obtener el número de pedido");
                     throw new PersistenciaException("Error al obtener el número de pedido");
                 }
+                pedido.setNumero_pedido(rs.getInt("numero_pedido"));
                 return pedido;
             }
         } catch (SQLException ex) {

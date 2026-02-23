@@ -10,6 +10,7 @@ package negocio.DTOs;
  */
 public class ClienteNuevoDTO {
     
+    private Integer id;
     private String colonia;
     private String calle;
     private String numero;
@@ -19,12 +20,29 @@ public class ClienteNuevoDTO {
     public ClienteNuevoDTO() {
     }
 
+    public ClienteNuevoDTO(Integer id, String colonia, String calle, String numero, String codigoP, String fechaNacimiento) {
+        this.id = id;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
+        this.codigoP = codigoP;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
     public ClienteNuevoDTO(String colonia, String calle, String numero, String codigoP, String fechaNacimiento) {
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
         this.codigoP = codigoP;
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getColonia() {

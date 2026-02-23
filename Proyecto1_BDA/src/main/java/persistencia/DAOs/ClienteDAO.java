@@ -27,12 +27,9 @@ public class ClienteDAO implements IClienteDAO{
     public ClienteDAO(IConexionBD cone){
         this.conexion = cone;
     }
-
     
-    
-//en la bd la fecha nacimiento no seria solo date?
     @Override
-    public Cliente agregarCliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, LocalDateTime fecha_nacimiento) throws PersistenciaException {
+    public Cliente agregarCliente(Cliente cliente) throws PersistenciaException {
         String comandoSQL =     """
                                 insert into clientes (
                                     id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento
@@ -42,24 +39,26 @@ public class ClienteDAO implements IClienteDAO{
                                 """;
         try(Connection cone = this.conexion.crearConexion();
                 PreparedStatement ps = cone.prepareStatement(comandoSQL)){
-            ps.setInt(1, id_cliente);
-            ps.setString(2, colonia);
-            ps.setString(3, calle);
-            ps.setString(4, numero);
-            ps.setString(5, codigo_postal);
-            ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.from(fecha_nacimiento)));
-            
+            ps.setInt(1, cliente.getId_cliente());
+            ps.setString(2, cliente.getColonia());
+            ps.setString(3, cliente.getCalle());
+            ps.setString(4, cliente.getNumero());
+            ps.setString(5, cliente.getCodigo_postal());
+            ps.setDate(6, cliente.getFecha_nacimiento());      
             int filasReg = ps.executeUpdate();
             if (filasReg != 1){
-                LOG.warning("No se pudo agregar el pedido ");
-                throw new PersistenciaException("No se pudo agregar pedido");
+                LOG.warning("No se pudo agregar el cliente.");
+                throw new PersistenciaException("No se pudo agregar el cliente");
             }
-            Cliente cli = new Cliente(id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento);
-            return cli;
-            
+            return cliente;
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
         }
+    }
+    
+    @Override
+    public Cliente validarIdUsuario(Cliente cliente) throws PersistenciaException {
+        return null;
     }
     
 }

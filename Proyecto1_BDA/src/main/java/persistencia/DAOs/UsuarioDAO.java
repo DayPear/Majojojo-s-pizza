@@ -50,7 +50,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             
             try(ResultSet rs = ps.executeQuery()){
                 if(!rs.next()){
-                    LOG.warning("No se logro obtener el tecnico con el id: "+id);
+                    LOG.warning("No se logró obtener el usuario con el id: "+id);
                     throw new PersistenciaException("No se pudo obtener el usuario.");
                 }
                 Integer idUsuario = rs.getInt("id");
@@ -70,7 +70,58 @@ public class UsuarioDAO implements IUsuarioDAO{
     
     @Override
     public Usuario agregarUsuario(Usuario usuario) throws PersistenciaException {
-        return null;
+        String comandoSQL = """
+                            insert into usuarios(nombres, apellido_paterno, apellido_materno, rol, correo, contra
+                            values (?, ?, ?, ?, ?, ?);
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)) {
+            ps.setString(1, usuario.getNombres());
+            ps.setString(2, usuario.getApellido_paterno());
+            ps.setString(3, usuario.getApellido_materno());
+            ps.setString(4, usuario.getRol());
+            ps.setString(5, usuario.getCorreo());
+            ps.setInt(6, usuario.getContrasenia());
+            
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo agregar el usuario a la base de datos.");
+                throw new PersistenciaException("Problemas para la insersión del usuario.");
+            }
+            try(ResultSet rs = ps.getGeneratedKeys()){
+                usuario.setId(rs.getInt("id_usuario"));
+                return usuario;
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Usuario validarUsuario(Usuario usuario) throws PersistenciaException {
+        String comandoSQL = """
+                            select id_usuario, nombres, apellido_paterno, apellido_materno, rol, correo, contra
+                            from usuarios where correo = ? and contra = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setString(1, usuario.getCorreo());
+            ps.setInt(2, usuario.getContrasenia());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se encontró un usuario con dicha información.");
+                    throw new PersistenciaException("No se pudo validar las credenciales.");
+                }
+                Integer id = rs.getInt("id_usuario");
+                String nombres = rs.getString("nombres");
+                String apellidoP = rs.getString("apellido_paterno");
+                String apellidoM = rs.getString("apellido_materno");
+                String rol = rs.getString("rol");
+                String correo = rs.getString("correo");
+                Integer contra = rs.getInt("contra");
+                return new Usuario(id, nombres, apellidoP, apellidoM, rol, correo, contra);
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        } 
     }
     
 }
