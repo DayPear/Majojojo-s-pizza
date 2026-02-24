@@ -12,7 +12,6 @@ import negocio.BOs.ClienteBO;
 import negocio.DTOs.ClienteNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.ClienteDAO;
-import persistencia.DAOs.IClienteDAO;
 import persistencia.conexion.ConexionBD;
 import persistencia.dominio.Cliente;
 import persistencia.dominio.Usuario;
@@ -28,6 +27,11 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
      */
     public PanelRegistroCliente() {
         initComponents();
+    }
+    
+    public PanelRegistroCliente(int id){
+        initComponents();
+        this.idUsuario = id;
     }
     
     public void setUsuario(Usuario usuario){
@@ -216,7 +220,7 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,7 +230,10 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String fechaN = jComboBox2.getActionCommand() + jComboBox1.getActionCommand() + jComboBox3.getActionCommand();
+        String m = jComboBox1.getSelectedItem().toString();
+        String d = jComboBox2.getSelectedItem().toString();
+        String a = jComboBox3.getSelectedItem().toString();
+        String fechaN = String.format("%02d%02d%04d", Integer.parseInt(d), Integer.parseInt(m), Integer.parseInt(a));
         String telefono = jTextField5.getText();      
         String colonia = jTextField6.getText().trim();
         String calle = jTextField7.getText().trim();
@@ -265,7 +272,7 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Formato inválido para código postal, solo pueden ser digítos", "Validación", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        ClienteNuevoDTO cliente = new ClienteNuevoDTO(usuario.getId(), colonia, calle, numero, codigoP, fechaN);
+        ClienteNuevoDTO cliente = new ClienteNuevoDTO(idUsuario, colonia, calle, numero, codigoP, fechaN);
         try{
             Cliente c = clienteBO.registrarCliente(cliente);
             if(c == null){
@@ -293,10 +300,6 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
         Window ventana = SwingUtilities.getWindowAncestor(this);
 
             if (ventana instanceof JFrame) {
@@ -310,6 +313,10 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
                 framePrincipal.revalidate();
                 framePrincipal.repaint();
             }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
@@ -335,5 +342,6 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
     private Usuario usuario;
+    private int idUsuario;
     private ClienteBO clienteBO = new ClienteBO(new ClienteDAO(new ConexionBD()));
 }

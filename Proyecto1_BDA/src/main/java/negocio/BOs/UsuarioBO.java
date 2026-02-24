@@ -38,7 +38,7 @@ public class UsuarioBO implements IUsuarioBO {
         } else {
             usu.setNombres(usuario.getNombres().trim());
         }
-        if(usuario.getApellidoM() == null || usuario.getApellidoP().isBlank() || usuario.getApellidoP().isEmpty()){
+        if(usuario.getApellidoP() == null || usuario.getApellidoP().isBlank() || usuario.getApellidoP().isEmpty()){
             LOG.log(Level.WARNING, "Apellido Paterno inválido para el registro.");
             throw new NegocioException("Error en el apellido paterno del usuario.");
         } else {
@@ -49,7 +49,7 @@ public class UsuarioBO implements IUsuarioBO {
         } else {
             usu.setApellido_materno(usuario.getApellidoM().trim());
         }
-        if(usuario.getRol() != "Empleado" || usuario.getRol() != "Cliente"){
+        if(usuario.getRol() != "Empleado" && usuario.getRol() != "Cliente"){
             LOG.log(Level.WARNING, "Rol no existente en el sistema.");
             throw new NegocioException("Error con el rol del usuario.");
         } else {
