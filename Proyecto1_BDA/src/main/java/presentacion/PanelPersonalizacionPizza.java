@@ -34,52 +34,251 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelFondo = new javax.swing.JPanel(){
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                super.paintComponent(g);
-                if (imagenFondo != null) {
-                    //scomoda imagen al tamaño del panel
-                    g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
-                } else {
-                    // Si la imagen sigue fallando
-                    g.setColor(java.awt.Color.RED);
-                    g.drawString("Imagen no encontrada :)", 10, 20);
-                }
+        PanelFondo = new javax.swing.JPanel();
+        PanelSuperior = new javax.swing.JPanel();
+        LblTitulo = new javax.swing.JLabel();
+        LblNombrePizza = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        LblDesTitulo = new javax.swing.JLabel();
+        LblDesTutulo = new javax.swing.JLabel();
+        LblNotas = new javax.swing.JLabel();
+        ComboBoxTamanio = new javax.swing.JComboBox<>();
+        LblTamaño1 = new javax.swing.JLabel();
+        LblPrecio1 = new javax.swing.JLabel();
+        TextFieldNotas = new javax.swing.JTextField();
+        jButtonAtras = new javax.swing.JButton();
+        jButtonTerminar = new javax.swing.JButton();
+        jButtonAgragar1 = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(700, 500));
+        setMinimumSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 500));
+
+        PanelFondo.setBackground(new java.awt.Color(216, 162, 60));
+        PanelFondo.setForeground(new java.awt.Color(216, 162, 60));
+
+        PanelSuperior.setBackground(new java.awt.Color(183, 76, 59));
+        PanelSuperior.setForeground(new java.awt.Color(183, 76, 59));
+
+        LblTitulo.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        LblTitulo.setText("¡Personaliza tu pizza!");
+
+        javax.swing.GroupLayout PanelSuperiorLayout = new javax.swing.GroupLayout(PanelSuperior);
+        PanelSuperior.setLayout(PanelSuperiorLayout);
+        PanelSuperiorLayout.setHorizontalGroup(
+            PanelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelSuperiorLayout.createSequentialGroup()
+                .addGap(176, 176, 176)
+                .addComponent(LblTitulo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PanelSuperiorLayout.setVerticalGroup(
+            PanelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSuperiorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LblTitulo)
+                .addGap(66, 66, 66))
+        );
+
+        LblNombrePizza.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        LblNombrePizza.setForeground(new java.awt.Color(1, 114, 160));
+        LblNombrePizza.setText("La Durangense");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 226, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 297, Short.MAX_VALUE)
+        );
+
+        LblDesTitulo.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        LblDesTitulo.setText("<html><body style 'whidh: 200px'>queso gratinado y  alacranes  sazonados que aportan un toque intenso y  crujiente.</body></html>");
+        LblDesTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        LblDesTutulo.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        LblDesTutulo.setForeground(new java.awt.Color(152, 4, 4));
+        LblDesTutulo.setText("descripcion:");
+
+        LblNotas.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        LblNotas.setText("Notas:");
+
+        ComboBoxTamanio.setBackground(new java.awt.Color(1, 114, 160));
+        ComboBoxTamanio.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        ComboBoxTamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chica", "mediana", "grande" }));
+        ComboBoxTamanio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        LblTamaño1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        LblTamaño1.setText("Tamaño:");
+
+        LblPrecio1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        LblPrecio1.setText("precio:  $180");
+
+        TextFieldNotas.setBackground(new java.awt.Color(1, 114, 160));
+        TextFieldNotas.setFont(new java.awt.Font("Bauhaus 93", 0, 12)); // NOI18N
+        TextFieldNotas.setText("¿alguna instrucion especial?");
+        TextFieldNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldNotasActionPerformed(evt);
             }
+        });
 
-        };
+        jButtonAtras.setBackground(new java.awt.Color(152, 4, 4));
+        jButtonAtras.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButtonAtras.setText("Atras");
+        jButtonAtras.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        setMaximumSize(new java.awt.Dimension(1000, 800));
-        setMinimumSize(new java.awt.Dimension(1000, 800));
-        setPreferredSize(new java.awt.Dimension(1000, 800));
+        jButtonTerminar.setBackground(new java.awt.Color(152, 4, 4));
+        jButtonTerminar.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButtonTerminar.setText("terminar  pedido");
+        jButtonTerminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonTerminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTerminarActionPerformed(evt);
+            }
+        });
+
+        jButtonAgragar1.setBackground(new java.awt.Color(152, 4, 4));
+        jButtonAgragar1.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButtonAgragar1.setText("Agregar otro producto");
+        jButtonAgragar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonAgragar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgragar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
         PanelFondo.setLayout(PanelFondoLayout);
         PanelFondoLayout.setHorizontalGroup(
             PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addComponent(PanelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGap(224, 224, 224)
+                .addComponent(LblNombrePizza)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jButtonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addComponent(LblTamaño1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblDesTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBoxTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22))
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PanelFondoLayout.createSequentialGroup()
+                                .addComponent(jButtonAgragar1)
+                                .addGap(31, 31, 31)
+                                .addComponent(jButtonTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(LblPrecio1)
+                                .addGroup(PanelFondoLayout.createSequentialGroup()
+                                    .addComponent(LblNotas)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(TextFieldNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelFondoLayout.createSequentialGroup()
+                    .addGap(282, 282, 282)
+                    .addComponent(LblDesTutulo)
+                    .addContainerGap(285, Short.MAX_VALUE)))
         );
         PanelFondoLayout.setVerticalGroup(
             PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addComponent(PanelSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(LblNombrePizza)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAtras))
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addComponent(LblDesTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelFondoLayout.createSequentialGroup()
+                                .addComponent(ComboBoxTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(LblPrecio1))
+                            .addComponent(LblTamaño1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblNotas)
+                            .addComponent(TextFieldNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAgragar1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(36, Short.MAX_VALUE))
+            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelFondoLayout.createSequentialGroup()
+                    .addGap(141, 141, 141)
+                    .addComponent(LblDesTutulo)
+                    .addContainerGap(338, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TextFieldNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldNotasActionPerformed
+
+    private void jButtonTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonTerminarActionPerformed
+
+    private void jButtonAgragar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgragar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAgragar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxTamanio;
+    private javax.swing.JLabel LblDesTitulo;
+    private javax.swing.JLabel LblDesTutulo;
+    private javax.swing.JLabel LblNombrePizza;
+    private javax.swing.JLabel LblNotas;
+    private javax.swing.JLabel LblPrecio1;
+    private javax.swing.JLabel LblTamaño1;
+    private javax.swing.JLabel LblTitulo;
     private javax.swing.JPanel PanelFondo;
+    private javax.swing.JPanel PanelSuperior;
+    private javax.swing.JTextField TextFieldNotas;
+    private javax.swing.JButton jButtonAgragar1;
+    private javax.swing.JButton jButtonAtras;
+    private javax.swing.JButton jButtonTerminar;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
 //metodo para poner la imagen de fondo DEFINITIVO

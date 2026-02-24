@@ -24,7 +24,7 @@ public class pruebasPaneles {
             ventana.setResizable(false);
 
             // Creamos una instancia del panel
-            PanelPersonalizacionPizza panelPP = new PanelPersonalizacionPizza();
+            PanelPersonalizacionPizza1 panelPP = new PanelPersonalizacionPizza1();
             PanelRealizarPedidoCliente panelRPC = new PanelRealizarPedidoCliente();
             PanelRegistroUsuario panelRU = new PanelRegistroUsuario();
             panelRPC.setPreferredSize(new Dimension(1000, 800));
