@@ -18,4 +18,5 @@ public interface IClienteBO {
     
     Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException;
     
+    Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException;
 }
