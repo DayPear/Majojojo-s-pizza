@@ -12,6 +12,7 @@ import java.time.LocalDate;
  */
 public class PedidoNuevoDTO {
     
+    private int idPedido;
     private String notas;
     private float costo;
     private String hora_recoleccion;
@@ -22,6 +23,17 @@ public class PedidoNuevoDTO {
     public PedidoNuevoDTO() {
     }
 
+    public PedidoNuevoDTO(int idPedido, String notas, float costo, String hora_recoleccion, Integer id_cliente, String estado_nuevo, String estado_viejo) {
+        this.idPedido = idPedido;
+        this.notas = notas;
+        this.costo = costo;
+        this.hora_recoleccion = hora_recoleccion;
+        this.id_cliente = id_cliente;
+        this.estado_nuevo = estado_nuevo;
+        this.estado_viejo = estado_viejo;
+    }
+
+    
     public PedidoNuevoDTO(String notas, float costo, String hora_recoleccion, Integer id_cliente, String estado_nuevo, String estado_viejo) {
         this.notas = notas;
         this.costo = costo;
@@ -39,6 +51,14 @@ public class PedidoNuevoDTO {
         this.estado_nuevo = estado_nuevo;
     }
 
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
+    
     public String getNotas() {
         return notas;
     }

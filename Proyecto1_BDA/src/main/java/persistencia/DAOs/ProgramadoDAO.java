@@ -4,6 +4,10 @@
  */
 package persistencia.DAOs;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
 import persistencia.dominio.Programado;
@@ -24,7 +28,22 @@ public class ProgramadoDAO implements IProgramadoDAO {
     
     @Override
     public Programado agregarProgramado(Programado programado) throws PersistenciaException {
-        return null;
+        String comandoSQL = """
+                            insert into programados(id_programado, id_cupon) 
+                            values(?, ?)
+                            """;
+        try(Connection cone = conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, programado.getIdProgramado());
+            ps.setInt(2, programado.getIdCupon());
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se agregó el pedido programado.");
+                throw new PersistenciaException("Error al agregar el pedido programado.");
+            }
+            return programado;
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
     
     @Override

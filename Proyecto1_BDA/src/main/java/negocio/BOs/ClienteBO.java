@@ -100,11 +100,16 @@ public class ClienteBO implements IClienteBO {
     @Override
     public Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException {
         if(idUsuario < 1){
-            LOG.log(Level.SEVERE, "El ID del usuario no puede ser 0 o menor.");
-            throw new NegocioException("Problemas con el ID del usuario.");
+            LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID.");
         }
         try{
             Cliente c = clienteDAO.validarIdUsuario(idUsuario);
+            if(c == null){
+                LOG.log(Level.WARNING, "No se pudo encontrar un usuario asociado al cliente.");
+                throw new NegocioException("");
+            }
+            return c;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas para consultar al usuario.");
             throw new NegocioException(pe.getMessage(), pe);

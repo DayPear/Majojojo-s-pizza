@@ -7,13 +7,8 @@ package persistencia.DAOs;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
 import persistencia.dominio.Cliente;
@@ -79,8 +74,7 @@ public class ClienteDAO implements IClienteDAO{
                 Date fechaN = rs.getDate("fecha_nacimiento");
                 Cliente c = new Cliente(id_cliente, colonia, calle, numero, codigoP, fechaN);
                 return c;
-            }
-        
+            }        
         } catch(SQLException ex){
             throw new PersistenciaException(ex.getMessage());
         }
