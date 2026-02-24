@@ -287,14 +287,14 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
     private void TextFieldNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNotasActionPerformed
         // TODO add your handling code here:
         TextFieldNotas.setText("");
-        try{
-            Pizza p = pizzasBO.consultarPizza(idPizza);
-            LblDesTitulo.setText(p.getDescripcion());
-            ComboBoxTamanio.setActionCommand(p.getTamanio());
-            jLabel1.setText(p.getPrecio());
-        } catch(NegocioException ne){
-            JOptionPane.showMessageDialog(this, "Problemas para consultar la base de datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        //try{
+            //Pizza p = pizzasBO.consultarPizza(idPizza);
+           // LblDesTitulo.setText(p.getDescripcion());
+            //ComboBoxTamanio.setActionCommand(p.getTamanio());
+            //jLabel1.setText(p.getPrecio());
+        //} catch(NegocioException ne){
+         //   JOptionPane.showMessageDialog(this, "Problemas para consultar la base de datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        //}
         
     }//GEN-LAST:event_TextFieldNotasActionPerformed
 
@@ -365,7 +365,7 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
     private PedidoBO pedidoBO = new PedidoBO(new PedidoDAO(new ConexionBD()));
     private ProgramadoBO programadoBO = new ProgramadoBO(new ProgramadoDAO(new ConexionBD()));
     private int idPizza;
-    private PizzaBO pizzasBO = new PizzaBO(new PizzaDAO(new ConexionBD()));
+    //private PizzaBO pizzasBO = new PizzaBO(new PizzaDAO(new ConexionBD()));
     //private List<DetallesPedidos> subPedidos;
     //private PizzaNuevoDTO pizza;
 //metodo para poner la imagen de fondo DEFINITIVO

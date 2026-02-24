@@ -38,6 +38,13 @@ public class PedidoDAO implements IPedidoDAO {
     //lo puse asi pq al momento de hacer el pedido no sabes a que hora van a hacer la pizza ni cuando
     //van a cambiar el estado a menos de que har el registro del pedido se tome como cambio de estado
     //y de igual manera lo de la hora recoleccion
+
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Pedido agregarPedido(Pedido pedido) throws PersistenciaException {
         String comandoSQL = """
@@ -71,6 +78,12 @@ public class PedidoDAO implements IPedidoDAO {
         }                    
     }
     
+    /**
+     *
+     * @param numeroPedido
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Pedido consultarPedido(int numeroPedido) throws PersistenciaException {
         String comandoSQL = """
@@ -91,6 +104,12 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
 
+    /**
+     *
+     * @param numero_pedido
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Pedido cancelarPedido(int numero_pedido) throws PersistenciaException {
         String comandoSQL = """
@@ -112,6 +131,12 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
 
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException {
         return null;

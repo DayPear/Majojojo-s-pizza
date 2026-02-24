@@ -6,6 +6,7 @@ package persistencia.DAOs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,5 +53,36 @@ public class PedidoExpresDAO implements IPedidoExpressDAO{
         } catch (SQLException ex) {
             throw new PersistenciaException("Error al insertar pedido express: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public PedidoExpress consultarPedidoExpress(int id_express) throws PersistenciaException {
+        String comandoSQL = """
+                            select folio, PIN
+                            from express
+                            where id_express = ?;
+                            
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); 
+                PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, id_express);
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se encontró el Pedido Express con número:" + id_express);
+                    throw new PersistenciaException("No existe el pedido con el número proporcionado.");
+                }
+                return extraerPedido(rs);
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        }
+        
+    }
+    
+    private PedidoExpress extraerPedido(ResultSet rs) throws SQLException{
+        PedidoExpress pe = new PedidoExpress();
+        pe.setFolio(rs.getString("folio"));
+        pe.setPin(rs.getString("PIN"));
+        return pe;
     }
 }

@@ -19,5 +19,13 @@ public interface IPedidoExpressDAO {
      * @return
      * @throws PersistenciaException
      */
-    public PedidoExpress agregarPedidoExpress(PedidoExpress press) throws PersistenciaException;;
+    public PedidoExpress agregarPedidoExpress(PedidoExpress press) throws PersistenciaException;
+    
+    /**
+     *
+     * @param id_express
+     * @return
+     * @throws PersistenciaException
+     */
+    public PedidoExpress consultarPedidoExpress(int id_express) throws PersistenciaException;
 }
