@@ -10,12 +10,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import negocio.BOs.ClienteBO;
 import negocio.BOs.UsuarioBO;
 import negocio.DTOs.UsuarioNuevoDTO;
 import negocio.excepciones.NegocioException;
+import persistencia.DAOs.ClienteDAO;
 import persistencia.DAOs.IUsuarioDAO;
 import persistencia.DAOs.UsuarioDAO;
 import persistencia.conexion.ConexionBD;
+import persistencia.dominio.Cliente;
 import persistencia.dominio.Usuario;
 
 /**
@@ -30,6 +33,8 @@ public class PanelInicioSesion extends javax.swing.JPanel {
     public PanelInicioSesion() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +63,7 @@ public class PanelInicioSesion extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        jButton1.setText("Iniciar Sesión");
+        jButton1.setText("Crear Cliente");
         jButton1.setActionCommand("InicioSesion");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -73,7 +78,7 @@ public class PanelInicioSesion extends javax.swing.JPanel {
 
         jButton3.setBackground(new java.awt.Color(255, 153, 0));
         jButton3.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        jButton3.setText("Crear Cliente");
+        jButton3.setText("Iniciar Sesión");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -141,12 +146,13 @@ public class PanelInicioSesion extends javax.swing.JPanel {
                 return;
             }
             if (u != null) {
+                this.usuario = u;
                 Window ventana = SwingUtilities.getWindowAncestor(this);
     
                 if (ventana instanceof JFrame) {
                 JFrame framePrincipal = (JFrame) ventana;
 
-                PanelRealizarPedidoCliente nuevoPanel = new PanelRealizarPedidoCliente();
+                PanelRegistroCliente nuevoPanel = new PanelRegistroCliente(this.usuario.getId());
 
                 framePrincipal.getContentPane().removeAll();
                 framePrincipal.getContentPane().add(nuevoPanel);
@@ -179,18 +185,41 @@ public class PanelInicioSesion extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Window ventana = SwingUtilities.getWindowAncestor(this);
+        // aquí haré q si ya tienen un cliente ya no se registren y solo les abra 
+        // la pantalla inicio
+        String correoU = jTextField1.getText().trim();
+        String contra = new String(jPasswordField1.getPassword());
+        if (correoU == null || correoU.isBlank() || correoU.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El usuario no puede estar vacío.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (contra == null || contra.isBlank() || contra.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La contraseña no puede estar vacía.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        UsuarioNuevoDTO usuario = new UsuarioNuevoDTO(correoU, contra);
+        try {
+            Usuario u = usuarioBO.validarUsuario(usuario);
+            Cliente c = clienteBO.usuarioAsociadoCliente(u.getId());
+            if (c == null) {
+                JOptionPane.showMessageDialog(this, "No tiene un cliente asociado, favor de registrar uno", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Window ventana = SwingUtilities.getWindowAncestor(this);
 
-        if (ventana instanceof JFrame) {
-            JFrame framePrincipal = (JFrame) ventana;
+            if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
 
-            PanelRegistroCliente nuevoPanel = new PanelRegistroCliente();
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada();
 
-            framePrincipal.getContentPane().removeAll();
-            framePrincipal.getContentPane().add(nuevoPanel);
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
 
-            framePrincipal.revalidate();
-            framePrincipal.repaint();
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+            }
+        } catch (NegocioException ne) {
+            JOptionPane.showMessageDialog(this, "Fallos para acceder a la base", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -205,6 +234,8 @@ public class PanelInicioSesion extends javax.swing.JPanel {
     private java.awt.Label label2;
     // End of variables declaration//GEN-END:variables
     private final UsuarioBO usuarioBO = new UsuarioBO(new UsuarioDAO(new ConexionBD()));
+    private ClienteBO clienteBO = new ClienteBO(new ClienteDAO(new ConexionBD()));
+    private Usuario usuario;
 
 } 
 

@@ -57,7 +57,7 @@ public class ClienteDAO implements IClienteDAO{
     public Cliente validarIdUsuario(int id_cliente) throws PersistenciaException {
         String comandoSQL = """
                             select id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento 
-                            from clientes where id = ?
+                            from clientes where id_cliente = ?
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setInt(1, id_cliente);

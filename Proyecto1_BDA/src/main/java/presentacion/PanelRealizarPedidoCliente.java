@@ -3,8 +3,11 @@ package presentacion;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Window;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -255,6 +258,19 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+            if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada();
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+            }
     }//GEN-LAST:event_botonAtrasActionPerformed
 
 

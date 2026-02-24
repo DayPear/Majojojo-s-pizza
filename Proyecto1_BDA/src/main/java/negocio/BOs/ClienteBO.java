@@ -72,9 +72,10 @@ public class ClienteBO implements IClienteBO {
         } else {
             cli.setCodigo_postal(cliente.getCodigoP());
         }    
-        int dia = cliente.getFechaNacimiento().charAt(0) + cliente.getFechaNacimiento().charAt(1);
-        int mes = cliente.getFechaNacimiento().charAt(2) + cliente.getFechaNacimiento().charAt(3);
-        int anio = cliente.getFechaNacimiento().charAt(4) + cliente.getFechaNacimiento().charAt(5) + cliente.getFechaNacimiento().charAt(6) + cliente.getFechaNacimiento().charAt(7);
+        int dia = Integer.parseInt(cliente.getFechaNacimiento().substring(0, 2));
+        int mes = Integer.parseInt(cliente.getFechaNacimiento().substring(2, 4));
+        int anio = Integer.parseInt(cliente.getFechaNacimiento().substring(4, 8));
+
         LocalDate fecha = LocalDate.of(anio, mes, dia);
         if(fecha.isAfter(LocalDate.now())){
             LOG.log(Level.WARNING, "La fecha de nacimiento no puede ser a futuro.");
