@@ -41,9 +41,9 @@ public class PizzaDAO implements IPizzaDAO{
     public Pizza agregarPizza(Pizza pizza) throws PersistenciaException {
         String comandoSQL = """
                             insert into pizzas(
-                            	nombre, tamanio, descripcion, precio
+                            	nombre, tamanio, descripcion, precio, estado
                             )values(
-                            	?, ?, ?, ?
+                            	?, ?, ?, ?, ?
                             );
                             """;
         
@@ -53,6 +53,7 @@ public class PizzaDAO implements IPizzaDAO{
             ps.setString(2, pizza.getTamanio());
             ps.setString(3, pizza.getDescripcion());
             ps.setFloat(4, pizza.getPrecio());
+            ps.setString(0, pizza.getEstado());
             
             int filasReg = ps.executeUpdate();
             if(filasReg == 0){
@@ -82,7 +83,7 @@ public class PizzaDAO implements IPizzaDAO{
     public Pizza consultarPizza(int id_pizza) throws PersistenciaException{
         String comandoSQL = """
                             select
-                            	nombre, tamanio, descripcion, precio
+                            	nombre, tamanio, descripcion, precio, estado
                             from pizzas
                             where id_pizza = ?;
                             """;
@@ -98,8 +99,9 @@ public class PizzaDAO implements IPizzaDAO{
                 String tamanio = rs.getString("tamanio");
                 String descripcion = rs.getString("descripcion");
                 float precio = rs.getFloat("precio");
+                String estado = rs.getString("estado");
                 
-                Pizza piz = new Pizza(id_pizza, nombre, tamanio, descripcion, precio);
+                Pizza piz = new Pizza(id_pizza, nombre, tamanio, descripcion, precio, estado);
                 return piz;
             }
             
@@ -107,7 +109,24 @@ public class PizzaDAO implements IPizzaDAO{
             throw new PersistenciaException(ex.getMessage());
         }
     }
-
+    
+    @Override
+    public Pizza cancelarPizza(int id_pizza) throws PersistenciaException {
+        String comandoSQL = """
+                            update pizzas set estado = "No Disponible" where id_pizza = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, id_pizza);
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se cambió el estado de la pizza.");
+                throw new PersistenciaException("No se quitó del catálogo");
+            }
+            return consultarPizza(id_pizza);
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
     
     
 }

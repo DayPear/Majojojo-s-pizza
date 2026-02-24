@@ -4,10 +4,19 @@
  */
 package negocio.BOs;
 
+import negocio.DTOs.PizzaNuevaDTO;
+import negocio.excepciones.NegocioException;
+import persistencia.dominio.Pizza;
+
 /**
  *
  * @author maria
  */
 public interface IPizzaBO {
     
+    Pizza registrarPizza(PizzaNuevaDTO pizza) throws NegocioException;
+    
+    Pizza consultarPizza(PizzaNuevaDTO pizza) throws NegocioException;
+    
+    Pizza cancelarPizza(PizzaNuevaDTO pizza) throws NegocioException;
 }
