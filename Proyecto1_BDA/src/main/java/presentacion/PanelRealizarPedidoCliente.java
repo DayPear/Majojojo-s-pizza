@@ -6,8 +6,13 @@ import java.awt.Image;
 import java.awt.Window;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import negocio.excepciones.NegocioException;
+import persistencia.DAOs.PizzaDAO;
+import persistencia.conexion.ConexionBD;
+import persistencia.dominio.Pizza;
 
 /**
  *
@@ -233,11 +238,24 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
     private void botonLaDuranguenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDuranguenseActionPerformed
         // TODO add your handling code here:
-  
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_botonLaDuranguenseActionPerformed
 
     private void botonLaDoblePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDoblePActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_botonLaDoblePActionPerformed
 
     private void botonReinaIsabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReinaIsabelActionPerformed
@@ -287,7 +305,8 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
     private javax.swing.JPanel panelBotonesPizzas;
     private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables
-
+    //private PizzaBO pizzasBO = new PizzaBO(new PizzaDAO(new ConexionBD()));
+    
     //metodo para poner la imagen de fondo 
     public void setImagenFondo(String ruta_imagen, JPanel panel1) {
         panel1.setOpaque(false);

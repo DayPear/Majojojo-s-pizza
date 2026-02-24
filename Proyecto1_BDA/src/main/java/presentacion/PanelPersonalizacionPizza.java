@@ -7,6 +7,23 @@ package presentacion;
 import java.awt.Image;
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import negocio.BOs.PedidoBO;
+import negocio.BOs.PizzaBO;
+import negocio.BOs.ProgramadoBO;
+import negocio.DTOs.PedidoNuevoDTO;
+import negocio.DTOs.ProgramadoNuevoDTO;
+import negocio.excepciones.NegocioException;
+import persistencia.DAOs.PedidoDAO;
+import persistencia.DAOs.PizzaDAO;
+import persistencia.DAOs.ProgramadoDAO;
+import persistencia.conexion.ConexionBD;
+import persistencia.dominio.Pedido;
+import persistencia.dominio.Pizza;
+import persistencia.dominio.Programado;
 
 /**
  *
@@ -23,6 +40,12 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
         //imagen de fondo
         setImagenFondo("src/main/java/imagenes/logo.png", PanelFondo);
         
+    }
+    
+    public PanelPersonalizacionPizza(int id_pizza){
+        initComponents();
+        setImagenFondo("src/main/java/imagenes/logo.png", PanelFondo);
+        this.idPizza = id_pizza;
     }
 
     /**
@@ -49,6 +72,7 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
         jButtonAtras = new javax.swing.JButton();
         jButtonTerminar = new javax.swing.JButton();
         jButtonAgragar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(700, 500));
         setMinimumSize(new java.awt.Dimension(700, 500));
@@ -96,26 +120,30 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
         );
 
         LblDesTitulo.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
-        LblDesTitulo.setText("<html><body style 'whidh: 200px'>queso gratinado y  alacranes  sazonados que aportan un toque intenso y  crujiente.</body></html>");
         LblDesTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         LblDesTutulo.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         LblDesTutulo.setForeground(new java.awt.Color(152, 4, 4));
-        LblDesTutulo.setText("descripcion:");
+        LblDesTutulo.setText("descripción:");
 
         LblNotas.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         LblNotas.setText("Notas:");
 
         ComboBoxTamanio.setBackground(new java.awt.Color(1, 114, 160));
         ComboBoxTamanio.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        ComboBoxTamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chica", "mediana", "grande" }));
+        ComboBoxTamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chica", "Mediana", "Grande" }));
         ComboBoxTamanio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ComboBoxTamanio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxTamanioActionPerformed(evt);
+            }
+        });
 
         LblTamaño1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         LblTamaño1.setText("Tamaño:");
 
         LblPrecio1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
-        LblPrecio1.setText("precio:  $180");
+        LblPrecio1.setText("precio:  $");
 
         TextFieldNotas.setBackground(new java.awt.Color(1, 114, 160));
         TextFieldNotas.setFont(new java.awt.Font("Bauhaus 93", 0, 12)); // NOI18N
@@ -128,7 +156,7 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
 
         jButtonAtras.setBackground(new java.awt.Color(152, 4, 4));
         jButtonAtras.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        jButtonAtras.setText("Atras");
+        jButtonAtras.setText("Atrás");
         jButtonAtras.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jButtonTerminar.setBackground(new java.awt.Color(152, 4, 4));
@@ -151,6 +179,9 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel1.setText("0.00");
+
         javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
         PanelFondo.setLayout(PanelFondoLayout);
         PanelFondoLayout.setHorizontalGroup(
@@ -172,7 +203,7 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
                 .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelFondoLayout.createSequentialGroup()
                         .addComponent(LblTamaño1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblDesTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboBoxTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,12 +214,14 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
                                 .addComponent(jButtonAgragar1)
                                 .addGap(31, 31, 31)
                                 .addComponent(jButtonTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelFondoLayout.createSequentialGroup()
+                                .addComponent(LblNotas)
+                                .addGap(18, 18, 18)
+                                .addComponent(TextFieldNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelFondoLayout.createSequentialGroup()
                                 .addComponent(LblPrecio1)
-                                .addGroup(PanelFondoLayout.createSequentialGroup()
-                                    .addComponent(LblNotas)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TextFieldNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel1)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(PanelFondoLayout.createSequentialGroup()
@@ -212,11 +245,12 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
                         .addComponent(LblDesTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelFondoLayout.createSequentialGroup()
-                                .addComponent(ComboBoxTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(LblPrecio1))
+                            .addComponent(ComboBoxTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LblTamaño1))
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblPrecio1)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblNotas)
@@ -252,15 +286,62 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
 
     private void TextFieldNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNotasActionPerformed
         // TODO add your handling code here:
+        TextFieldNotas.setText("");
+        try{
+            Pizza p = pizzasBO.consultarPizza(idPizza);
+            LblDesTitulo.setText(p.getDescripcion());
+            ComboBoxTamanio.setActionCommand(p.getTamanio());
+            jLabel1.setText(p.getPrecio());
+        } catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Problemas para consultar la base de datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_TextFieldNotasActionPerformed
 
     private void jButtonTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarActionPerformed
         // TODO add your handling code here:
+        String tamanio = ComboBoxTamanio.getActionCommand().trim();
+        String notas = TextFieldNotas.getText();
+        
+        if(notas == null || notas.isBlank() || notas.isEmpty()){
+            notas = null;
+        }
+        try{
+            Pedido p = pedidoBO.insertarPedido(new PedidoNuevoDTO());
+            if(p == null){
+                JOptionPane.showMessageDialog(this, "No se agregó el pedido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // falta ver q show con el cupón
+            Programado pr = programadoBO.insertarProgramado(new ProgramadoNuevoDTO(p.getId_cliente(), null));
+            if(p != null){
+                Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada();
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+                }
+            }
+        } catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Falló al registrar el pedido.", "Error Pedido", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButtonTerminarActionPerformed
 
     private void jButtonAgragar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgragar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAgragar1ActionPerformed
+
+    private void ComboBoxTamanioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTamanioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxTamanioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -278,9 +359,15 @@ public class PanelPersonalizacionPizza extends javax.swing.JPanel {
     private javax.swing.JButton jButtonAgragar1;
     private javax.swing.JButton jButtonAtras;
     private javax.swing.JButton jButtonTerminar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
+    private PedidoBO pedidoBO = new PedidoBO(new PedidoDAO(new ConexionBD()));
+    private ProgramadoBO programadoBO = new ProgramadoBO(new ProgramadoDAO(new ConexionBD()));
+    private int idPizza;
+    private PizzaBO pizzasBO = new PizzaBO(new PizzaDAO(new ConexionBD()));
+    //private List<DetallesPedidos> subPedidos;
+    //private PizzaNuevoDTO pizza;
 //metodo para poner la imagen de fondo DEFINITIVO
     public void setImagenFondo(String ruta_imagen, JPanel panel1) {
         panel1.setOpaque(false);
