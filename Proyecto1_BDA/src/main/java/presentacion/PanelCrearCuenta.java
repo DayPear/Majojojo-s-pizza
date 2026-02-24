@@ -2,7 +2,17 @@
 package presentacion;
 
 import java.awt.Image;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import negocio.BOs.UsuarioBO;
+import negocio.DTOs.UsuarioNuevoDTO;
+import negocio.excepciones.NegocioException;
+import persistencia.DAOs.UsuarioDAO;
+import persistencia.conexion.ConexionBD;
+import persistencia.dominio.Usuario;
 
 /**
  *
@@ -48,27 +58,171 @@ public class PanelCrearCuenta extends javax.swing.JPanel {
         }
 
         ;
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordField2 = new javax.swing.JPasswordField();
 
+        setBackground(new java.awt.Color(153, 0, 0));
         setMaximumSize(new java.awt.Dimension(1000, 800));
         setMinimumSize(new java.awt.Dimension(1000, 800));
         setPreferredSize(new java.awt.Dimension(1000, 800));
+
+        PanelFondo.setBackground(new java.awt.Color(153, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel1.setText("Cree su cuenta:");
+
+        jLabel2.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel2.setText("Nombre(s):");
+
+        jTextField1.setBackground(new java.awt.Color(0, 102, 153));
+
+        jLabel3.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel3.setText("Apellido P: ");
+
+        jTextField2.setBackground(new java.awt.Color(0, 102, 153));
+
+        jLabel4.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel4.setText("Apellido M:");
+
+        jTextField3.setBackground(new java.awt.Color(0, 102, 153));
+
+        jLabel5.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel5.setText("Correo:");
+
+        jTextField4.setBackground(new java.awt.Color(0, 102, 153));
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel6.setText("Contraseña:");
+
+        jLabel7.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        jLabel7.setText("Confirmar;");
+
+        jButton1.setBackground(new java.awt.Color(255, 153, 0));
+        jButton1.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButton1.setText("Crear Usuario");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(255, 153, 0));
+        jButton2.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField1.setBackground(new java.awt.Color(0, 102, 153));
+
+        jPasswordField2.setBackground(new java.awt.Color(0, 102, 153));
 
         javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
         PanelFondo.setLayout(PanelFondoLayout);
         PanelFondoLayout.setHorizontalGroup(
             PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelFondoLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel7)
+                                .addGroup(PanelFondoLayout.createSequentialGroup()
+                                    .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(PanelFondoLayout.createSequentialGroup()
+                                            .addGap(8, 8, 8)
+                                            .addComponent(jLabel2)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jTextField1))
+                                        .addGroup(PanelFondoLayout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(32, 32, 32)
+                                    .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel5))))
+                            .addGroup(PanelFondoLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(184, 184, 184)))
+                        .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                            .addComponent(jPasswordField1)
+                            .addComponent(jPasswordField2))))
+                .addGap(246, 246, 246))
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelFondoLayout.setVerticalGroup(
             PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(144, 144, 144)
+                .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,10 +230,108 @@ public class PanelCrearCuenta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String nombres = jTextField1.getText().trim();
+        String apellidoP = jTextField2.getText().trim();
+        String apellidoM = jTextField3.getText().trim();
+        String correo = jTextField4.getText().trim();
+        String contra1 = new String(jPasswordField1.getPassword());
+        String contra2 = new String(jPasswordField2.getPassword());
+        
+        if(nombres == null || nombres.isBlank() || nombres.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Los nombre(s) no pueden estar vacíos", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(apellidoP == null || apellidoP.isBlank() || apellidoP.isEmpty()){
+            JOptionPane.showMessageDialog(this, "El apellido paterno no puede estar vacío", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(apellidoM == null || apellidoM.isBlank() || apellidoM.isEmpty()){
+            apellidoM = null;
+        }
+        if(correo == null || correo.isBlank() || correo.isEmpty()){
+            JOptionPane.showMessageDialog(this, "El correo no puede estar vacío", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(contra1 == null || contra1.isBlank() || contra1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "La contraseña no puede estar vacía", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(contra2 == null || contra2.isBlank() || contra2.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor confirme la contraseña", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(!contra2.equals(contra1)){
+            JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        UsuarioNuevoDTO usuario = new UsuarioNuevoDTO(nombres, apellidoP, apellidoM, "Cliente", correo, contra1);
+        try{
+            Usuario u = usuarioBO.registrarUsuario(usuario);
+            if(u == null){
+                JOptionPane.showMessageDialog(this, "No se pudo crear el usuario", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelInicioSesion nuevoPanel = new PanelInicioSesion();
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+                }
+        } catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al guardar el usuario en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelInicioSesion nuevoPanel = new PanelInicioSesion();
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+                }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelFondo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
+    private UsuarioBO usuarioBO = new UsuarioBO(new UsuarioDAO(new ConexionBD()));
 //metodo para poner la imagen de fondo 
     public void setImagenFondo(String ruta_imagen, JPanel panel1) {
         panel1.setOpaque(false);
