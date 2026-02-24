@@ -54,7 +54,6 @@ public class UsuarioDAO implements IUsuarioDAO{
                     LOG.warning("No se logró obtener el usuario con el id: "+id);
                     throw new PersistenciaException("No se pudo obtener el usuario.");
                 }
-                Integer idUsuario = rs.getInt("id_usuario");
                 String nombres = rs.getString("nombres");
                 String apellido_paterno = rs.getString("apellido_paterno");
                 String apellido_materno = rs.getString("apellido_paterno");
