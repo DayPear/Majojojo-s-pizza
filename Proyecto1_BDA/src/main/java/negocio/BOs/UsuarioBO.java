@@ -139,4 +139,5 @@ public class UsuarioBO implements IUsuarioBO {
             throw new NegocioException(pe.getMessage(), pe);
         }
     }
+    
 }

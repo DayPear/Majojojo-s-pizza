@@ -96,4 +96,19 @@ public class ClienteBO implements IClienteBO {
     public Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException {
         return null;
     }
+    
+    @Override
+    public Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException {
+        if(idUsuario < 1){
+            LOG.log(Level.SEVERE, "El ID del usuario no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID del usuario.");
+        }
+        try{
+            Cliente c = clienteDAO.validarIdUsuario(idUsuario);
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para consultar al usuario.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
 }

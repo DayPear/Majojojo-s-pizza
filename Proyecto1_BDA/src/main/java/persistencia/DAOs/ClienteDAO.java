@@ -5,7 +5,9 @@
 package persistencia.DAOs;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -57,8 +59,31 @@ public class ClienteDAO implements IClienteDAO{
     }
     
     @Override
-    public Cliente validarIdUsuario(Cliente cliente) throws PersistenciaException {
-        return null;
+    public Cliente validarIdUsuario(int id_cliente) throws PersistenciaException {
+        String comandoSQL = """
+                            select id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento 
+                            from clientes where id = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, id_cliente);
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.warning("No se logró asociar el cliente con el usuario de id: "+id_cliente);
+                    throw new PersistenciaException("No se pudo obtener el cliente asociado al usuario.");
+                }
+                Integer idCliente = rs.getInt("id_cliente");
+                String colonia = rs.getString("colonia");
+                String calle = rs.getString("calle");
+                String numero = rs.getString("numero");
+                String codigoP = rs.getString("codigo_postal");
+                Date fechaN = rs.getDate("fecha_nacimiento");
+                Cliente c = new Cliente(id_cliente, colonia, calle, numero, codigoP, fechaN);
+                return c;
+            }
+        
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
     
 }
