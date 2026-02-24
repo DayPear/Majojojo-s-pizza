@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author hp
+ * @author Piña
  */
 public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
@@ -58,6 +58,11 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
         boton8Hoyos = new javax.swing.JButton();
         botonInfantil = new javax.swing.JButton();
         botonAtras = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(1000, 800));
+        setMinimumSize(new java.awt.Dimension(100, 600));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1000, 800));
 
         PanelFondo.setMaximumSize(new java.awt.Dimension(800, 600));
         PanelFondo.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -204,7 +209,7 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
                 .addComponent(panelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(panelBotonesPizzas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(135, 135, 135)
                 .addComponent(botonAtras)
@@ -219,7 +224,7 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -267,7 +272,7 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
     private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables
 
-    //metodo para poner la imagen de fondo DEFINITIVO
+    //metodo para poner la imagen de fondo 
     public void setImagenFondo(String ruta_imagen, JPanel panel1) {
         panel1.setOpaque(false);
         try {
