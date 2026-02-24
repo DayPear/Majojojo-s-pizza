@@ -6,6 +6,7 @@ package negocio.BOs;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import negocio.DTOs.ProgramadoNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.IProgramadoDAO;
 import persistencia.dominio.Programado;
@@ -25,7 +26,7 @@ public class ProgramadoBO implements IProgramadoBO {
     }
     
     @Override
-    public Programado insertarProgramado(Programado programado) throws NegocioException {
+    public Programado insertarProgramado(ProgramadoNuevoDTO programado) throws NegocioException {
         if(programado == null){
             LOG.log(Level.WARNING, "El pedido programado no puede ser nulo.");
             throw new NegocioException("Pedido programado nulo.");
@@ -37,7 +38,7 @@ public class ProgramadoBO implements IProgramadoBO {
         }
         // lueo valido
         try{
-            Programado pro = programadoDAO.consultarProgramado(programado.getIdProgramado());
+            Programado pro = programadoDAO.agregarProgramado(new Programado(programado.getIdProgramado(), programado.getIdCupon()));
             if(pro == null){
                 LOG.log(Level.SEVERE, "No se pudo dar de alta en la base de datos.");
                 throw new NegocioException("Errores al meter el pedido programado a la base.");

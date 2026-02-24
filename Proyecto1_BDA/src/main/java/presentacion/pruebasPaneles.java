@@ -24,11 +24,8 @@ public class pruebasPaneles {
             ventana.setResizable(false);
 
             // Creamos una instancia del panel
-            PanelPersonalizacionPizza panelPP = new PanelPersonalizacionPizza();
-            PanelRealizarPedidoCliente panelRPC = new PanelRealizarPedidoCliente();
-            PanelRegistroUsuario panelRU = new PanelRegistroUsuario();
-            panelRPC.setPreferredSize(new Dimension(1000, 800));
-            panelPP.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
+            PanelCrearCuenta panel = new PanelCrearCuenta();
+            panel.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
             //ventana.add(panelRPC);
             //ventana.add(panelPP);
             ventana.pack(); //ajusta la ventana al tamaño del panel
@@ -37,7 +34,7 @@ public class pruebasPaneles {
             ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
            // ventana.add(panelPP); 
             //ventana.add(panelRPC);
-            ventana.add(panelRU);
+            ventana.add(panel);
             ventana.setSize(1000, 800); 
             ventana.setLocationRelativeTo(null); 
             ventana.setVisible(true); 

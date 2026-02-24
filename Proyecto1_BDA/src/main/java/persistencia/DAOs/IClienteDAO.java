@@ -15,5 +15,5 @@ import persistencia.excepciones.PersistenciaException;
 public interface IClienteDAO {
     public Cliente agregarCliente(Cliente cliente)throws PersistenciaException;
     
-    Cliente validarIdUsuario(Cliente cliente) throws PersistenciaException;
+    Cliente validarIdUsuario(int idCliente) throws PersistenciaException;
 }

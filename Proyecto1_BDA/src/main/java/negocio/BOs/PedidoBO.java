@@ -6,6 +6,7 @@ package negocio.BOs;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.IPedidoDAO;
 import persistencia.dominio.Pedido;
@@ -25,26 +26,23 @@ public class PedidoBO implements IPedidoBO {
     }
     
     @Override
-    public Pedido insertarPedido(Pedido pedido) throws NegocioException {
+    public Pedido insertarPedido(PedidoNuevoDTO pedido) throws NegocioException {
         if(pedido == null){
             LOG.log(Level.WARNING, "El pedido no puede ser nulo.");
             throw new NegocioException("El pedido es nulo.");
         }
-        if(pedido.getNumero_pedido() != null){
-            LOG.log(Level.WARNING, "No se puede registrar un pedido con ID previo.");
-            throw new NegocioException("El pedido no se puede registrar con ID.");
-        }
         if(pedido.getNotas() == null || pedido.getNotas().isEmpty() || pedido.getNotas().isBlank()){
             pedido.setNotas("S/N");
         }
+        Pedido ped = new Pedido(pedido.getNotas(), pedido.getCosto(), pedido.getId_cliente());
         try{
-            Pedido ped = this.pedidoDAO.agregarPedido(pedido);
-            if(ped == null){
+            Pedido p = this.pedidoDAO.agregarPedido(ped);
+            if(p == null){
                 LOG.warning("No se pudo registrar el pedido a la base de datos.");
                 throw new NegocioException("No se insertó el pedido a la base.");
             }
             LOG.log(Level.INFO, "Se insertó el pedido a la base.");
-            return ped;
+            return p;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas con la insersión del pedido.");
             throw new NegocioException(pe.getMessage(), pe);
@@ -72,18 +70,18 @@ public class PedidoBO implements IPedidoBO {
     }
     
     @Override
-    public Pedido cancelarPedido(Pedido pedido) throws NegocioException {
-        if(pedido.getNumero_pedido() < 1){
+    public Pedido cancelarPedido(PedidoNuevoDTO pedido) throws NegocioException {
+        if(pedido.getIdPedido() < 1){
             LOG.log(Level.WARNING, "El número de pedido no puede ser menor a 1.");
             throw new NegocioException("El número de pedido es inválido.");
         }
         // validaciones
-        if(pedido.getEstado_actual() != "Pendiente" || pedido.getEstado_actual() != "Listo"){
+        if(pedido.getEstado_nuevo() != "Pendiente" || pedido.getEstado_nuevo() != "Listo"){
             LOG.log(Level.WARNING, "Dado al estado actual del pedido, este ya no puede ser cancelado.");
             throw new NegocioException("No se pudo cancelar el pedido.");
         }
         try{
-            Pedido pe = this.pedidoDAO.cancelarPedido(pedido.getNumero_pedido());
+            Pedido pe = this.pedidoDAO.cancelarPedido(pedido.getIdPedido());
             if(pe == null){     
                LOG.warning("No se pudo cancelar el pedido.");
                throw new NegocioException("Falló al cancelar pedido.");  

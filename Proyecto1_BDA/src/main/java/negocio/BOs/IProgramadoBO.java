@@ -4,6 +4,7 @@
  */
 package negocio.BOs;
 
+import negocio.DTOs.ProgramadoNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.dominio.Programado;
 
@@ -13,7 +14,7 @@ import persistencia.dominio.Programado;
  */
 public interface IProgramadoBO {
     
-    public Programado insertarProgramado(Programado programado) throws NegocioException;
+    public Programado insertarProgramado(ProgramadoNuevoDTO programado) throws NegocioException;
     
     public Programado cancelarProgramado(int numeroProgramado) throws NegocioException;
     
