@@ -4,6 +4,7 @@
  */
 package presentacion;
 
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -23,14 +24,20 @@ public class pruebasPaneles {
             ventana.setResizable(false);
 
             // Creamos una instancia del panel
-            PanelPersonalizacionPizza panelTonto = new PanelPersonalizacionPizza();
-            panelTonto.setPreferredSize(new java.awt.Dimension(1000, 800)); //tamaño sugerido
-            ventana.add(panelTonto);
+            PanelPersonalizacionPizza panelPP = new PanelPersonalizacionPizza();
+            PanelRealizarPedidoCliente panelRPC = new PanelRealizarPedidoCliente();
+            PanelRegistroUsuario panelRU = new PanelRegistroUsuario();
+            panelRPC.setPreferredSize(new Dimension(1000, 800));
+            panelPP.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
+            //ventana.add(panelRPC);
+            //ventana.add(panelPP);
             ventana.pack(); //ajusta la ventana al tamaño del panel
 
             // Configuraciones
             ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-            ventana.add(panelTonto); 
+           // ventana.add(panelPP); 
+            //ventana.add(panelRPC);
+            ventana.add(panelRU);
             ventana.setSize(1000, 800); 
             ventana.setLocationRelativeTo(null); 
             ventana.setVisible(true); 

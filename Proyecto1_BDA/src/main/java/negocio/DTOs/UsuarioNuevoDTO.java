@@ -29,6 +29,11 @@ public class UsuarioNuevoDTO {
         this.contra = contra;
     }
 
+    public UsuarioNuevoDTO(String correo, String contra){
+        this.correo = correo;
+        this.contra = contra;
+    }
+    
     public String getNombres() {
         return nombres;
     }

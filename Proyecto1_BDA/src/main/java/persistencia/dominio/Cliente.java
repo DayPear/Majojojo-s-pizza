@@ -4,6 +4,7 @@
  */
 package persistencia.dominio;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 /**
@@ -16,12 +17,12 @@ public class Cliente {
     private String calle;
     private String numero;
     private String codigo_postal;
-    private LocalDateTime fecha_nacimiento;
+    private Date fecha_nacimiento;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, LocalDateTime fecha_nacimiento) {
+    public Cliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, Date fecha_nacimiento) {
         this.id_cliente = id_cliente;
         this.colonia = colonia;
         this.calle = calle;
@@ -70,11 +71,11 @@ public class Cliente {
         this.codigo_postal = codigo_postal;
     }
 
-    public LocalDateTime getFecha_nacimiento() {
+    public Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(LocalDateTime fecha_nacimiento) {
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 

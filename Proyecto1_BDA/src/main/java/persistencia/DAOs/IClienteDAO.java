@@ -13,5 +13,7 @@ import persistencia.excepciones.PersistenciaException;
  * @author Dayanara Peralta G
  */
 public interface IClienteDAO {
-    public Cliente agregarCliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, LocalDateTime fecha_nacimiento)throws PersistenciaException ;
+    public Cliente agregarCliente(Cliente cliente)throws PersistenciaException;
+    
+    Cliente validarIdUsuario(Cliente cliente) throws PersistenciaException;
 }

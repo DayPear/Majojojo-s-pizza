@@ -19,7 +19,7 @@ public class ConexionBD implements IConexionBD {
     //Crdenciales
     private final String cadenaConexion = "jdbc:mysql://localhost:3306/pizzeria";
     private final String usuario = "root";
-    private final String contrasenia = "PitoPitillo1*";
+    private final String contrasenia = "4$h31ji85";
     private static final Logger LOG = Logger.getLogger(ConexionBD.class.getName());
     
     /**
