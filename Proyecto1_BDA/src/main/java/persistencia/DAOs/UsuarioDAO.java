@@ -70,7 +70,7 @@ public class UsuarioDAO implements IUsuarioDAO{
     
     @Override
     public Usuario agregarUsuario(Usuario usuario) throws PersistenciaException {
-        return null;
+        String comandoSQL = 
     }
     
 }

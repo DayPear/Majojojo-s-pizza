@@ -26,7 +26,7 @@ public class Proyecto1_BDA {
             //Connection cone = conexion.crearConexion();
             IConexionBD cone = new ConexionBD();
             PedidoDAO ped = new PedidoDAO(cone);
-            Pedido pe = new Pedido("Maziso de queso", 199.99f, "Pendiente",null, 3);
+            Pedido pe = new Pedido("Macizo de queso", 199.99f, 3);
             /*if(cone != null){
                 System.out.println("Conexion exitosa");
             }*/
