@@ -168,7 +168,7 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
         );
 
         botonAtras.setBackground(new java.awt.Color(216, 162, 60));
-        botonAtras.setText("atras");
+        botonAtras.setText("Regresar");
         botonAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAtrasActionPerformed(evt);

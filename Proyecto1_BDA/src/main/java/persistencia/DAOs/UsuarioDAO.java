@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
@@ -53,7 +54,7 @@ public class UsuarioDAO implements IUsuarioDAO{
                     LOG.warning("No se logró obtener el usuario con el id: "+id);
                     throw new PersistenciaException("No se pudo obtener el usuario.");
                 }
-                Integer idUsuario = rs.getInt("id");
+                Integer idUsuario = rs.getInt("id_usuario");
                 String nombres = rs.getString("nombres");
                 String apellido_paterno = rs.getString("apellido_paterno");
                 String apellido_materno = rs.getString("apellido_paterno");
@@ -71,10 +72,10 @@ public class UsuarioDAO implements IUsuarioDAO{
     @Override
     public Usuario agregarUsuario(Usuario usuario) throws PersistenciaException {
         String comandoSQL = """
-                            insert into usuarios(nombres, apellido_paterno, apellido_materno, rol, correo, contra
+                            insert into usuarios(nombres, apellido_paterno, apellido_materno, rol, correo, contrasenia)
                             values (?, ?, ?, ?, ?, ?);
                             """;
-        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)) {
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, usuario.getNombres());
             ps.setString(2, usuario.getApellido_paterno());
             ps.setString(3, usuario.getApellido_materno());
@@ -88,7 +89,10 @@ public class UsuarioDAO implements IUsuarioDAO{
                 throw new PersistenciaException("Problemas para la insersión del usuario.");
             }
             try(ResultSet rs = ps.getGeneratedKeys()){
-                usuario.setId(rs.getInt("id_usuario"));
+                if(rs.next()){
+                   int id = rs.getInt(1);
+                   usuario.setId(id);
+                }
                 return usuario;
             }
         } catch (SQLException ex) {
@@ -99,8 +103,8 @@ public class UsuarioDAO implements IUsuarioDAO{
     @Override
     public Usuario validarUsuario(Usuario usuario) throws PersistenciaException {
         String comandoSQL = """
-                            select id_usuario, nombres, apellido_paterno, apellido_materno, rol, correo, contra
-                            from usuarios where correo = ? and contra = ?
+                            select id_usuario, nombres, apellido_paterno, apellido_materno, rol, correo, contrasenia
+                            from usuarios where correo = ? and contrasenia = ?
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setString(1, usuario.getCorreo());
@@ -116,7 +120,7 @@ public class UsuarioDAO implements IUsuarioDAO{
                 String apellidoM = rs.getString("apellido_materno");
                 String rol = rs.getString("rol");
                 String correo = rs.getString("correo");
-                Integer contra = rs.getInt("contra");
+                Integer contra = rs.getInt("contrasenia");
                 return new Usuario(id, nombres, apellidoP, apellidoM, rol, correo, contra);
             }
         } catch (SQLException ex) {

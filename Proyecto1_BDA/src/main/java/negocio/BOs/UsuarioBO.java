@@ -95,7 +95,7 @@ public class UsuarioBO implements IUsuarioBO {
             LOG.log(Level.WARNING, "El usuario no puede ser nulo.");
             throw new NegocioException("Error con el usuario, es nulo.");
         }
-        if(!usuario.getCorreo().matches("[A-Za-z0-9-_.+@A-za-z.]")){
+        if(!usuario.getCorreo().trim().matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")){
             LOG.log(Level.WARNING, "El correo no corresponde con el formato adecuado.");
             throw new NegocioException("Error con el correo del usuario.");
         } else {
@@ -105,7 +105,7 @@ public class UsuarioBO implements IUsuarioBO {
             LOG.log(Level.WARNING, "La contraseña no puede estar vacía.");
             throw new NegocioException("Contraseña inválida.");
         } else {
-            usu.setContrasenia(usuario.getContra().hashCode());
+            usu.setContrasenia(usuario.getContra().trim().hashCode());
         }
         try{
             Usuario u = usuarioDAO.validarUsuario(usu);
