@@ -12,5 +12,20 @@ import persistencia.excepciones.PersistenciaException;
  * @author Dayanara Peralta G
  */
 public interface ITelefonoClienteDAO {
+
+    /**
+     *
+     * @param tel
+     * @return
+     * @throws PersistenciaException
+     */
     public TelefonoCliente agregarTelefonoCliente(TelefonoCliente tel) throws PersistenciaException;
+    
+    /**
+     *
+     * @param id_telefono
+     * @return
+     * @throws PersistenciaException
+     */
+    public TelefonoCliente consultarTelefonoCliente(int id_telefono) throws PersistenciaException;
 }
