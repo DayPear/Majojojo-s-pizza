@@ -24,10 +24,20 @@ public class PedidoBO implements IPedidoBO {
     private final IPedidoDAO pedidoDAO;
     private IEstadoPedidoDAO estadoPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
+
+    /**
+     *
+     * @param pedidoDAO
+     */
+    public PedidoBO(IPedidoDAO pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
+    }
+    
     
     /**
      *
      * @param pedido
+     * @param estadoPed
      */
     public PedidoBO(IPedidoDAO pedido, IEstadoPedidoDAO estadoPed){
         this.pedidoDAO = pedido;
