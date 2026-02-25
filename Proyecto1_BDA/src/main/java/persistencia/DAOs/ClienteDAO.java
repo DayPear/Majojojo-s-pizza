@@ -131,4 +131,26 @@ public class ClienteDAO implements IClienteDAO{
         }
     }
     
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws PersistenciaException {
+        String comandoSQL = """
+                            update clientes set colonia = ?, calle = ?, numero = ?, codigo_postal = ?
+                            where id_cliente = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setString(1, cliente.getColonia());
+            ps.setString(2, cliente.getCalle());
+            ps.setString(3, cliente.getNumero());
+            ps.setString(4, cliente.getCodigo_postal());
+            ps.setInt(4, cliente.getId_cliente());
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo actualizar al cliente.");
+                throw new PersistenciaException("Fallo al actualizar el cliente.");
+            }
+            return validarIdUsuario(cliente.getId_cliente());
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
 }

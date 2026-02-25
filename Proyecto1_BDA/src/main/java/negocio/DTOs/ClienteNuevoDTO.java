@@ -33,6 +33,14 @@ public class ClienteNuevoDTO {
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
     }
+
+    public ClienteNuevoDTO(Integer id, String colonia, String calle, String numero, String codigoP) {
+        this.id = id;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
+        this.codigoP = codigoP;
+    }
     
     public ClienteNuevoDTO(String colonia, String calle, String numero, String codigoP, String fechaNacimiento, String estado) {
         this.colonia = colonia;

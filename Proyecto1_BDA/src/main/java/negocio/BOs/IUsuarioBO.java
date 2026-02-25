@@ -39,4 +39,6 @@ public interface IUsuarioBO {
     Usuario consultarUsuario(int idUsuario) throws NegocioException;
     
     //boolean usuarioAsociadoEmpleado(int idUsuario) throws NegocioException;
+    
+    Usuario actualizarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
 }

@@ -41,6 +41,12 @@ public class UsuarioNuevoDTO {
         this.contra = contra;
     }
 
+    public UsuarioNuevoDTO(String nombres, String apellidoP, String apellidoM) {
+        this.nombres = nombres;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
+    }
+    
     /**
      *
      * @param correo

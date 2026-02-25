@@ -27,4 +27,6 @@ public interface IClienteDAO {
     Cliente desactivarCliente(int idCliente) throws PersistenciaException;
     
     Cliente activarCliente(int idCliente) throws PersistenciaException;
+    
+    Cliente actualizarCliente(Cliente cliente) throws PersistenciaException;
 }
