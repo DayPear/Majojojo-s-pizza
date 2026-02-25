@@ -93,7 +93,16 @@ public class ClienteBO implements IClienteBO {
         }
         Date fechaBD = Date.valueOf(fecha);
         cli.setFecha_nacimiento(fechaBD);
-        // falta un método q valide el id del usuario
+        if(cliente.getEstado() == null || cliente.getEstado().isBlank() || cliente.getEstado().isEmpty()){
+            LOG.log(Level.WARNING, "El estado no puede ser nulo/vacío.");
+            throw new NegocioException("Estado inválido.");
+        }
+        if(cliente.getEstado() != "Activo" && cliente.getEstado() != "Inactivo"){
+            LOG.log(Level.WARNING, "El estado del cliente solo puede ser Activo o Inactivo.");
+            throw new NegocioException("Estado inválido.");
+        } else {
+            cli.setEstado(cliente.getEstado());
+        }
         try{
             Cliente c = clienteDAO.agregarCliente(cli);
             return c;
@@ -110,17 +119,6 @@ public class ClienteBO implements IClienteBO {
      * @throws NegocioException
      */
     @Override
-    public Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException {
-        return null;
-    }
-    
-    /**
-     *
-     * @param idUsuario
-     * @return
-     * @throws NegocioException
-     */
-    @Override
     public Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException {
         if(idUsuario < 1){
             LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
@@ -130,11 +128,49 @@ public class ClienteBO implements IClienteBO {
             Cliente c = clienteDAO.validarIdUsuario(idUsuario);
             if(c == null){
                 LOG.log(Level.WARNING, "No se pudo encontrar un usuario asociado al cliente.");
-                throw new NegocioException("");
+                throw new NegocioException("Error en la consulta.");
             }
             return c;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas para consultar al usuario.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente desactivarCliente(int idUsuario) throws NegocioException {
+        if(idUsuario < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID.");
+        }
+        try{
+            Cliente c = clienteDAO.desactivarCliente(idUsuario);
+            if (c == null){
+                LOG.log(Level.WARNING, "No se pudo desactivar al cliente.");
+                throw new NegocioException("Error en la consulta.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para desactivar al usuario.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente activarCliente(int idUsuario) throws NegocioException {
+        if(idUsuario < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID.");
+        }
+        try{
+            Cliente c = clienteDAO.activarCliente(idUsuario);
+            if (c == null){
+                LOG.log(Level.WARNING, "No se pudo activar al cliente.");
+                throw new NegocioException("Error en la consulta.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para activar al usuario.");
             throw new NegocioException(pe.getMessage(), pe);
         }
     }

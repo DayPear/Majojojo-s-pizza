@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
 import persistencia.dominio.Cliente;
@@ -35,9 +36,9 @@ public class ClienteDAO implements IClienteDAO{
     public Cliente agregarCliente(Cliente cliente) throws PersistenciaException {
         String comandoSQL =     """
                                 insert into clientes (
-                                    id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento
+                                    id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento, estado
                                 ) values (
-                                    ?, ?, ?, ?, ?, ?
+                                    ?, ?, ?, ?, ?, ?, ?
                                 );
                                 """;
         try(Connection cone = this.conexion.crearConexion();
@@ -47,7 +48,8 @@ public class ClienteDAO implements IClienteDAO{
             ps.setString(3, cliente.getCalle());
             ps.setString(4, cliente.getNumero());
             ps.setString(5, cliente.getCodigo_postal());
-            ps.setDate(6, cliente.getFecha_nacimiento());      
+            ps.setDate(6, cliente.getFecha_nacimiento()); 
+            ps.setString(7, cliente.getEstado());
             int filasReg = ps.executeUpdate();
             if (filasReg != 1){
                 LOG.warning("No se pudo agregar el cliente.");
@@ -68,7 +70,7 @@ public class ClienteDAO implements IClienteDAO{
     @Override
     public Cliente validarIdUsuario(int id_cliente) throws PersistenciaException {
         String comandoSQL = """
-                            select id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento 
+                            select id_cliente, colonia, calle, numero, codigo_postal, fecha_nacimiento, estado
                             from clientes where id_cliente = ?
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
@@ -84,9 +86,46 @@ public class ClienteDAO implements IClienteDAO{
                 String numero = rs.getString("numero");
                 String codigoP = rs.getString("codigo_postal");
                 Date fechaN = rs.getDate("fecha_nacimiento");
-                Cliente c = new Cliente(id_cliente, colonia, calle, numero, codigoP, fechaN);
+                String estado = rs.getString("estado");
+                Cliente c = new Cliente(id_cliente, colonia, calle, numero, codigoP, fechaN, estado);
                 return c;
             }        
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Cliente desactivarCliente(int idCliente) throws PersistenciaException {
+        String comandoSQL = """
+                            update clientes set estado = 'Inactivo' where id = ? and estado = 'Activo'
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, idCliente);
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo desactivar al cliente.");
+                throw new PersistenciaException("No se desactivó el cliente.");
+            }
+            return validarIdUsuario(idCliente);
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Cliente activarCliente(int idCliente) throws PersistenciaException {
+         String comandoSQL = """
+                            update clientes set estado = 'Activo' where id = ? and estado = 'Inactivo'
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, idCliente);
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se pudo desactivar al cliente.");
+                throw new PersistenciaException("No se desactivó el cliente.");
+            }
+            return validarIdUsuario(idCliente);
         } catch(SQLException ex){
             throw new PersistenciaException(ex.getMessage());
         }

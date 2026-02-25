@@ -29,7 +29,7 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
         initComponents();
     }
     
-    public PanelRegistroCliente(int id){
+    public PanelRegistroCliente(Integer id){
         initComponents();
         this.idUsuario = id;
     }
@@ -272,7 +272,7 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Formato inválido para código postal, solo pueden ser digítos", "Validación", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        ClienteNuevoDTO cliente = new ClienteNuevoDTO(idUsuario, colonia, calle, numero, codigoP, fechaN);
+        ClienteNuevoDTO cliente = new ClienteNuevoDTO(idUsuario, colonia, calle, numero, codigoP, fechaN, "Activo");
         try{
             Cliente c = clienteBO.registrarCliente(cliente);
             if(c == null){
@@ -342,6 +342,6 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
     private Usuario usuario;
-    private int idUsuario;
+    private Integer idUsuario;
     private ClienteBO clienteBO = new ClienteBO(new ClienteDAO(new ConexionBD()));
 }
