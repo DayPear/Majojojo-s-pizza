@@ -50,33 +50,33 @@ public class ClienteBO implements IClienteBO {
         } else {
             cli.setId_cliente(cliente.getId());
         }
-        if(cliente.getColonia().trim().length() > 50){
+        if(cliente.getColonia().length() > 50){
             LOG.log(Level.WARNING, "El nombre de la colonia está muy largo, no puede pasar de 50 carácteres.");
             throw new NegocioException("Colonia inválida.");
         } else {
             cli.setColonia(cliente.getColonia());
         }
-        if(cliente.getCalle().trim().length() > 50){
+        if(cliente.getCalle().length() > 50){
             LOG.log(Level.WARNING, "El nombre de la calle está muy largo, no puede pasar de 50 carácteres.");
             throw new NegocioException("Calle inválida.");
         } else {
             cli.setCalle(cliente.getCalle());
         }
-        if(cliente.getNumero().trim().length() > 5){
+        if(cliente.getNumero().length() > 5){
             LOG.log(Level.WARNING, "El número de casa está muy largo, no puede pasar de 5 digítos.");
             throw new NegocioException("Número de casa inválido.");
         }
-        if(!cliente.getNumero().trim().matches("\\d+")){
+        if(!cliente.getNumero().matches("\\d+")){
             LOG.log(Level.WARNING, "El número de casa solo puede contener digítos.");
             throw new NegocioException("Número de casa inválido..");
         } else {
             cli.setNumero(cliente.getNumero());
         }
-        if(cliente.getCodigoP().trim().length() > 8){
+        if(cliente.getCodigoP().length() > 8){
             LOG.log(Level.WARNING, "El código postal está muy largo, no puede pasar de 8 dígítos.");
             throw new NegocioException("Código postal inválido.");
         }
-        if(!cliente.getCodigoP().trim().matches("\\d+")){
+        if(!cliente.getCodigoP().matches("\\d+")){
             LOG.log(Level.WARNING, "El código postal solo puede contener digítos.");
             throw new NegocioException("Código postal inválido.");
         } else {
@@ -151,7 +151,7 @@ public class ClienteBO implements IClienteBO {
             }
             return c;
         } catch(PersistenciaException pe){
-            LOG.log(Level.WARNING, "Problemas para desactivar al usuario.");
+            LOG.log(Level.WARNING, "Problemas para desactivar al cliente.");
             throw new NegocioException(pe.getMessage(), pe);
         }
     }
@@ -170,7 +170,65 @@ public class ClienteBO implements IClienteBO {
             }
             return c;
         } catch(PersistenciaException pe){
-            LOG.log(Level.WARNING, "Problemas para activar al usuario.");
+            LOG.log(Level.WARNING, "Problemas para activar al cliente.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente actualizarCliente(ClienteNuevoDTO cliente) throws NegocioException {
+        Cliente cli = new Cliente();
+        if(cliente == null){
+            LOG.log(Level.WARNING, "No se puede validar el cliente si está vacío.");
+            throw new NegocioException("Cliente nulo.");
+        }
+        if(cliente.getId() < 0 || cliente.getId() == null){
+            LOG.log(Level.WARNING, "No se puede actualizar el cliente si no tiene un ID.");
+            throw new NegocioException("Cliente sin ID.");
+        } else {
+            cli.setId_cliente(cliente.getId());
+        }
+        if(cliente.getColonia().length() > 50){
+            LOG.log(Level.WARNING, "El nombre de la colonia está muy largo, no puede pasar de 50 carácteres.");
+            throw new NegocioException("Colonia inválida.");
+        } else {
+            cli.setColonia(cliente.getColonia());
+        }
+        if(cliente.getCalle().length() > 50){
+            LOG.log(Level.WARNING, "El nombre de la calle está muy largo, no puede pasar de 50 carácteres.");
+            throw new NegocioException("Calle inválida.");
+        } else {
+            cli.setCalle(cliente.getCalle());
+        }
+        if(cliente.getNumero().length() > 5){
+            LOG.log(Level.WARNING, "El número de casa está muy largo, no puede pasar de 5 digítos.");
+            throw new NegocioException("Número de casa inválido.");
+        }
+        if(!cliente.getNumero().matches("\\d+")){
+            LOG.log(Level.WARNING, "El número de casa solo puede contener digítos.");
+            throw new NegocioException("Número de casa inválido..");
+        } else {
+            cli.setNumero(cliente.getNumero());
+        }
+        if(cliente.getCodigoP().length() > 8){
+            LOG.log(Level.WARNING, "El código postal está muy largo, no puede pasar de 8 dígítos.");
+            throw new NegocioException("Código postal inválido.");
+        }
+        if(!cliente.getCodigoP().matches("\\d+")){
+            LOG.log(Level.WARNING, "El código postal solo puede contener digítos.");
+            throw new NegocioException("Código postal inválido.");
+        } else {
+            cli.setCodigo_postal(cliente.getCodigoP());
+        } 
+        try{
+            Cliente c = clienteDAO.actualizarCliente(cli);
+            if(c == null){
+                LOG.log(Level.WARNING, "No se actualizó nada.");
+                throw new NegocioException("Falló al actualizar.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para actualizar al cliente.");
             throw new NegocioException(pe.getMessage(), pe);
         }
     }

@@ -138,7 +138,29 @@ public class UsuarioDAO implements IUsuarioDAO{
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
         } 
-
+    }
+    
+    @Override
+    public Usuario actualizarUsuario(Usuario usuario) throws PersistenciaException {
+        String comandoSQL = """
+                            update usuarios set nombres = ?, apellido_paterno = ?, apellido_materno = ?
+                            where id_usuario = ?
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setString(1, usuario.getNombres());
+            ps.setString(2, usuario.getApellido_paterno());
+            ps.setString(3, usuario.getApellido_materno());
+            ps.setInt(4, usuario.getId());
+            
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se actualizó el usuario.");
+                throw new PersistenciaException("Falló al actualizar usuario.");
+            }
+            return consultarUsuario(usuario.getId());
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
     
 }

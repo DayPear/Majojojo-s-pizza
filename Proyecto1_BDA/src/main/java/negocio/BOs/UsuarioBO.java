@@ -162,4 +162,40 @@ public class UsuarioBO implements IUsuarioBO {
         }
     }
     
+    @Override
+    public Usuario actualizarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
+        Usuario usu = new Usuario();
+        if(usuario == null){
+            LOG.log(Level.WARNING, "El usuario no puede ser nulo.");
+            throw new NegocioException("Error con el usuario, es nulo.");
+        }
+        if(usuario.getNombres() == null || usuario.getNombres().isBlank() || usuario.getNombres().isEmpty()){
+            LOG.log(Level.WARNING, "Nombre inválido para el registro.");
+            throw new NegocioException("Error en el nombre del usuario.");
+        } else {
+            usu.setNombres(usuario.getNombres());
+        }
+        if(usuario.getApellidoP() == null || usuario.getApellidoP().isBlank() || usuario.getApellidoP().isEmpty()){
+            LOG.log(Level.WARNING, "Apellido Paterno inválido para el registro.");
+            throw new NegocioException("Error en el apellido paterno del usuario.");
+        } else {
+            usu.setApellido_paterno(usuario.getApellidoP());
+        }
+        if(usuario.getApellidoM() == null || usuario.getApellidoM().isBlank() || usuario.getApellidoM().isEmpty()){
+           usu.setApellido_materno(null);
+        } else {
+            usu.setApellido_materno(usuario.getApellidoM());
+        }
+        try{
+            Usuario u = usuarioDAO.actualizarUsuario(usu);
+            if(u == null){
+                LOG.log(Level.WARNING, "No hubo usuario al cual actualizar.");
+                throw new NegocioException("No hubo actualiación.");
+            }
+            return u;
+        } catch(PersistenciaException pe){
+             LOG.log(Level.WARNING, "Problemas para actualizar al usuario.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
 }

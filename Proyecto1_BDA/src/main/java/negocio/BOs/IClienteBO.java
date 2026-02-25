@@ -27,4 +27,6 @@ public interface IClienteBO {
     Cliente desactivarCliente(int idUsuario) throws NegocioException;
     
     Cliente activarCliente(int idUsuario) throws NegocioException;
+    
+    Cliente actualizarCliente(ClienteNuevoDTO cliente) throws NegocioException;
 }
