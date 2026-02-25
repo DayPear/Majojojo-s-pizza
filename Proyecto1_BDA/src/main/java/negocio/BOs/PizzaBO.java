@@ -62,10 +62,17 @@ public class PizzaBO implements IPizzaBO {
         } else {
             pza.setDescripcion(pizza.getDescripcion());
         }
-        // !String.valueOf(pizza.getPrecio()).matches("^\d{1,5}\.\d{2}$")
         if(pizza.getPrecio() == null){
             LOG.log(Level.SEVERE, "Error en el precio de la pizza.");
-            throw new NegocioException("Precio excesivo.");
+            throw new NegocioException("La pizza debe contener un precio.");
+        }
+        if(pizza.getPrecio() > 99999) {
+            LOG.log(Level.WARNING, "Error con el precio de la pizza.");
+            throw new NegocioException("El precio sobrepasa el límite (99999.99)");
+        } 
+        if (pizza.getPrecio() * 100 != Math.floor(pizza.getPrecio() * 100)) {
+            LOG.log(Level.WARNING, "Error con el precio de la pizza.");
+            throw new NegocioException("El precio no puede pasar de los dos decimales después del punto.");
         } else {
             pza.setPrecio(pizza.getPrecio());
         }
@@ -94,12 +101,48 @@ public class PizzaBO implements IPizzaBO {
     
     
     @Override
-    public Pizza consultarPizza(PizzaNuevaDTO pizza) throws NegocioException {
-        return null;
+    public Pizza consultarPizza(Integer id_pizza) throws NegocioException {
+        if(id_pizza == null){
+            LOG.log(Level.WARNING, "Debe ingresar un id para consultar.");
+            throw new NegocioException("ID no puede estar vacío.");
+        }
+        if(id_pizza < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser menor o igual a 0.");
+            throw new NegocioException("ID inválido a consultar");
+        }
+        try{
+            Pizza p = pizzaDAO.consultarPizza(id_pizza);
+            if(p == null){
+                LOG.log(Level.WARNING, "No se encontró una pizza con dicho ID.");
+                throw new NegocioException("Pizza no encontrada.");
+            }
+            return p;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Error al consultar la base de datos.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
     }
     
     @Override
-    public Pizza cancelarPizza(PizzaNuevaDTO pizza) throws NegocioException {
-        return null;
+    public Pizza cancelarPizza(Integer id_pizza) throws NegocioException {
+        if(id_pizza == null){
+            LOG.log(Level.WARNING, "Debe ingresar un id para consultar.");
+            throw new NegocioException("ID no puede estar vacío.");
+        }
+        if(id_pizza < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser menor o igual a 0.");
+            throw new NegocioException("ID inválida a consultar.");
+        }
+        try{
+            Pizza p = pizzaDAO.cancelarPizza(id_pizza);
+            if(p == null){
+                LOG.log(Level.WARNING, "No se encontró una pizza la cual cancelar.");
+                throw new NegocioException("Pizza no encontrada.");
+            }
+            return p;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Error al cancelar el pedido.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
     }
 }
