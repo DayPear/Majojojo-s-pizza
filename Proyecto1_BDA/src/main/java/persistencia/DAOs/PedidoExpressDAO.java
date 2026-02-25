@@ -18,12 +18,12 @@ import persistencia.excepciones.PersistenciaException;
  *
  * @author Dayanara Peralta G
  */
-public class PedidoExpresDAO implements IPedidoExpressDAO{
+public class PedidoExpressDAO implements IPedidoExpressDAO{
     private IConexionBD conexion;
-    private static final Logger LOG = Logger.getLogger(PedidoExpresDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(PedidoExpressDAO.class.getName());
     
 
-    public PedidoExpresDAO(IConexionBD conexion) {
+    public PedidoExpressDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
     
