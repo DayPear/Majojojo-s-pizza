@@ -16,7 +16,7 @@ public interface IPizzaBO {
     
     Pizza registrarPizza(PizzaNuevaDTO pizza) throws NegocioException;
     
-    Pizza consultarPizza(PizzaNuevaDTO pizza) throws NegocioException;
+    Pizza consultarPizza(Integer id_pizza) throws NegocioException;
     
-    Pizza cancelarPizza(PizzaNuevaDTO pizza) throws NegocioException;
+    Pizza cancelarPizza(Integer id_pizza) throws NegocioException;
 }
