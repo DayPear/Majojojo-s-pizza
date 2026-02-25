@@ -18,6 +18,7 @@ public class Cliente {
     private String numero;
     private String codigo_postal;
     private Date fecha_nacimiento;
+    private String estado;
 
     /**
      *
@@ -25,22 +26,14 @@ public class Cliente {
     public Cliente() {
     }
 
-    /**
-     *
-     * @param id_cliente
-     * @param colonia
-     * @param calle
-     * @param numero
-     * @param codigo_postal
-     * @param fecha_nacimiento
-     */
-    public Cliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, Date fecha_nacimiento) {
+    public Cliente(Integer id_cliente, String colonia, String calle, String numero, String codigo_postal, Date fecha_nacimiento, String estado) {
         this.id_cliente = id_cliente;
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
         this.codigo_postal = codigo_postal;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.estado = estado;
     }
 
     /**
@@ -139,13 +132,17 @@ public class Cliente {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    /**
-     *
-     * @return
-     */
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "id_cliente=" + id_cliente + ", colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + ", codigo_postal=" + codigo_postal + ", fecha_nacimiento=" + fecha_nacimiento + '}';
+        return "Cliente{" + "id_cliente=" + id_cliente + ", colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + ", codigo_postal=" + codigo_postal + ", fecha_nacimiento=" + fecha_nacimiento + ", estado=" + estado + '}';
     }
     
 }
