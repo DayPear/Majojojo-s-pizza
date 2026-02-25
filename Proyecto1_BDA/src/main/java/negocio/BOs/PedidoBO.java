@@ -4,11 +4,15 @@
  */
 package negocio.BOs;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
+import persistencia.DAOs.EstadoPedidoDAO;
+import persistencia.DAOs.IEstadoPedidoDAO;
 import persistencia.DAOs.IPedidoDAO;
+import persistencia.dominio.EstadoPedido;
 import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
@@ -17,16 +21,27 @@ import persistencia.excepciones.PersistenciaException;
  * @author maria
  */
 public class PedidoBO implements IPedidoBO {
-    
     private final IPedidoDAO pedidoDAO;
+    private IEstadoPedidoDAO estadoPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
+
+    /**
+     *
+     * @param pedidoDAO
+     */
+    public PedidoBO(IPedidoDAO pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
+    }
+    
     
     /**
      *
      * @param pedido
+     * @param estadoPed
      */
-    public PedidoBO(IPedidoDAO pedido){
+    public PedidoBO(IPedidoDAO pedido, IEstadoPedidoDAO estadoPed){
         this.pedidoDAO = pedido;
+        this.estadoPedidoDAO = estadoPed;
     }
     
     /**
@@ -114,6 +129,78 @@ public class PedidoBO implements IPedidoBO {
             LOG.log(Level.WARNING, "Problemas para cancelar el pedido.");
             throw new NegocioException(pe.getMessage(), pe);
         }
+    }
+
+    /**
+     *
+     * @param numero_pedido
+     * @param nuevoEstado
+     * @return
+     * @throws NegocioException
+     */
+    @Override
+    public Pedido cambiarEstadoPedido(int numero_pedido, String nuevoEstado) throws NegocioException {
+        if (numero_pedido < 1) {
+            LOG.log(Level.WARNING, "El numero de pedido no puede ser menor a 1");
+            throw new NegocioException("Problema con el nuemro de pedido");
+        }
+        try {
+            Pedido ped = pedidoDAO.consultarPedido(numero_pedido);
+
+            if (ped == null) {
+                LOG.log(Level.WARNING, "No se pudo encontrar el pedido");
+                throw new NegocioException("Pedido invalido.");
+            }
+            
+            validarEstado(nuevoEstado, "Cambiar estado");
+            
+            if(!validarCambioEstado(ped.getEstado_actual(), nuevoEstado)){
+                LOG.log(Level.WARNING, "No es valido el cambio.");
+                throw new NegocioException("Cambio no valido");
+            }
+            
+            String viejo = ped.getEstado_actual();
+            
+            ped.setEstado_actual(nuevoEstado);
+            ped.setEstado_viejo(viejo);
+            
+            Pedido act = pedidoDAO.actualizarEstadoPedido(ped);
+            
+            EstadoPedido est = new EstadoPedido();
+            est.setEstado(nuevoEstado);
+            est.setHora_cambio(LocalDateTime.now());
+            est.setNumero_pedido(numero_pedido);
+            
+            estadoPedidoDAO.insertarEstado(est);
+            
+            return act;
+            
+        } catch (PersistenciaException ex) {
+            LOG.log(Level.WARNING, "Problemas para cambiar el estado del pedido.");
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
+    private void validarEstado(String nuevoEstado, String opcion) throws NegocioException{
+        if (!nuevoEstado.equals("Pendiente") && !nuevoEstado.equals("Listo") &&
+        !nuevoEstado.equals("Entregado") && !nuevoEstado.equals("Cancelado") && !nuevoEstado.equals("No Entregado")) {
+            throw new NegocioException("No se puede " + opcion + ": El estado no es un estado valido.");
+        }
+    }
+    
+    private boolean validarCambioEstado(String estadoActual, String estadoNuevo){
+        switch(estadoActual){
+            case "Pendiente":
+                return estadoNuevo.equals("Listo") || estadoNuevo.equals("Cancelado");
+            case "Listo":
+                return estadoNuevo.equals("Entregado") || estadoNuevo.equals("Cancelado");
+            case "Entregado":
+                return false;
+            case "Cancelado":
+                return false;
+            default:
+                return false;
+        }        
     }
 }
     

@@ -16,6 +16,7 @@ public class ClienteNuevoDTO {
     private String numero;
     private String codigoP;
     private String fechaNacimiento;
+    private String estado;
 
     /**
      *
@@ -23,21 +24,31 @@ public class ClienteNuevoDTO {
     public ClienteNuevoDTO() {
     }
 
-    public ClienteNuevoDTO(Integer id, String colonia, String calle, String numero, String codigoP, String fechaNacimiento) {
+    public ClienteNuevoDTO(Integer id, String colonia, String calle, String numero, String codigoP, String fechaNacimiento, String estado) {
         this.id = id;
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
         this.codigoP = codigoP;
         this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
+    }
+
+    public ClienteNuevoDTO(Integer id, String colonia, String calle, String numero, String codigoP) {
+        this.id = id;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.numero = numero;
+        this.codigoP = codigoP;
     }
     
-    public ClienteNuevoDTO(String colonia, String calle, String numero, String codigoP, String fechaNacimiento) {
+    public ClienteNuevoDTO(String colonia, String calle, String numero, String codigoP, String fechaNacimiento, String estado) {
         this.colonia = colonia;
         this.calle = calle;
         this.numero = numero;
         this.codigoP = codigoP;
         this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -88,9 +99,17 @@ public class ClienteNuevoDTO {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "ClienteNuevoDTO{" + "colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + ", codigoP=" + codigoP + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return "ClienteNuevoDTO{" + "colonia=" + colonia + ", calle=" + calle + ", numero=" + numero + ", codigoP=" + codigoP + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + '}';
     }
     
 }

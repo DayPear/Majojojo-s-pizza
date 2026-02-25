@@ -4,38 +4,37 @@
  */
 package persistencia.DAOs;
 
-import persistencia.dominio.Usuario;
+import persistencia.dominio.DetallesPedido;
 import persistencia.excepciones.PersistenciaException;
 
 /**
  *
  * @author Dayanara Peralta G
  */
-public interface IUsuarioDAO {
-    
+public interface IDetallesPedidoDAO {
+
     /**
      *
-     * @param idUsuario
+     * @param detalles
      * @return
      * @throws PersistenciaException
      */
-    Usuario consultarUsuario(Integer idUsuario) throws PersistenciaException;
+    public DetallesPedido insertarDetallePedido(DetallesPedido detalles)throws PersistenciaException;
     
     /**
      *
-     * @param usuario
+     * @param id_detalles
      * @return
      * @throws PersistenciaException
      */
-    Usuario agregarUsuario(Usuario usuario) throws PersistenciaException;
+    public DetallesPedido consultarDetallesPedido(int id_detalles)throws PersistenciaException;
     
     /**
      *
-     * @param usuario
+     * @param detalle
      * @return
      * @throws PersistenciaException
      */
-    Usuario validarUsuario(Usuario usuario) throws PersistenciaException;
+    public DetallesPedido actualizarDetallesPedido(DetallesPedido detalle)throws PersistenciaException;
     
-    Usuario actualizarUsuario(Usuario usuario) throws PersistenciaException;
 }

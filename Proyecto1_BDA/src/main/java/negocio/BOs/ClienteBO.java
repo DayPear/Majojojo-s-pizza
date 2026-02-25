@@ -50,33 +50,33 @@ public class ClienteBO implements IClienteBO {
         } else {
             cli.setId_cliente(cliente.getId());
         }
-        if(cliente.getColonia().trim().length() > 50){
+        if(cliente.getColonia().length() > 50){
             LOG.log(Level.WARNING, "El nombre de la colonia está muy largo, no puede pasar de 50 carácteres.");
             throw new NegocioException("Colonia inválida.");
         } else {
             cli.setColonia(cliente.getColonia());
         }
-        if(cliente.getCalle().trim().length() > 50){
+        if(cliente.getCalle().length() > 50){
             LOG.log(Level.WARNING, "El nombre de la calle está muy largo, no puede pasar de 50 carácteres.");
             throw new NegocioException("Calle inválida.");
         } else {
             cli.setCalle(cliente.getCalle());
         }
-        if(cliente.getNumero().trim().length() > 5){
+        if(cliente.getNumero().length() > 5){
             LOG.log(Level.WARNING, "El número de casa está muy largo, no puede pasar de 5 digítos.");
             throw new NegocioException("Número de casa inválido.");
         }
-        if(!cliente.getNumero().trim().matches("\\d+")){
+        if(!cliente.getNumero().matches("\\d+")){
             LOG.log(Level.WARNING, "El número de casa solo puede contener digítos.");
             throw new NegocioException("Número de casa inválido..");
         } else {
             cli.setNumero(cliente.getNumero());
         }
-        if(cliente.getCodigoP().trim().length() > 8){
+        if(cliente.getCodigoP().length() > 8){
             LOG.log(Level.WARNING, "El código postal está muy largo, no puede pasar de 8 dígítos.");
             throw new NegocioException("Código postal inválido.");
         }
-        if(!cliente.getCodigoP().trim().matches("\\d+")){
+        if(!cliente.getCodigoP().matches("\\d+")){
             LOG.log(Level.WARNING, "El código postal solo puede contener digítos.");
             throw new NegocioException("Código postal inválido.");
         } else {
@@ -93,7 +93,16 @@ public class ClienteBO implements IClienteBO {
         }
         Date fechaBD = Date.valueOf(fecha);
         cli.setFecha_nacimiento(fechaBD);
-        // falta un método q valide el id del usuario
+        if(cliente.getEstado() == null || cliente.getEstado().isBlank() || cliente.getEstado().isEmpty()){
+            LOG.log(Level.WARNING, "El estado no puede ser nulo/vacío.");
+            throw new NegocioException("Estado inválido.");
+        }
+        if(cliente.getEstado() != "Activo" && cliente.getEstado() != "Inactivo"){
+            LOG.log(Level.WARNING, "El estado del cliente solo puede ser Activo o Inactivo.");
+            throw new NegocioException("Estado inválido.");
+        } else {
+            //cli.setEstado(cliente.getEstado());
+        }
         try{
             Cliente c = clienteDAO.agregarCliente(cli);
             return c;
@@ -110,17 +119,6 @@ public class ClienteBO implements IClienteBO {
      * @throws NegocioException
      */
     @Override
-    public Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException {
-        return null;
-    }
-    
-    /**
-     *
-     * @param idUsuario
-     * @return
-     * @throws NegocioException
-     */
-    @Override
     public Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException {
         if(idUsuario < 1){
             LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
@@ -130,11 +128,107 @@ public class ClienteBO implements IClienteBO {
             Cliente c = clienteDAO.validarIdUsuario(idUsuario);
             if(c == null){
                 LOG.log(Level.WARNING, "No se pudo encontrar un usuario asociado al cliente.");
-                throw new NegocioException("");
+                throw new NegocioException("Error en la consulta.");
             }
             return c;
         } catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas para consultar al usuario.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente desactivarCliente(int idUsuario) throws NegocioException {
+        if(idUsuario < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID.");
+        }
+        try{
+            Cliente c = clienteDAO.desactivarCliente(idUsuario);
+            if (c == null){
+                LOG.log(Level.WARNING, "No se pudo desactivar al cliente.");
+                throw new NegocioException("Error en la consulta.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para desactivar al cliente.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente activarCliente(int idUsuario) throws NegocioException {
+        if(idUsuario < 1){
+            LOG.log(Level.WARNING, "El ID no puede ser 0 o menor.");
+            throw new NegocioException("Problemas con el ID.");
+        }
+        try{
+            Cliente c = clienteDAO.activarCliente(idUsuario);
+            if (c == null){
+                LOG.log(Level.WARNING, "No se pudo activar al cliente.");
+                throw new NegocioException("Error en la consulta.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para activar al cliente.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    @Override
+    public Cliente actualizarCliente(ClienteNuevoDTO cliente) throws NegocioException {
+        Cliente cli = new Cliente();
+        if(cliente == null){
+            LOG.log(Level.WARNING, "No se puede validar el cliente si está vacío.");
+            throw new NegocioException("Cliente nulo.");
+        }
+        if(cliente.getId() < 0 || cliente.getId() == null){
+            LOG.log(Level.WARNING, "No se puede actualizar el cliente si no tiene un ID.");
+            throw new NegocioException("Cliente sin ID.");
+        } else {
+            cli.setId_cliente(cliente.getId());
+        }
+        if(cliente.getColonia().length() > 50){
+            LOG.log(Level.WARNING, "El nombre de la colonia está muy largo, no puede pasar de 50 carácteres.");
+            throw new NegocioException("Colonia inválida.");
+        } else {
+            cli.setColonia(cliente.getColonia());
+        }
+        if(cliente.getCalle().length() > 50){
+            LOG.log(Level.WARNING, "El nombre de la calle está muy largo, no puede pasar de 50 carácteres.");
+            throw new NegocioException("Calle inválida.");
+        } else {
+            cli.setCalle(cliente.getCalle());
+        }
+        if(cliente.getNumero().length() > 5){
+            LOG.log(Level.WARNING, "El número de casa está muy largo, no puede pasar de 5 digítos.");
+            throw new NegocioException("Número de casa inválido.");
+        }
+        if(!cliente.getNumero().matches("\\d+")){
+            LOG.log(Level.WARNING, "El número de casa solo puede contener digítos.");
+            throw new NegocioException("Número de casa inválido..");
+        } else {
+            cli.setNumero(cliente.getNumero());
+        }
+        if(cliente.getCodigoP().length() > 8){
+            LOG.log(Level.WARNING, "El código postal está muy largo, no puede pasar de 8 dígítos.");
+            throw new NegocioException("Código postal inválido.");
+        }
+        if(!cliente.getCodigoP().matches("\\d+")){
+            LOG.log(Level.WARNING, "El código postal solo puede contener digítos.");
+            throw new NegocioException("Código postal inválido.");
+        } else {
+            cli.setCodigo_postal(cliente.getCodigoP());
+        } 
+        try{
+            Cliente c = clienteDAO.actualizarCliente(cli);
+            if(c == null){
+                LOG.log(Level.WARNING, "No se actualizó nada.");
+                throw new NegocioException("Falló al actualizar.");
+            }
+            return c;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para actualizar al cliente.");
             throw new NegocioException(pe.getMessage(), pe);
         }
     }

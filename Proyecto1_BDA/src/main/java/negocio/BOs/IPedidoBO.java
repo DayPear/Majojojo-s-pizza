@@ -38,4 +38,11 @@ public interface IPedidoBO {
      */
     public Pedido cancelarPedido(PedidoNuevoDTO pedido) throws NegocioException;
     
+    /**
+     *
+     * @param numero_pedido
+     * @param nuevoEstado
+     * @return
+     */
+    public Pedido cambiarEstadoPedido(int numero_pedido, String nuevoEstado)throws NegocioException ;
 }
