@@ -29,6 +29,12 @@ public interface IPizzaDAO {
      */
     public Pizza consultarPizza(int id_pizza) throws PersistenciaException;
     
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws PersistenciaException
+     */
     public Pizza cancelarPizza(int id_pizza) throws PersistenciaException;
     
 }

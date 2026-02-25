@@ -21,10 +21,20 @@ public class PedidoBO implements IPedidoBO {
     private final IPedidoDAO pedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
     
+    /**
+     *
+     * @param pedido
+     */
     public PedidoBO(IPedidoDAO pedido){
         this.pedidoDAO = pedido;
     }
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pedido insertarPedido(PedidoNuevoDTO pedido) throws NegocioException {
         if(pedido == null){
@@ -49,6 +59,12 @@ public class PedidoBO implements IPedidoBO {
         }
     }
     
+    /**
+     *
+     * @param numeroPedido
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pedido consultarPedido(int numeroPedido) throws NegocioException {
         if(numeroPedido < 1){
@@ -69,6 +85,12 @@ public class PedidoBO implements IPedidoBO {
         }
     }
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pedido cancelarPedido(PedidoNuevoDTO pedido) throws NegocioException {
         if(pedido.getIdPedido() < 1){

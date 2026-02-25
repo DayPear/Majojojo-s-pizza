@@ -13,8 +13,20 @@ import persistencia.excepciones.PersistenciaException;
  */
 public interface IProgramadoDAO {
     
+    /**
+     *
+     * @param programado
+     * @return
+     * @throws PersistenciaException
+     */
     Programado agregarProgramado(Programado programado) throws PersistenciaException;
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws PersistenciaException
+     */
     Programado consultarProgramado(int numeroProgramado) throws PersistenciaException;
     
 }

@@ -21,10 +21,20 @@ public class ProgramadoBO implements IProgramadoBO {
     private final IProgramadoDAO programadoDAO;
     private final Logger LOG = Logger.getLogger(ProgramadoBO.class.getName());
     
+    /**
+     *
+     * @param programado
+     */
     public ProgramadoBO(IProgramadoDAO programado){
         this.programadoDAO = programado;
     }
     
+    /**
+     *
+     * @param programado
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Programado insertarProgramado(ProgramadoNuevoDTO programado) throws NegocioException {
         if(programado == null){
@@ -51,11 +61,23 @@ public class ProgramadoBO implements IProgramadoBO {
         }
     }
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Programado cancelarProgramado(int numeroProgramado) throws NegocioException {
         return null;
     }
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Programado consultarProgramado(int numeroProgramado) throws NegocioException {
         return null;

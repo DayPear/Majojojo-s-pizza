@@ -70,6 +70,12 @@ public class TelefonoClienteDAO implements ITelefonoClienteDAO{
         }
     }
 
+    /**
+     *
+     * @param id_telefono
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public TelefonoCliente consultarTelefonoCliente(int id_telefono) throws PersistenciaException {
         String comandoSQL = """

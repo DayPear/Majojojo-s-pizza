@@ -110,6 +110,12 @@ public class PizzaDAO implements IPizzaDAO{
         }
     }
     
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Pizza cancelarPizza(int id_pizza) throws PersistenciaException {
         String comandoSQL = """

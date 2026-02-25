@@ -23,21 +23,37 @@ public class FabricaDAO {
    
     private static IConexionBD conexion = new ConexionBD();
     
+    /**
+     *
+     * @return
+     */
     public static IPedidoDAO obtenerPedidoDAO(){
         IPedidoDAO pedidoDAO = new PedidoDAO(conexion);
         return pedidoDAO;
     }
     
+    /**
+     *
+     * @return
+     */
     public static IProgramadoDAO obtenerProgramadoDAO(){
         IProgramadoDAO programadoDAO = new ProgramadoDAO(conexion);
         return programadoDAO;
     }
     
+    /**
+     *
+     * @return
+     */
     public static IClienteDAO obtenerClienteDAO(){
         IClienteDAO clienteDAO = new ClienteDAO(conexion);
         return clienteDAO;
     }
     
+    /**
+     *
+     * @return
+     */
     public static IUsuarioDAO obtenerUsuarioDAO(){
         IUsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
         return usuarioDAO;

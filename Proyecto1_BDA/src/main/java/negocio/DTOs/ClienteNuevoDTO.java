@@ -17,6 +17,9 @@ public class ClienteNuevoDTO {
     private String codigoP;
     private String fechaNacimiento;
 
+    /**
+     *
+     */
     public ClienteNuevoDTO() {
     }
 

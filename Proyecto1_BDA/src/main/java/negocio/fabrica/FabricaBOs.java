@@ -19,17 +19,30 @@ import persistencia.fabrica.FabricaDAO;
 public class FabricaBOs {
     
     // método que crea un PedidoBO listo para trabajar con él
+
+    /**
+     *
+     * @return
+     */
     
     public IPedidoBO obtenerPedidoBO(){
         IPedidoBO pedido = new PedidoBO(FabricaDAO.obtenerPedidoDAO());
         return pedido;
     }
     
+    /**
+     *
+     * @return
+     */
     public IProgramadoBO obtenerProgramadoBO(){
         IProgramadoBO programado = new ProgramadoBO(FabricaDAO.obtenerProgramadoDAO());
         return programado;
     }
     
+    /**
+     *
+     * @return
+     */
     public IUsuarioBO obtenerUsuarioBO(){
         IUsuarioBO usuario = new UsuarioBO(FabricaDAO.obtenerUsuarioDAO());
         return usuario;

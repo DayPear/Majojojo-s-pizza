@@ -13,6 +13,9 @@ public class TelefonoClienteNuevoDTO {
     private String etiqueta;
     private Integer id_cliente;
 
+    /**
+     *
+     */
     public TelefonoClienteNuevoDTO() {
     }
 

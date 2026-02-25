@@ -14,10 +14,28 @@ import persistencia.dominio.Pedido;
  */
 public interface IPedidoBO {
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws NegocioException
+     */
     public Pedido insertarPedido(PedidoNuevoDTO pedido) throws NegocioException;
     
+    /**
+     *
+     * @param numeroPedido
+     * @return
+     * @throws NegocioException
+     */
     public Pedido consultarPedido(int numeroPedido) throws NegocioException;
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws NegocioException
+     */
     public Pedido cancelarPedido(PedidoNuevoDTO pedido) throws NegocioException;
     
 }

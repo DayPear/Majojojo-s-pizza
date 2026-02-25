@@ -22,12 +22,20 @@ public class PedidoExpressDAO implements IPedidoExpressDAO{
     private IConexionBD conexion;
     private static final Logger LOG = Logger.getLogger(PedidoExpressDAO.class.getName());
     
-
+    /**
+     *
+     * @param conexion
+     */
     public PedidoExpressDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
     
-
+    /**
+     *
+     * @param press
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public PedidoExpress agregarPedidoExpress(PedidoExpress press) throws PersistenciaException {
         String comandoSQL = """
@@ -55,6 +63,12 @@ public class PedidoExpressDAO implements IPedidoExpressDAO{
         }
     }
 
+    /**
+     *
+     * @param id_express
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public PedidoExpress consultarPedidoExpress(int id_express) throws PersistenciaException {
         String comandoSQL = """

@@ -13,10 +13,28 @@ import persistencia.excepciones.PersistenciaException;
  */
 public interface IUsuarioDAO {
     
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws PersistenciaException
+     */
     Usuario consultarUsuario(Integer idUsuario) throws PersistenciaException;
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws PersistenciaException
+     */
     Usuario agregarUsuario(Usuario usuario) throws PersistenciaException;
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws PersistenciaException
+     */
     Usuario validarUsuario(Usuario usuario) throws PersistenciaException;
     
 }

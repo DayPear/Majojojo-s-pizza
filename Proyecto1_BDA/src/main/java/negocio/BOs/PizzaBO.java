@@ -21,10 +21,20 @@ public class PizzaBO implements IPizzaBO {
     private final IPizzaDAO pizzaDAO;
     private static final Logger LOG = Logger.getLogger(ClienteBO.class.getName());
     
+    /**
+     *
+     * @param pizza
+     */
     public PizzaBO(IPizzaDAO pizza){
         this.pizzaDAO = pizza;
     }
     
+    /**
+     *
+     * @param pizza
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pizza registrarPizza(PizzaNuevaDTO pizza) throws NegocioException {
         Pizza pza = new Pizza();
@@ -99,7 +109,12 @@ public class PizzaBO implements IPizzaBO {
         }
     }
     
-    
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pizza consultarPizza(Integer id_pizza) throws NegocioException {
         if(id_pizza == null){
@@ -123,6 +138,12 @@ public class PizzaBO implements IPizzaBO {
         }
     }
     
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Pizza cancelarPizza(Integer id_pizza) throws NegocioException {
         if(id_pizza == null){

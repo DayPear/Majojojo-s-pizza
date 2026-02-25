@@ -23,10 +23,20 @@ public class ClienteBO implements IClienteBO {
     private final IClienteDAO clienteDAO;
     private static final Logger LOG = Logger.getLogger(ClienteBO.class.getName());
     
+    /**
+     *
+     * @param cliente
+     */
     public ClienteBO(IClienteDAO cliente){
         this.clienteDAO = cliente;
     }
     
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Cliente registrarCliente(ClienteNuevoDTO cliente) throws NegocioException {
         Cliente cli = new Cliente();
@@ -93,11 +103,23 @@ public class ClienteBO implements IClienteBO {
         }
     }
     
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException {
         return null;
     }
     
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException {
         if(idUsuario < 1){

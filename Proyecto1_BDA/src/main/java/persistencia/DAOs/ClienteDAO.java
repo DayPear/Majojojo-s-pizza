@@ -25,6 +25,12 @@ public class ClienteDAO implements IClienteDAO{
         this.conexion = cone;
     }
     
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Cliente agregarCliente(Cliente cliente) throws PersistenciaException {
         String comandoSQL =     """
@@ -53,6 +59,12 @@ public class ClienteDAO implements IClienteDAO{
         }
     }
     
+    /**
+     *
+     * @param id_cliente
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Cliente validarIdUsuario(int id_cliente) throws PersistenciaException {
         String comandoSQL = """

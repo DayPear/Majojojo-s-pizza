@@ -21,10 +21,20 @@ public class UsuarioBO implements IUsuarioBO {
     private final IUsuarioDAO usuarioDAO;
     private final Logger LOG = Logger.getLogger(UsuarioBO.class.getName());
     
+    /**
+     *
+     * @param usuario
+     */
     public UsuarioBO(IUsuarioDAO usuario){
         this.usuarioDAO = usuario;
     }
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Usuario registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
         Usuario usu = new Usuario();
@@ -88,6 +98,12 @@ public class UsuarioBO implements IUsuarioBO {
         }
     }
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Usuario validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException {
         Usuario usu = new Usuario();
@@ -120,6 +136,12 @@ public class UsuarioBO implements IUsuarioBO {
         }
     }
     
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public Usuario consultarUsuario(int idUsuario) throws NegocioException {
         if(idUsuario < 1){

@@ -20,11 +20,20 @@ public class TelefonoClienteBO implements ITelefonoClientesBO {
     private ITelefonoClienteDAO telefonoDAO;
     private static final Logger LOG = Logger.getLogger(TelefonoClienteBO.class.getName());
     
-    
+    /**
+     *
+     * @param telefono
+     */
     public TelefonoClienteBO(ITelefonoClienteDAO telefono){
         this.telefonoDAO = telefono;
     }
 
+    /**
+     *
+     * @param telefono
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public TelefonoCliente agregarTelefono(TelefonoClienteNuevoDTO telefono) throws NegocioException {
         if(telefono == null){
@@ -55,6 +64,12 @@ public class TelefonoClienteBO implements ITelefonoClientesBO {
         }
     }
 
+    /**
+     *
+     * @param id_telefono
+     * @return
+     * @throws NegocioException
+     */
     @Override
     public TelefonoCliente consultarTelefono(int id_telefono) throws NegocioException {
         if (id_telefono < 1) {

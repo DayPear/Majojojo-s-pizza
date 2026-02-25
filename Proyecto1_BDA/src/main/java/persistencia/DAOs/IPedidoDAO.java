@@ -14,12 +14,36 @@ import persistencia.excepciones.PersistenciaException;
  */
 public interface IPedidoDAO {
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws PersistenciaException
+     */
     Pedido agregarPedido(Pedido pedido) throws PersistenciaException;
     
+    /**
+     *
+     * @param numeroPedido
+     * @return
+     * @throws PersistenciaException
+     */
     Pedido consultarPedido(int numeroPedido) throws PersistenciaException;
     
+    /**
+     *
+     * @param numero_pedido
+     * @return
+     * @throws PersistenciaException
+     */
     Pedido cancelarPedido(int numero_pedido) throws PersistenciaException;
     
+    /**
+     *
+     * @param pedido
+     * @return
+     * @throws PersistenciaException
+     */
     Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException;
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();

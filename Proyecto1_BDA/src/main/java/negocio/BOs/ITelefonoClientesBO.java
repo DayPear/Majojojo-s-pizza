@@ -24,7 +24,7 @@ public interface ITelefonoClientesBO {
     
     /**
      *
-     * @param telefono
+     * @param id_telefono
      * @return
      * @throws NegocioException
      */

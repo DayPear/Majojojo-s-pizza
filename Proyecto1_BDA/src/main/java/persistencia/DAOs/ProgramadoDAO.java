@@ -22,10 +22,20 @@ public class ProgramadoDAO implements IProgramadoDAO {
     private IConexionBD conexion;
     private static final Logger LOG = Logger.getLogger(ProgramadoDAO.class.getName());
     
+    /**
+     *
+     * @param cone
+     */
     public ProgramadoDAO(IConexionBD cone){
         this.conexion = cone;
     }
     
+    /**
+     *
+     * @param programado
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Programado agregarProgramado(Programado programado) throws PersistenciaException {
         String comandoSQL = """
@@ -46,6 +56,12 @@ public class ProgramadoDAO implements IProgramadoDAO {
         }
     }
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Programado consultarProgramado(int numeroProgramado) throws PersistenciaException {
         return null;

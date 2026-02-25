@@ -14,9 +14,27 @@ import persistencia.dominio.Cliente;
  */
 public interface IClienteBO {
     
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws NegocioException
+     */
     Cliente registrarCliente(ClienteNuevoDTO cliente) throws NegocioException;
     
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws NegocioException
+     */
     Cliente consultarCliente(ClienteNuevoDTO cliente) throws NegocioException;
     
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws NegocioException
+     */
     Cliente usuarioAsociadoCliente(int idUsuario) throws NegocioException;
 }

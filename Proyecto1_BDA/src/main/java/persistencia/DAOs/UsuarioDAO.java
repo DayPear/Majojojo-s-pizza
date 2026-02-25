@@ -68,6 +68,12 @@ public class UsuarioDAO implements IUsuarioDAO{
         }
     }
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Usuario agregarUsuario(Usuario usuario) throws PersistenciaException {
 
@@ -100,6 +106,12 @@ public class UsuarioDAO implements IUsuarioDAO{
         }
     }
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws PersistenciaException
+     */
     @Override
     public Usuario validarUsuario(Usuario usuario) throws PersistenciaException {
         String comandoSQL = """

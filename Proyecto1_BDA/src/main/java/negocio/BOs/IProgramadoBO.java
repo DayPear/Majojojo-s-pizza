@@ -14,10 +14,28 @@ import persistencia.dominio.Programado;
  */
 public interface IProgramadoBO {
     
+    /**
+     *
+     * @param programado
+     * @return
+     * @throws NegocioException
+     */
     public Programado insertarProgramado(ProgramadoNuevoDTO programado) throws NegocioException;
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws NegocioException
+     */
     public Programado cancelarProgramado(int numeroProgramado) throws NegocioException;
     
+    /**
+     *
+     * @param numeroProgramado
+     * @return
+     * @throws NegocioException
+     */
     public Programado consultarProgramado(int numeroProgramado) throws NegocioException;
     
 }

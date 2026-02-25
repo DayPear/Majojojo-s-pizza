@@ -14,9 +14,27 @@ import persistencia.dominio.Pizza;
  */
 public interface IPizzaBO {
     
+    /**
+     *
+     * @param pizza
+     * @return
+     * @throws NegocioException
+     */
     Pizza registrarPizza(PizzaNuevaDTO pizza) throws NegocioException;
     
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws NegocioException
+     */
     Pizza consultarPizza(Integer id_pizza) throws NegocioException;
     
+    /**
+     *
+     * @param id_pizza
+     * @return
+     * @throws NegocioException
+     */
     Pizza cancelarPizza(Integer id_pizza) throws NegocioException;
 }

@@ -14,10 +14,28 @@ import persistencia.dominio.Usuario;
  */
 public interface IUsuarioBO {
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws NegocioException
+     */
     Usuario registrarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
     
+    /**
+     *
+     * @param usuario
+     * @return
+     * @throws NegocioException
+     */
     Usuario validarUsuario(UsuarioNuevoDTO usuario) throws NegocioException;
     
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws NegocioException
+     */
     Usuario consultarUsuario(int idUsuario) throws NegocioException;
     
     //boolean usuarioAsociadoEmpleado(int idUsuario) throws NegocioException;
