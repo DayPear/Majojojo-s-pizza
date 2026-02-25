@@ -5,7 +5,19 @@
 package presentacion;
 
 import java.awt.Image;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import negocio.BOs.ClienteBO;
+import negocio.BOs.UsuarioBO;
+import negocio.excepciones.NegocioException;
+import persistencia.DAOs.ClienteDAO;
+import persistencia.DAOs.UsuarioDAO;
+import persistencia.conexion.ConexionBD;
+import persistencia.dominio.Cliente;
+import persistencia.dominio.Usuario;
 
 /**
  *
@@ -14,13 +26,37 @@ import javax.swing.JPanel;
 public class PanelPerfilCliente extends javax.swing.JPanel {
 
     private Image imagenFondo;
+    private Cliente cliente;
+    private Usuario usuario;
+    private final UsuarioBO usuarioBO = new UsuarioBO(new UsuarioDAO(new ConexionBD()));
+    private ClienteBO clienteBO = new ClienteBO(new ClienteDAO(new ConexionBD()));
     
     /**
      * Creates new form PanelPerfilCliente
      */
-    public PanelPerfilCliente() {
+    public PanelPerfilCliente(int id) {
         initComponents();
         setImagenFondo("src/main/java/imagenes/logo.png", jPanel1);
+        try{
+            usuario = usuarioBO.consultarUsuario(id);
+            cliente = clienteBO.usuarioAsociadoCliente(id);
+        } catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, ne.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if(cliente.getEstado().equals("Activo")){
+            jButton2.setText("Darse de baja");
+        } else {
+            jButton2.setText("Darse de alta");
+        }
+        jTextArea1.setText(cliente.getColonia() + ", " + cliente.getCalle() + " #" + cliente.getNumero() + ". C.P. " + cliente.getCodigo_postal());
+        if(usuario.getApellido_materno() != null){
+            jTextArea2.setText(usuario.getNombres() + " " + usuario.getApellido_paterno() + " " + usuario.getApellido_materno());
+        } else {
+            jTextArea2.setText(usuario.getNombres() + " " + usuario.getApellido_paterno());
+        }
+        jTextArea3.setText(cliente.getEstado());
+        jTextArea4.setText(cliente.getFecha_nacimiento().toString());
+        //jTextArea5.setText(cliente.getFecha_nacimiento().toLocalDate().getYear());
     }
     
     public void setImagenFondo(String ruta_imagen, JPanel panel1) {
@@ -78,6 +114,7 @@ public class PanelPerfilCliente extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(1, 114, 160));
         jLabel2.setText("Dirección:");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -117,10 +154,11 @@ public class PanelPerfilCliente extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(255, 153, 0));
         jButton1.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
         jButton1.setText("Cerrar Sesión");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(255, 153, 0));
         jButton2.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        jButton2.setText("Dar de baja");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setBackground(new java.awt.Color(255, 153, 0));
         jButton3.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
@@ -223,7 +261,65 @@ public class PanelPerfilCliente extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada(usuario.getId());
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+                }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (jButton2.getText() == "Darse de baja") {
+                Cliente c = clienteBO.desactivarCliente(cliente.getId_cliente());
+                if(c == null){
+                    JOptionPane.showMessageDialog(this, "No se dió de baja el cliente", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showConfirmDialog(this, "Cliente dado de baja", "Información", JOptionPane.INFORMATION_MESSAGE);
+                jTextArea3.setText(c.getEstado());
+                jButton2.setText("Darse de alta");
+            } else {
+                Cliente c = clienteBO.activarCliente(cliente.getId_cliente());
+                if(c == null){
+                    JOptionPane.showMessageDialog(this, "No se dió de alta el cliente", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                JOptionPane.showConfirmDialog(this, "Cliente dado de alta", "Información", JOptionPane.INFORMATION_MESSAGE);
+                jTextArea3.setText(c.getEstado());
+                jButton2.setText("Darse de baja");
+            }
+        } catch (NegocioException ne) {
+            JOptionPane.showMessageDialog(this, ne.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
+                JFrame framePrincipal = (JFrame) ventana;
+
+                PanelInicioSesion nuevoPanel = new PanelInicioSesion();
+
+                framePrincipal.getContentPane().removeAll();
+                framePrincipal.getContentPane().add(nuevoPanel);
+
+                framePrincipal.revalidate();
+                framePrincipal.repaint();
+                }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -101,7 +101,7 @@ public class ClienteBO implements IClienteBO {
             LOG.log(Level.WARNING, "El estado del cliente solo puede ser Activo o Inactivo.");
             throw new NegocioException("Estado inválido.");
         } else {
-            cli.setEstado(cliente.getEstado());
+            //cli.setEstado(cliente.getEstado());
         }
         try{
             Cliente c = clienteDAO.agregarCliente(cli);
