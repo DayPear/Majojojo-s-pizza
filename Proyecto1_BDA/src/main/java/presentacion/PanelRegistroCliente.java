@@ -284,7 +284,7 @@ public class PanelRegistroCliente extends javax.swing.JPanel {
             if (ventana instanceof JFrame) {
                 JFrame framePrincipal = (JFrame) ventana;
 
-                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada();
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada(c.getId_cliente());
 
                 framePrincipal.getContentPane().removeAll();
                 framePrincipal.getContentPane().add(nuevoPanel);

@@ -281,7 +281,8 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
             if (ventana instanceof JFrame) {
                 JFrame framePrincipal = (JFrame) ventana;
 
-                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada();
+                // aquí debe mandarle el id del usuario/cliente 
+                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada(1);
 
                 framePrincipal.getContentPane().removeAll();
                 framePrincipal.getContentPane().add(nuevoPanel);

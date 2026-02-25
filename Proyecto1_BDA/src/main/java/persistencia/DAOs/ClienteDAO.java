@@ -98,7 +98,7 @@ public class ClienteDAO implements IClienteDAO{
     @Override
     public Cliente desactivarCliente(int idCliente) throws PersistenciaException {
         String comandoSQL = """
-                            update clientes set estado = 'Inactivo' where id = ? and estado = 'Activo'
+                            update clientes set estado = 'Inactivo' where id_cliente = ? and estado = 'Activo'
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setInt(1, idCliente);
@@ -116,7 +116,7 @@ public class ClienteDAO implements IClienteDAO{
     @Override
     public Cliente activarCliente(int idCliente) throws PersistenciaException {
          String comandoSQL = """
-                            update clientes set estado = 'Activo' where id = ? and estado = 'Inactivo'
+                            update clientes set estado = 'Activo' where id_cliente = ? and estado = 'Inactivo'
                             """;
         try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setInt(1, idCliente);
