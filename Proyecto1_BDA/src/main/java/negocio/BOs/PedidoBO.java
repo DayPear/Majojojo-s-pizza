@@ -4,11 +4,15 @@
  */
 package negocio.BOs;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
+import persistencia.DAOs.EstadoPedidoDAO;
+import persistencia.DAOs.IEstadoPedidoDAO;
 import persistencia.DAOs.IPedidoDAO;
+import persistencia.dominio.EstadoPedido;
 import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
@@ -17,16 +21,17 @@ import persistencia.excepciones.PersistenciaException;
  * @author maria
  */
 public class PedidoBO implements IPedidoBO {
-    
     private final IPedidoDAO pedidoDAO;
+    private IEstadoPedidoDAO estadoPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
     
     /**
      *
      * @param pedido
      */
-    public PedidoBO(IPedidoDAO pedido){
+    public PedidoBO(IPedidoDAO pedido, IEstadoPedidoDAO estadoPed){
         this.pedidoDAO = pedido;
+        this.estadoPedidoDAO = estadoPed;
     }
     
     /**
@@ -149,7 +154,16 @@ public class PedidoBO implements IPedidoBO {
             ped.setEstado_actual(nuevoEstado);
             ped.setEstado_viejo(viejo);
             
-            return pedidoDAO.actualizarEstadoPedido(ped);
+            Pedido act = pedidoDAO.actualizarEstadoPedido(ped);
+            
+            EstadoPedido est = new EstadoPedido();
+            est.setEstado(nuevoEstado);
+            est.setHora_cambio(LocalDateTime.now());
+            est.setNumero_pedido(numero_pedido);
+            
+            estadoPedidoDAO.insertarEstado(est);
+            
+            return act;
             
         } catch (PersistenciaException ex) {
             LOG.log(Level.WARNING, "Problemas para cambiar el estado del pedido.");
@@ -158,18 +172,22 @@ public class PedidoBO implements IPedidoBO {
     }
     
     private void validarEstado(String nuevoEstado, String opcion) throws NegocioException{
-        if (!nuevoEstado.matches("Listo") && !nuevoEstado.matches("Pendiente") && !nuevoEstado.matches("Entregado")
-                && !nuevoEstado.matches("Cancelado") && !nuevoEstado.matches("No entregado")) {
+        if (!nuevoEstado.equals("Pendiente") && !nuevoEstado.equals("Listo") &&
+        !nuevoEstado.equals("Entregado") && !nuevoEstado.equals("Cancelado") && !nuevoEstado.equals("No Entregado")) {
             throw new NegocioException("No se puede " + opcion + ": El estado no es un estado valido.");
         }
     }
     
-    private boolean validarCambioEstado(String estadoNuevo, String estadoActual){
+    private boolean validarCambioEstado(String estadoActual, String estadoNuevo){
         switch(estadoActual){
             case "Pendiente":
                 return estadoNuevo.equals("Listo") || estadoNuevo.equals("Cancelado");
             case "Listo":
                 return estadoNuevo.equals("Entregado") || estadoNuevo.equals("Cancelado");
+            case "Entregado":
+                return false;
+            case "Cancelado":
+                return false;
             default:
                 return false;
         }        

@@ -7,6 +7,7 @@ package persistencia.DAOs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
@@ -17,7 +18,7 @@ import persistencia.excepciones.PersistenciaException;
  *
  * @author Dayanara Peralta G
  */
-public class EstadoPedidoDAO implements IEstadoPedido {
+public class EstadoPedidoDAO implements IEstadoPedidoDAO {
     private IConexionBD cone;
     private static final Logger LOG = Logger.getLogger(EstadoPedidoDAO.class.getName());
     
@@ -44,7 +45,7 @@ public class EstadoPedidoDAO implements IEstadoPedido {
         try (Connection con = cone.crearConexion(); 
                 PreparedStatement ps = con.prepareStatement(comandoSQL)) {
             ps.setString(1, estado.getEstado());
-            ps.setString(2, estado.getHora_cambio());
+            ps.setTimestamp(2, Timestamp.valueOf(estado.getHora_cambio()));
             ps.setInt(3, estado.getNumero_pedido());
             
             int filasReg = ps.executeUpdate();

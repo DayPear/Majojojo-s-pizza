@@ -11,7 +11,7 @@ import persistencia.excepciones.PersistenciaException;
  *
  * @author Dayanara Peralta G
  */
-public interface IEstadoPedido {
+public interface IEstadoPedidoDAO {
 
     /**
      *

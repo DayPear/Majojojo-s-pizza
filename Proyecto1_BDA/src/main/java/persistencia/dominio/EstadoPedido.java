@@ -4,6 +4,8 @@
  */
 package persistencia.dominio;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Dayanara Peralta G
@@ -11,20 +13,20 @@ package persistencia.dominio;
 public class EstadoPedido {
     private Integer id_estado_pedido;
     private String estado;
-    private String hora_cambio;
+    private LocalDateTime hora_cambio;
     private Integer numero_pedido;
 
     public EstadoPedido() {
     }
 
-    public EstadoPedido(Integer id_estado_pedido, String estado, String hora_cambio, Integer numero_pedido) {
+    public EstadoPedido(Integer id_estado_pedido, String estado, LocalDateTime hora_cambio, Integer numero_pedido) {
         this.id_estado_pedido = id_estado_pedido;
         this.estado = estado;
         this.hora_cambio = hora_cambio;
         this.numero_pedido = numero_pedido;
     }
 
-    public EstadoPedido(String estado, String hora_cambio, Integer numero_pedido) {
+    public EstadoPedido(String estado, LocalDateTime hora_cambio, Integer numero_pedido) {
         this.estado = estado;
         this.hora_cambio = hora_cambio;
         this.numero_pedido = numero_pedido;
@@ -46,11 +48,11 @@ public class EstadoPedido {
         this.estado = estado;
     }
 
-    public String getHora_cambio() {
+    public LocalDateTime getHora_cambio() {
         return hora_cambio;
     }
 
-    public void setHora_cambio(String hora_cambio) {
+    public void setHora_cambio(LocalDateTime hora_cambio) {
         this.hora_cambio = hora_cambio;
     }
 
