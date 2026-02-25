@@ -183,8 +183,8 @@ public class ClienteBO implements IClienteBO {
             throw new NegocioException("Cliente nulo.");
         }
         if(cliente.getId() < 0 || cliente.getId() == null){
-            LOG.log(Level.WARNING, "No se puede actualizar el cliente si no tiene un ID.");
-            throw new NegocioException("Cliente sin ID.");
+            LOG.log(Level.WARNING, "No se puede actualizar el cliente si no tiene un ID o su ID es menor o igual a 0.");
+            throw new NegocioException("Cliente sin ID/con ID inválido.");
         } else {
             cli.setId_cliente(cliente.getId());
         }

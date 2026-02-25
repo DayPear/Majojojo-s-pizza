@@ -169,6 +169,16 @@ public class UsuarioBO implements IUsuarioBO {
             LOG.log(Level.WARNING, "El usuario no puede ser nulo.");
             throw new NegocioException("Error con el usuario, es nulo.");
         }
+        if(usuario.getId() == null){
+            LOG.log(Level.WARNING, "El usuario tiene que tener un ID.");
+            throw new NegocioException("Error con el ID de usuario.");
+        }
+        if(usuario.getId() < 1){
+            LOG.log(Level.WARNING, "El ID del usuario no puede ser 0 o menor.");
+            throw new NegocioException("Error con el ID de usuario.");
+        } else {
+            usu.setId(usuario.getId());
+        }
         if(usuario.getNombres() == null || usuario.getNombres().isBlank() || usuario.getNombres().isEmpty()){
             LOG.log(Level.WARNING, "Nombre inválido para el registro.");
             throw new NegocioException("Error en el nombre del usuario.");

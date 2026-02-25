@@ -10,12 +10,13 @@ package negocio.DTOs;
  */
 public class UsuarioNuevoDTO {
     
-    String nombres;
-    String apellidoP;
-    String apellidoM;
-    String rol;
-    String correo;
-    String contra;
+    private Integer id;
+    private String nombres;
+    private String apellidoP;
+    private String apellidoM;
+    private String rol;
+    private String correo;
+    private String contra;
 
     /**
      *
@@ -41,7 +42,8 @@ public class UsuarioNuevoDTO {
         this.contra = contra;
     }
 
-    public UsuarioNuevoDTO(String nombres, String apellidoP, String apellidoM) {
+    public UsuarioNuevoDTO(Integer id, String nombres, String apellidoP, String apellidoM) {
+        this.id = id;
         this.nombres = nombres;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
@@ -55,6 +57,14 @@ public class UsuarioNuevoDTO {
     public UsuarioNuevoDTO(String correo, String contra){
         this.correo = correo;
         this.contra = contra;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     /**
