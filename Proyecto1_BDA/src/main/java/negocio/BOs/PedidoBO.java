@@ -115,5 +115,64 @@ public class PedidoBO implements IPedidoBO {
             throw new NegocioException(pe.getMessage(), pe);
         }
     }
+
+    /**
+     *
+     * @param numero_pedido
+     * @param nuevoEstado
+     * @return
+     * @throws NegocioException
+     */
+    @Override
+    public Pedido cambiarEstadoPedido(int numero_pedido, String nuevoEstado) throws NegocioException {
+        if (numero_pedido < 1) {
+            LOG.log(Level.WARNING, "El numero de pedido no puede ser menor a 1");
+            throw new NegocioException("Problema con el nuemro de pedido");
+        }
+        try {
+            Pedido ped = pedidoDAO.consultarPedido(numero_pedido);
+
+            if (ped == null) {
+                LOG.log(Level.WARNING, "No se pudo encontrar el pedido");
+                throw new NegocioException("Pedido invalido.");
+            }
+            
+            validarEstado(nuevoEstado, "Cambiar estado");
+            
+            if(!validarCambioEstado(ped.getEstado_actual(), nuevoEstado)){
+                LOG.log(Level.WARNING, "No es valido el cambio.");
+                throw new NegocioException("Cambio no valido");
+            }
+            
+            String viejo = ped.getEstado_actual();
+            
+            ped.setEstado_actual(nuevoEstado);
+            ped.setEstado_viejo(viejo);
+            
+            return pedidoDAO.actualizarEstadoPedido(ped);
+            
+        } catch (PersistenciaException ex) {
+            LOG.log(Level.WARNING, "Problemas para cambiar el estado del pedido.");
+            throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
+    private void validarEstado(String nuevoEstado, String opcion) throws NegocioException{
+        if (!nuevoEstado.matches("Listo") && !nuevoEstado.matches("Pendiente") && !nuevoEstado.matches("Entregado")
+                && !nuevoEstado.matches("Cancelado") && !nuevoEstado.matches("No entregado")) {
+            throw new NegocioException("No se puede " + opcion + ": El estado no es un estado valido.");
+        }
+    }
+    
+    private boolean validarCambioEstado(String estadoNuevo, String estadoActual){
+        switch(estadoActual){
+            case "Pendiente":
+                return estadoNuevo.equals("Listo") || estadoNuevo.equals("Cancelado");
+            case "Listo":
+                return estadoNuevo.equals("Entregado") || estadoNuevo.equals("Cancelado");
+            default:
+                return false;
+        }        
+    }
 }
     
