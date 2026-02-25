@@ -29,8 +29,8 @@ public class pruebasPaneles {
             PanelRegistroCliente panelRU = new PanelRegistroCliente();
             panelRPC.setPreferredSize(new Dimension(1000, 800));
             panelPP.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
-            PanelCrearCuenta panel = new PanelCrearCuenta();
-            panel.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
+            PanelUsuarioNoEncontrado panel = new PanelUsuarioNoEncontrado();
+            panel.setPreferredSize(new Dimension(700, 500)); //tamaño sugerido
             //ventana.add(panelRPC);
             //ventana.add(panelPP);
             ventana.pack(); //ajusta la ventana al tamaño del panel
