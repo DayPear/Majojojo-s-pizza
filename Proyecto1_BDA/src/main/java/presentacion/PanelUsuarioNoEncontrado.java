@@ -68,7 +68,7 @@ public class PanelUsuarioNoEncontrado extends javax.swing.JFrame {
         BtnCrearCuenta.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         BtnCrearCuenta.setForeground(new java.awt.Color(255, 255, 255));
         BtnCrearCuenta.setText("Crear Cuenta");
-        BtnCrearCuenta.setActionCommand("");
+        BtnCrearCuenta.setActionCommand("Crear Cuenta");
         BtnCrearCuenta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout PanelFondoLayout = new javax.swing.GroupLayout(PanelFondo);
