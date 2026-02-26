@@ -4,6 +4,7 @@
  */
 package persistencia.DAOs;
 
+import java.awt.List;
 import persistencia.dominio.DetallesPedido;
 import persistencia.excepciones.PersistenciaException;
 
@@ -38,4 +39,6 @@ public interface IDetallesPedidoDAO {
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalle)throws PersistenciaException;
     
     float totalPedido(int numero_pedido) throws PersistenciaException;
+    
+    
 }

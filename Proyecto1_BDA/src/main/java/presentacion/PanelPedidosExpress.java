@@ -1,12 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package presentacion;
 
 import java.awt.Window;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import negocio.BOs.IPedidoExpressBO;
+import negocio.BOs.PedidoExpressBO;
+import negocio.DTOs.PedidoExpressResumenDTO;
+import persistencia.DAOs.PedidoExpressDAO;
 
 /**
  *
@@ -17,8 +21,12 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
     /**
      * Creates new form PanelPedidosExpress
      */
+    
+    private IPedidoExpressBO pedidoBO;
     public PanelPedidosExpress() {
         initComponents();
+        this.pedidoBO = new PedidoExpressBO(); 
+        this.cargarPedidos();
     }
 
     /**
@@ -32,7 +40,9 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         LblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        BtnAtras = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPedidos = new javax.swing.JTable();
+        BtnInicio = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(216, 162, 60));
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -45,22 +55,40 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(216, 162, 60));
 
+        tblPedidos.setBackground(new java.awt.Color(216, 162, 60));
+        tblPedidos.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "tamaño", "costo", "notas", ""
+            }
+        ));
+        jScrollPane1.setViewportView(tblPedidos);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
-        BtnAtras.setBackground(new java.awt.Color(152, 4, 4));
-        BtnAtras.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        BtnAtras.setText("Atras");
-        BtnAtras.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        BtnAtras.addActionListener(this::BtnAtrasActionPerformed);
+        BtnInicio.setBackground(new java.awt.Color(152, 4, 4));
+        BtnInicio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        BtnInicio.setText("Regresar al inicio");
+        BtnInicio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BtnInicio.addActionListener(this::BtnInicioActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,8 +99,8 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LblTitulo)))
+                            .addComponent(LblTitulo)
+                            .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -85,13 +113,13 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                 .addComponent(LblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(BtnAtras)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnInicio)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAtrasActionPerformed
+    private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
         //accion para regresar a la onatalla anterior
         Window ventana = SwingUtilities.getWindowAncestor(this);
         
@@ -106,12 +134,30 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
             framePrincipal.revalidate();
             framePrincipal.repaint();
         }
-    }//GEN-LAST:event_BtnAtrasActionPerformed
+    }//GEN-LAST:event_BtnInicioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAtras;
+    private javax.swing.JButton BtnInicio;
     private javax.swing.JLabel LblTitulo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarPedidos() {
+    try {
+        List<PedidoExpressResumenDTO> lista = pedidoBO.listarResumenExpress();
+        DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
+        modelo.setRowCount(0); 
+
+        for (PedidoExpressResumenDTO p : lista) {
+            Object[] fila = {p.getNombre(), p.getTamanio(), p.getNotas(), p.getCosto()};
+            modelo.addRow(fila);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+}
+
 }

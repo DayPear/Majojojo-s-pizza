@@ -4,6 +4,9 @@
  */
 package persistencia.DAOs;
 
+import java.util.List;
+import negocio.DTOs.DetallesPedidoNuevoDTO;
+import negocio.DTOs.PedidoExpressResumenDTO;
 import persistencia.dominio.PedidoExpress;
 import persistencia.excepciones.PersistenciaException;
 
@@ -28,4 +31,7 @@ public interface IPedidoExpressDAO {
      * @throws PersistenciaException
      */
     public PedidoExpress consultarPedidoExpress(int id_express) throws PersistenciaException;
+    
+    
+    public List<PedidoExpressResumenDTO> obtenerPedidosExpress() throws PersistenciaException;
 }

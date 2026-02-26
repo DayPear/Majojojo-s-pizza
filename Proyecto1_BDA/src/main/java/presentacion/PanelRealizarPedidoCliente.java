@@ -255,23 +255,88 @@ public class PanelRealizarPedidoCliente extends javax.swing.JPanel {
 
     private void botonLaDoblePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLaDoblePActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
         
     }//GEN-LAST:event_botonLaDoblePActionPerformed
 
     private void botonReinaIsabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReinaIsabelActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_botonReinaIsabelActionPerformed
 
     private void botonFermentadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFermentadaActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_botonFermentadaActionPerformed
 
     private void boton8HoyosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton8HoyosActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_boton8HoyosActionPerformed
 
     private void botonInfantilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInfantilActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPersonalizacionPizza nuevoPanel = new PanelPersonalizacionPizza(1);
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_botonInfantilActionPerformed
 
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
