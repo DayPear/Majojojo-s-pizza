@@ -32,6 +32,8 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         LblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaPedidos = new javax.swing.JTable();
         BtnInicio = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(216, 162, 60));
@@ -45,15 +47,33 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(216, 162, 60));
 
+        TablaPedidos.setBackground(new java.awt.Color(216, 162, 60));
+        TablaPedidos.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        TablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "tamaño", "costo", "notas", ""
+            }
+        ));
+        jScrollPane1.setViewportView(TablaPedidos);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         BtnInicio.setBackground(new java.awt.Color(152, 4, 4));
@@ -85,9 +105,9 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                 .addComponent(LblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnInicio)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,6 +132,8 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnInicio;
     private javax.swing.JLabel LblTitulo;
+    private javax.swing.JTable TablaPedidos;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
