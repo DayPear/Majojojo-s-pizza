@@ -4,12 +4,15 @@
  */
 package presentacion;
 
+import java.awt.Window;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import negocio.BOs.IPedidoBO;
 import negocio.BOs.PedidoBO;
@@ -29,7 +32,45 @@ public class PanelVisualizarPedidos extends javax.swing.JPanel {
      */
     public PanelVisualizarPedidos() {
         initComponents();
+        cargarPedidos("Pendiente");
     }
+    
+    private void cargarPedidos(String estado) {
+
+    try {
+        IPedidoBO pedBO = new PedidoBO(new PedidoDAO(new ConexionBD()));
+        List<Pedido> lista = pedBO.consultarEstadoPedido(estado);
+
+        String[] columnas = {
+            "Número", "Notas", "Costo", "Hora Recolección",
+            "ID Cliente", "Estado Actual", "Estado Viejo"
+        };
+
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // tabla solo lectura
+            }
+        };
+
+        for (Pedido p : lista) {
+            modelo.addRow(new Object[]{
+                p.getNumero_pedido(),
+                p.getNotas(),
+                p.getCosto(),
+                p.getHora_recoleccion(),
+                p.getId_cliente(),
+                p.getEstado_actual(),
+                p.getEstado_viejo()
+            });
+        }
+
+        jTable1.setModel(modelo);
+
+    } catch (NegocioException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+}
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,21 +81,89 @@ public class PanelVisualizarPedidos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setBackground(new java.awt.Color(153, 0, 0));
+
+        jButton1.setBackground(new java.awt.Color(255, 102, 0));
+        jButton1.setFont(new java.awt.Font("Bauhaus 93", 0, 12)); // NOI18N
+        jButton1.setText("Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel1.setText("Visualizar pedidos pendientes");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 834, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelEmpleadoEntrada nuevoPanel = new PanelEmpleadoEntrada();
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
