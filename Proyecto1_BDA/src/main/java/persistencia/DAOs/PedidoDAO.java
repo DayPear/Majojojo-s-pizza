@@ -130,6 +130,11 @@ public class PedidoDAO implements IPedidoDAO {
             throw new PersistenciaException(ex.getMessage());
         }
     }
+    
+    public Pedido consultarEstado(Pedido pedido) throws PersistenciaException{
+        String comandoSQL = """
+                            """;
+    }
 
     /**
      *
@@ -160,6 +165,6 @@ public class PedidoDAO implements IPedidoDAO {
         p.setId_cliente(rs.getInt("id_cliente"));
         return p;
     }
-   
+    
 }
     
