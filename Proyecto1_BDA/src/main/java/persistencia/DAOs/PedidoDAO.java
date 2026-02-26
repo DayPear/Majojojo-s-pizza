@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
@@ -131,21 +133,31 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
     
-    public Pedido consultarEstado(Pedido pedido) throws PersistenciaException{
+    public List<Pedido> consultarEstado(String estado_actual) throws PersistenciaException{
         String comandoSQL = """
-                            select estado_actual from pedidos where numero_pedido = ?
+
+                            select  numero_pedido, notas, costo, hora_recoleccion,
+                                    id_cliente, estado_actual, estado_viejo
+                            from pedidos
+                            where estado_actual = ?;
                             """;
-        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
-            ps.setInt(1, pedido.getNumero_pedido());
+        List<Pedido> pedidosEstado = new ArrayList<>();
+        try(Connection cone = this.conexion.crearConexion(); 
+                PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setString(1, estado_actual);
             try(ResultSet rs = ps.executeQuery()){
-                if(!rs.next()){
-                    LOG.log(Level.WARNING, "No se pudo consultar el estado del pedido.");
-                    throw new PersistenciaException("Error al consultar el estado.");
+                while(rs.next()){
+                    Pedido p = new Pedido(rs.getInt("numero_pedido"),
+                    rs.getString("notas"), rs.getFloat("costo"),
+                    rs.getString("hora_recoleccion"), rs.getInt("id_cliente"),
+                    rs.getString("estado_actual"), rs.getString("estado_viejo"));
+                    pedidosEstado.add(p);
                 }
-                pedido.setEstado_actual(rs.getString("estado_actual"));
-                return pedido;
+                
+                return pedidosEstado;
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
+
             throw new PersistenciaException(ex.getMessage());
         }
     }
@@ -158,7 +170,43 @@ public class PedidoDAO implements IPedidoDAO {
      */
     @Override
     public Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException {
-        return null;
+        String comandoSQL = """
+                            call actualizar_estado_pedido(?, ?)
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, pedido.getNumero_pedido());
+            ps.setString(2, pedido.getEstado_actual());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo cambiar el estado del pedido.");
+                    throw new PersistenciaException("No se cambió el eatado del pedido.");
+                }
+                LOG.log(Level.INFO, "Se canceló el pedido");
+                return extraerPedido(rs);
+            }
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Pedido entregarPedido(Pedido pedido) throws PersistenciaException {
+        String comandoSQL = """
+                            call actualizar_estado_pedido(?, 'Entregado')
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, pedido.getNumero_pedido());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo entregar el pedido.");
+                    throw new PersistenciaException("No se entregó el pedido.");
+                }
+                LOG.log(Level.INFO, "Se canceló el pedido");
+                return extraerPedido(rs);
+            }
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
     
     private Pedido extraerPedido(ResultSet rs) throws SQLException {

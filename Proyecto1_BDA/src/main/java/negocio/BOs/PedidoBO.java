@@ -5,11 +5,11 @@
 package negocio.BOs;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
-import persistencia.DAOs.EstadoPedidoDAO;
 import persistencia.DAOs.IDetallesPedidoDAO;
 import persistencia.DAOs.IEstadoPedidoDAO;
 import persistencia.DAOs.IPedidoDAO;
@@ -23,11 +23,17 @@ import persistencia.excepciones.PersistenciaException;
  * @author maria
  */
 public class PedidoBO implements IPedidoBO {
-    private final IPedidoDAO pedidoDAO;
+    private IPedidoDAO pedidoDAO;
     private IEstadoPedidoDAO estadoPedidoDAO;
     private IDetallesPedidoDAO detallesPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
 
+    /**
+     *
+     */
+    public PedidoBO() {
+    }
+    
     /**
      *
      * @param pedidoDAO
@@ -117,7 +123,7 @@ public class PedidoBO implements IPedidoBO {
             throw new NegocioException("El número de pedido es inválido.");
         }
         // validaciones
-        if(pedido.getEstado_nuevo() != "Pendiente" || pedido.getEstado_nuevo() != "Listo"){
+        if(pedido.getEstado_nuevo() != "Pendiente"){
             LOG.log(Level.WARNING, "Dado al estado actual del pedido, este ya no puede ser cancelado.");
             throw new NegocioException("No se pudo cancelar el pedido.");
         }
@@ -196,8 +202,7 @@ public class PedidoBO implements IPedidoBO {
         if (detalles == null) {
             LOG.log(Level.WARNING, "El numero de pedido no puede ser menor a 1");
             throw new NegocioException("Problema con el nuemro de pedido");
-        }
-        
+        }        
         try{
             DetallesPedido dp = detallesPedidoDAO.actualizarDetallesPedido(detalles);
             if(dp == null){
@@ -209,6 +214,26 @@ public class PedidoBO implements IPedidoBO {
         }catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas con la actualizacion del pedido.");
             throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    /**
+     *
+     * @param estado
+     * @return
+     * @throws NegocioException
+     */
+    @Override
+    public List<Pedido> consultarEstadoPedido(String estado) throws NegocioException{
+        if(estado == null){
+            LOG.log(Level.WARNING, "El estado no puede ser null.");
+            throw new NegocioException("El estado es inválido.");
+        }
+        validarEstado(estado, "consultar");
+        try{
+            return pedidoDAO.consultarEstado(estado);
+        }catch(PersistenciaException e){
+            throw new NegocioException("Errror al consultar pedidos por estado", e);
         }
     }
     
@@ -232,6 +257,35 @@ public class PedidoBO implements IPedidoBO {
             default:
                 return false;
         }        
+    }
+    
+    @Override
+    public Pedido entregarPedido(PedidoNuevoDTO pedido) throws NegocioException {
+        if(pedido.getIdPedido() < 1){
+            LOG.log(Level.WARNING, "El número de pedido no puede ser menor a 1.");
+            throw new NegocioException("El número de pedido es inválido.");
+        }
+        // validaciones
+        if(pedido.getEstado_nuevo() == null){
+            LOG.log(Level.WARNING, "Se debe conocer el estado del pedido.");
+            throw new NegocioException("No se pudo cancelar el pedido.");
+        }
+        if(pedido.getEstado_nuevo() != "Cancelado"){
+            LOG.log(Level.WARNING, "Dado al estado actual del pedido, este ya no puede ser cancelado.");
+            throw new NegocioException("No se pudo cancelar el pedido.");
+        }
+        try{
+            Pedido pe = this.pedidoDAO.entregarPedido(new Pedido(pedido.getIdPedido()));
+            if(pe == null){     
+               LOG.warning("No se pudo cancelar el pedido.");
+               throw new NegocioException("Falló al cancelar pedido.");  
+            }
+            LOG.log(Level.INFO, "Pedido cancelado.");
+            return pe;
+        } catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas para cancelar el pedido.");
+            throw new NegocioException(pe.getMessage(), pe);
+        }
     }
 }
     

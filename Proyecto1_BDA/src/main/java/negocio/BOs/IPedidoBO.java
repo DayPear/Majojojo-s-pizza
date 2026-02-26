@@ -4,6 +4,7 @@
  */
 package negocio.BOs;
 
+import java.util.List;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.dominio.DetallesPedido;
@@ -55,4 +56,16 @@ public interface IPedidoBO {
      * @throws NegocioException
      */
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalles) throws NegocioException;
+    
+
+    /**
+     *
+     * @param estado
+     * @return
+     * @throws NegocioException
+     */
+    public List<Pedido> consultarEstadoPedido(String estado) throws NegocioException;
+
+    public Pedido entregarPedido(PedidoNuevoDTO pedido) throws NegocioException;
+
 }

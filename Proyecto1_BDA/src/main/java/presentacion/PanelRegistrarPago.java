@@ -4,33 +4,19 @@
  */
 package presentacion;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.table.DefaultTableModel;
-import negocio.BOs.IPedidoBO;
-import negocio.BOs.PedidoBO;
-import negocio.excepciones.NegocioException;
-import persistencia.DAOs.PedidoDAO;
-import persistencia.conexion.ConexionBD;
-import persistencia.dominio.Pedido;
-
 /**
  *
  * @author Dayanara Peralta G
  */
-public class PanelVisualizarPedidos extends javax.swing.JPanel {
+public class PanelRegistrarPago extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelVisualizarPedidos
+     * Creates new form PanelRegistrarPago
      */
-    public PanelVisualizarPedidos() {
+    public PanelRegistrarPago() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
