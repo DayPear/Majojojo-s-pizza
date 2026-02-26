@@ -87,7 +87,16 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
                     LOG.log(Level.WARNING, "No se encontraron los detalles del pedido", numero_pedido);
                     throw new PersistenciaException("No existen los detalles del pedido");
                 }
-                return extraerPedido(rs);
+                int id_detalles = rs.getInt("id_detalles");
+                int id_pizza = rs.getInt("id_pizza");
+                float subtotal = rs.getFloat("subtotal");
+                int cantidad = rs.getInt("cantidad");
+                String notas = rs.getString("notas");
+                float precio = rs.getFloat("precio");
+                
+                DetallesPedido dp = new DetallesPedido(id_detalles, numero_pedido, id_pizza, subtotal, cantidad, notas, precio);
+                
+                return dp;
             }
         } catch (SQLException ex) {
             throw new PersistenciaException(ex.getMessage());
@@ -102,19 +111,26 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
      */
     @Override
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalle) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String comandoSQL = """
+                            update detalles_pedido
+                            set cantidad = ?, notas = ?, subtotal = ?
+                            where id_detalles = ?;
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); 
+                PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, detalle.getCantidad());
+            ps.setString(2, detalle.getNotas());
+            ps.setFloat(3, detalle.getSubtotal());
+            ps.setInt(4, detalle.getId_detalles());
+            
+            int filasAfectadas = ps.executeUpdate();
+            if(filasAfectadas == 0){
+                LOG.log(Level.WARNING, "No se actualizó el usuario.");
+                throw new PersistenciaException("Falló al actualizar usuario.");
+            }
+            return consultarDetallesPedido(detalle.getNumero_pedido());
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
-    
-    private DetallesPedido extraerPedido(ResultSet rs) throws SQLException {
-        DetallesPedido p = new DetallesPedido();
-        p.setId_detalles(rs.getInt("id_detalles"));
-        p.setNumero_pedido(rs.getInt("numero_pedido"));
-        p.setId_pizza(rs.getInt("id_pizza"));
-        p.setSubtotal(rs.getFloat("subtotal"));
-        p.setCantidad(rs.getInt("cantidad"));
-        p.setNotas(rs.getString("notas"));
-        p.setPrecio(rs.getFloat("precio"));
-        return p;
-    }
-    
 }
