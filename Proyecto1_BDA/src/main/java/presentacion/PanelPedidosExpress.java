@@ -32,7 +32,7 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         LblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        BtnAtras = new javax.swing.JButton();
+        BtnInicio = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(216, 162, 60));
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -56,11 +56,11 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
             .addGap(0, 385, Short.MAX_VALUE)
         );
 
-        BtnAtras.setBackground(new java.awt.Color(152, 4, 4));
-        BtnAtras.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        BtnAtras.setText("Atras");
-        BtnAtras.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        BtnAtras.addActionListener(this::BtnAtrasActionPerformed);
+        BtnInicio.setBackground(new java.awt.Color(152, 4, 4));
+        BtnInicio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        BtnInicio.setText("Regresar al inicio");
+        BtnInicio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BtnInicio.addActionListener(this::BtnInicioActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -71,8 +71,8 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LblTitulo)))
+                            .addComponent(LblTitulo)
+                            .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -85,13 +85,13 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                 .addComponent(LblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(BtnAtras)
-                .addGap(34, 34, 34))
+                .addGap(18, 18, 18)
+                .addComponent(BtnInicio)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAtrasActionPerformed
+    private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
         //accion para regresar a la onatalla anterior
         Window ventana = SwingUtilities.getWindowAncestor(this);
         
@@ -106,11 +106,11 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
             framePrincipal.revalidate();
             framePrincipal.repaint();
         }
-    }//GEN-LAST:event_BtnAtrasActionPerformed
+    }//GEN-LAST:event_BtnInicioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAtras;
+    private javax.swing.JButton BtnInicio;
     private javax.swing.JLabel LblTitulo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
