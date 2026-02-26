@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import negocio.BOs.PedidoBO;
 import negocio.excepciones.NegocioException;
 import persistencia.dominio.Pedido;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -314,8 +316,7 @@ public class PanelEmpleadoEntrada extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -328,5 +329,8 @@ public class PanelEmpleadoEntrada extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    }// </editor-fold>                        
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+

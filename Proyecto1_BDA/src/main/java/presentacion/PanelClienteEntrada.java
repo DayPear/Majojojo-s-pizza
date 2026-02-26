@@ -16,7 +16,6 @@ import javax.swing.ImageIcon;
  */
 public class PanelClienteEntrada extends javax.swing.JPanel {
 
-    private Image imagen;
     
     /**
      * Creates new form PanelClienteEntrada
@@ -24,7 +23,6 @@ public class PanelClienteEntrada extends javax.swing.JPanel {
     public PanelClienteEntrada(int id) {
         initComponents();
         idUsuario = id;
-        this.imagen = new ImageIcon(getClass().getResource("src/main/java/imagenes/logo.png")).getImage();
     }
 
     /**
