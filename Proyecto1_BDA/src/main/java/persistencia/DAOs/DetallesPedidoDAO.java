@@ -133,4 +133,25 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
             throw new PersistenciaException(ex.getMessage());
         }
     }
+    
+    public float totalPedido(int numero_pedido) throws PersistenciaException{
+        String comandoSQL = """
+                            select sum(subtotal) as total
+                            from detalles_pedido
+                            where numero_pedido = ?;
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); 
+                PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, numero_pedido);
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se encontro el total del pedido:", numero_pedido);
+                    throw new PersistenciaException("No existe el total");
+                }
+                return rs.getFloat("total");
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
 }

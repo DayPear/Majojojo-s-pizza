@@ -6,6 +6,7 @@ package negocio.BOs;
 
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
+import persistencia.dominio.DetallesPedido;
 import persistencia.dominio.Pedido;
 
 /**
@@ -43,6 +44,15 @@ public interface IPedidoBO {
      * @param numero_pedido
      * @param nuevoEstado
      * @return
+     * @throws negocio.excepciones.NegocioException
      */
     public Pedido cambiarEstadoPedido(int numero_pedido, String nuevoEstado)throws NegocioException ;
+    
+    /**
+     *
+     * @param detalles
+     * @return
+     * @throws NegocioException
+     */
+    public DetallesPedido actualizarDetallesPedido(DetallesPedido detalles) throws NegocioException;
 }

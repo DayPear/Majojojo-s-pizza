@@ -10,8 +10,10 @@ import java.util.logging.Logger;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.EstadoPedidoDAO;
+import persistencia.DAOs.IDetallesPedidoDAO;
 import persistencia.DAOs.IEstadoPedidoDAO;
 import persistencia.DAOs.IPedidoDAO;
+import persistencia.dominio.DetallesPedido;
 import persistencia.dominio.EstadoPedido;
 import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
@@ -23,6 +25,7 @@ import persistencia.excepciones.PersistenciaException;
 public class PedidoBO implements IPedidoBO {
     private final IPedidoDAO pedidoDAO;
     private IEstadoPedidoDAO estadoPedidoDAO;
+    private IDetallesPedidoDAO detallesPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
 
     /**
@@ -33,15 +36,16 @@ public class PedidoBO implements IPedidoBO {
         this.pedidoDAO = pedidoDAO;
     }
     
-    
     /**
      *
-     * @param pedido
-     * @param estadoPed
+     * @param pedidoDAO
+     * @param estadoPedidoDAO
+     * @param detallesPedidoDAO
      */
-    public PedidoBO(IPedidoDAO pedido, IEstadoPedidoDAO estadoPed){
-        this.pedidoDAO = pedido;
-        this.estadoPedidoDAO = estadoPed;
+    public PedidoBO(IPedidoDAO pedidoDAO, IEstadoPedidoDAO estadoPedidoDAO, IDetallesPedidoDAO detallesPedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
+        this.estadoPedidoDAO = estadoPedidoDAO;
+        this.detallesPedidoDAO = detallesPedidoDAO;
     }
     
     /**
@@ -178,6 +182,33 @@ public class PedidoBO implements IPedidoBO {
         } catch (PersistenciaException ex) {
             LOG.log(Level.WARNING, "Problemas para cambiar el estado del pedido.");
             throw new NegocioException(ex.getMessage(), ex);
+        }
+    }
+    
+    /**
+     *
+     * @param detalles
+     * @return
+     * @throws NegocioException
+     */
+    @Override
+    public DetallesPedido actualizarDetallesPedido(DetallesPedido detalles) throws NegocioException{
+        if (detalles == null) {
+            LOG.log(Level.WARNING, "El numero de pedido no puede ser menor a 1");
+            throw new NegocioException("Problema con el nuemro de pedido");
+        }
+        
+        try{
+            DetallesPedido dp = detallesPedidoDAO.actualizarDetallesPedido(detalles);
+            if(dp == null){
+                LOG.warning("No se pudo atualizar el pedido.");
+                throw new NegocioException("No se actualizo el pedido.");
+            }
+            LOG.log(Level.INFO, "Se actualizo el pedido.");
+            return dp;
+        }catch(PersistenciaException pe){
+            LOG.log(Level.WARNING, "Problemas con la actualizacion del pedido.");
+            throw new NegocioException(pe.getMessage(), pe);
         }
     }
     

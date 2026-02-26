@@ -43,7 +43,6 @@ public class PanelAgregarCupon extends javax.swing.JFrame {
         setBackground(new java.awt.Color(216, 162, 60));
         setMaximumSize(new java.awt.Dimension(700, 500));
         setMinimumSize(new java.awt.Dimension(700, 500));
-        setPreferredSize(new java.awt.Dimension(700, 500));
 
         PanelFondo.setBackground(new java.awt.Color(216, 162, 60));
 
