@@ -1,12 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package presentacion;
 
 import java.awt.Window;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import negocio.BOs.IPedidoExpressBO;
+import negocio.BOs.PedidoExpressBO;
+import negocio.DTOs.PedidoExpressResumenDTO;
+import persistencia.DAOs.PedidoExpressDAO;
 
 /**
  *
@@ -17,8 +21,12 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
     /**
      * Creates new form PanelPedidosExpress
      */
+    
+    private IPedidoExpressBO pedidoBO;
     public PanelPedidosExpress() {
         initComponents();
+        this.pedidoBO = new PedidoExpressBO(); 
+        this.cargarPedidos();
     }
 
     /**
@@ -33,7 +41,7 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
         LblTitulo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaPedidos = new javax.swing.JTable();
+        tblPedidos = new javax.swing.JTable();
         BtnInicio = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(216, 162, 60));
@@ -47,9 +55,9 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(216, 162, 60));
 
-        TablaPedidos.setBackground(new java.awt.Color(216, 162, 60));
-        TablaPedidos.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        TablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidos.setBackground(new java.awt.Color(216, 162, 60));
+        tblPedidos.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -61,7 +69,7 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
                 "Nombre", "tamaño", "costo", "notas", ""
             }
         ));
-        jScrollPane1.setViewportView(TablaPedidos);
+        jScrollPane1.setViewportView(tblPedidos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,8 +140,24 @@ public class PanelPedidosExpress extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnInicio;
     private javax.swing.JLabel LblTitulo;
-    private javax.swing.JTable TablaPedidos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarPedidos() {
+    try {
+        List<PedidoExpressResumenDTO> lista = pedidoBO.listarResumenExpress();
+        DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
+        modelo.setRowCount(0); 
+
+        for (PedidoExpressResumenDTO p : lista) {
+            Object[] fila = {p.getNombre(), p.getTamanio(), p.getNotas(), p.getCosto()};
+            modelo.addRow(fila);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+}
+
 }

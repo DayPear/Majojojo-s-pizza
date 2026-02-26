@@ -8,6 +8,8 @@ import negocio.DTOs.PedidoExpressResumenDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.IPedidoExpressDAO;
 import persistencia.DAOs.PedidoExpressDAO;
+import persistencia.conexion.ConexionBD;
+import persistencia.conexion.IConexionBD;
 import persistencia.excepciones.PersistenciaException;
 
 /**
@@ -16,28 +18,20 @@ import persistencia.excepciones.PersistenciaException;
  */
 public class PedidoExpressBO implements IPedidoExpressBO {
 
-    private final IPedidoExpressDAO pedidoExpressDAO;
-    private static final Logger LOG = Logger.getLogger(PedidoExpressBO.class.getName());
+   private final IPedidoExpressDAO pedidoExpressDAO; 
 
-    public PedidoExpressBO(IPedidoExpressDAO pedidoExpressDAO) {
-        this.pedidoExpressDAO = pedidoExpressDAO;
+    public PedidoExpressBO() {
+        IConexionBD conexion = new ConexionBD(); 
+        this.pedidoExpressDAO = new PedidoExpressDAO(conexion); 
     }
 
     @Override
     public List<PedidoExpressResumenDTO> listarResumenExpress() throws NegocioException {
         try {
-            List<PedidoExpressResumenDTO> lista = pedidoExpressDAO.obtenerPedidosExpress();
-
-            if (lista == null || lista.isEmpty()) {
-                LOG.log(Level.INFO, "No se encontraron pedidos express para mostrar.");
-                // Opcional: puedes lanzar excepción o simplemente devolver la lista vacía
-            }
-
-            return lista;
-
-        } catch (PersistenciaException pe) {
-            LOG.log(Level.SEVERE, "Error al consultar los pedidos express en la base de datos.");
-            throw new NegocioException("No se pudo obtener el reporte de pedidos express.", pe);
+            
+            return pedidoExpressDAO.obtenerPedidosExpress();
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al consultar pedidos", e);
         }
     }
 }
