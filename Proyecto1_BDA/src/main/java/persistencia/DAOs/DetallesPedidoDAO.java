@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
@@ -42,24 +43,30 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
     @Override
     public DetallesPedido insertarDetallePedido(DetallesPedido deta) throws PersistenciaException {
         String comandoSQL = """
-                            insert into detalles_pedido(numero_pedido, id_pizza, subtotal, cantidad, notas, precio)
-                            values (?,?,?,?,?,?);
+                            insert into detalles_pedido(numero_pedido, id_pizza, cantidad, notas, precio)
+                            values (?,?,?,?,?);
                             """;
         try(Connection cone = this.conexion.crearConexion();
-                PreparedStatement ps = cone.prepareStatement(comandoSQL);){
+                PreparedStatement ps = cone.prepareStatement(comandoSQL, Statement.RETURN_GENERATED_KEYS);){
             ps.setInt(1, deta.getNumero_pedido());
             ps.setInt(2, deta.getId_pizza());
-            ps.setFloat(3, deta.getSubtotal());
-            ps.setInt(4, deta.getCantidad());
-            ps.setString(5, deta.getNotas());
-            ps.setFloat(6, deta.getPrecio());
+            ps.setInt(3, deta.getCantidad());
+            ps.setString(4, deta.getNotas());
+            ps.setFloat(5, deta.getPrecio());
             
             int filasReg = ps.executeUpdate();
             if (filasReg == 0){
                 LOG.warning("No se pudo agregar los detalles del pedido ");
                 throw new PersistenciaException("No se pudo agregar detalles del pedido");
             }
-            return deta;
+            try(ResultSet rs = ps.getGeneratedKeys()){
+                if(rs.next()){
+                   int id = rs.getInt(1);
+                   deta.setId_detalles(id);
+                   deta.setSubtotal(deta.getCantidad() * deta.getPrecio());
+                }
+                return deta;
+            }
             
         } catch (SQLException ex) {
             throw new PersistenciaException("Error al insertar detalles pedido: " + ex.getMessage());
@@ -113,15 +120,14 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalle) throws PersistenciaException {
         String comandoSQL = """
                             update detalles_pedido
-                            set cantidad = ?, notas = ?, subtotal = ?
+                            set cantidad = ?, notas = ?
                             where id_detalles = ?;
                             """;
         try(Connection cone = this.conexion.crearConexion(); 
                 PreparedStatement ps = cone.prepareStatement(comandoSQL)){
             ps.setInt(1, detalle.getCantidad());
             ps.setString(2, detalle.getNotas());
-            ps.setFloat(3, detalle.getSubtotal());
-            ps.setInt(4, detalle.getId_detalles());
+            ps.setInt(3, detalle.getId_detalles());
             
             int filasAfectadas = ps.executeUpdate();
             if(filasAfectadas == 0){
@@ -134,6 +140,7 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
         }
     }
     
+    @Override
     public float totalPedido(int numero_pedido) throws PersistenciaException{
         String comandoSQL = """
                             select sum(subtotal) as total
@@ -145,7 +152,7 @@ public class DetallesPedidoDAO implements IDetallesPedidoDAO{
             ps.setInt(1, numero_pedido);
             try(ResultSet rs = ps.executeQuery()){
                 if(!rs.next()){
-                    LOG.log(Level.WARNING, "No se encontro el total del pedido:", numero_pedido);
+                    LOG.log(Level.WARNING, "No se encontró el total del pedido:", numero_pedido);
                     throw new PersistenciaException("No existe el total");
                 }
                 return rs.getFloat("total");

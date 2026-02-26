@@ -133,7 +133,21 @@ public class PedidoDAO implements IPedidoDAO {
     
     public Pedido consultarEstado(Pedido pedido) throws PersistenciaException{
         String comandoSQL = """
+                            select estado_actual from pedidos where numero_pedido = ?
                             """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, pedido.getNumero_pedido());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo consultar el estado del pedido.");
+                    throw new PersistenciaException("Error al consultar el estado.");
+                }
+                pedido.setEstado_actual(rs.getString("estado_actual"));
+                return pedido;
+            }
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
 
     /**

@@ -33,6 +33,7 @@ public class DetallesPedido {
      * @param notas
      * @param precio
      */
+    
     public DetallesPedido(Integer id_detalles,Integer numero_pedido, Integer id_pizza, float subtotal, Integer cantidad, String notas, float precio) {
         this.id_detalles = id_detalles;
         this.numero_pedido = numero_pedido;
@@ -43,6 +44,14 @@ public class DetallesPedido {
         this.precio = precio;
     }
 
+    public DetallesPedido(Integer numero_pedido, Integer id_pizza, Integer cantidad, String notas, float precio) {
+        this.numero_pedido = numero_pedido;
+        this.id_pizza = id_pizza;
+        this.cantidad = cantidad;
+        this.notas = notas;
+        this.precio = precio;
+    }
+    
     /**
      *
      * @return
