@@ -5,11 +5,11 @@
 package negocio.BOs;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.DTOs.PedidoNuevoDTO;
 import negocio.excepciones.NegocioException;
-import persistencia.DAOs.EstadoPedidoDAO;
 import persistencia.DAOs.IDetallesPedidoDAO;
 import persistencia.DAOs.IEstadoPedidoDAO;
 import persistencia.DAOs.IPedidoDAO;
@@ -23,11 +23,17 @@ import persistencia.excepciones.PersistenciaException;
  * @author maria
  */
 public class PedidoBO implements IPedidoBO {
-    private final IPedidoDAO pedidoDAO;
+    private IPedidoDAO pedidoDAO;
     private IEstadoPedidoDAO estadoPedidoDAO;
     private IDetallesPedidoDAO detallesPedidoDAO;
     private final Logger LOG = Logger.getLogger(PedidoBO.class.getName());
 
+    /**
+     *
+     */
+    public PedidoBO() {
+    }
+    
     /**
      *
      * @param pedidoDAO
@@ -209,6 +215,26 @@ public class PedidoBO implements IPedidoBO {
         }catch(PersistenciaException pe){
             LOG.log(Level.WARNING, "Problemas con la actualizacion del pedido.");
             throw new NegocioException(pe.getMessage(), pe);
+        }
+    }
+    
+    /**
+     *
+     * @param estado
+     * @return
+     * @throws NegocioException
+     */
+    @Override
+    public List<Pedido> consultarEstadoPedido(String estado) throws NegocioException{
+        if(estado == null){
+            LOG.log(Level.WARNING, "El estado no puede ser null.");
+            throw new NegocioException("El estado es inválido.");
+        }
+        validarEstado(estado, "consultar");
+        try{
+            return pedidoDAO.consultarEstado(estado);
+        }catch(PersistenciaException e){
+            throw new NegocioException("Errror al consultar pedidos por estado", e);
         }
     }
     

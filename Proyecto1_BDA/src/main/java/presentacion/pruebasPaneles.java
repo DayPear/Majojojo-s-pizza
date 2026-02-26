@@ -31,12 +31,14 @@ public class pruebasPaneles {
 //            panelPP.setPreferredSize(new Dimension(1000, 800)); //tamaño sugerido
 //            PanelUsuarioNoEncontrado panel = new PanelUsuarioNoEncontrado();
 //            panel.setPreferredSize(new Dimension(700, 500)); //tamaño sugerido
-            PanelPedidosExpress panelPE = new PanelPedidosExpress();
+//            PanelPedidosExpress panelPE = new PanelPedidosExpress();
+            PanelEmpleadoEntrada pan = new PanelEmpleadoEntrada();
             
                     
             //ventana.add(panelRPC);
             //ventana.add(panelPP);
-            ventana.add(panelPE);
+//            ventana.add(panelPE);
+            ventana.add(pan);
             ventana.pack(); //ajusta la ventana al tamaño del panel
 
             ventana.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);

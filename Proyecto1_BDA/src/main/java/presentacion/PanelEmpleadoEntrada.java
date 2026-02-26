@@ -4,19 +4,35 @@
  */
 package presentacion;
 
+import java.awt.Window;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import negocio.BOs.PedidoBO;
+import negocio.excepciones.NegocioException;
+import persistencia.dominio.Pedido;
+
 /**
  *
  * @author Dayanara Peralta G
  */
 public class PanelEmpleadoEntrada extends javax.swing.JPanel {
     private int id_empleado;
+
+    public PanelEmpleadoEntrada() {
+        initComponents();
+    }
+    
     /**
      * Creates new form PanelPantallaInicioEmpleado
      * @param id_empleado
      */
     public PanelEmpleadoEntrada(int id_empleado) {
         this.id_empleado = id_empleado;
-        initComponents();
+        
     }
 
     /**
@@ -229,24 +245,24 @@ public class PanelEmpleadoEntrada extends javax.swing.JPanel {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    //BOTON DE VISUALIZAR PEDIDOS PENDIENTES
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Window ventana = SwingUtilities.getWindowAncestor(this);
 
         if (ventana instanceof JFrame) {
             JFrame framePrincipal = (JFrame) ventana;
-
-            PanelRealizarPedidoCliente nuevoPanel = new PanelRealizarPedidoCliente();
-
+            PedidoBO pedBO = new PedidoBO();
+            PanelVisualizarPedidos nuevoPanel = new PanelVisualizarPedidos();
             framePrincipal.getContentPane().removeAll();
             framePrincipal.getContentPane().add(nuevoPanel);
 
             framePrincipal.revalidate();
             framePrincipal.repaint();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
+    }//GEN-LAST:event_jButton2ActionPerformed
+    //BOTON DE MODIFICAR ESTADO PEDIDO
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Window ventana = SwingUtilities.getWindowAncestor(this);
@@ -254,7 +270,7 @@ public class PanelEmpleadoEntrada extends javax.swing.JPanel {
         if (ventana instanceof JFrame) {
             JFrame framePrincipal = (JFrame) ventana;
 
-            PanelPedidosExpress nuevoPanel = new PanelPedidosExpress();
+            PanelModificarEstado nuevoPanel = new PanelModificarEstado();
 
             framePrincipal.getContentPane().removeAll();
             framePrincipal.getContentPane().add(nuevoPanel);
@@ -263,13 +279,39 @@ public class PanelEmpleadoEntrada extends javax.swing.JPanel {
             framePrincipal.repaint();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    //BOTON DE REGISTRAR PAGO
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        Window ventana = SwingUtilities.getWindowAncestor(this);
 
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelRegistrarPago nuevoPanel = new PanelRegistrarPago();
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    //BOTON DE CONSULTAR PEDIDOS MEDIANTE FILTROS
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelConsultarPedidos nuevoPanel = new PanelConsultarPedidos();
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

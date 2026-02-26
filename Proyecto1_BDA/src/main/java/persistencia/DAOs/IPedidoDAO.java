@@ -5,6 +5,7 @@
 package persistencia.DAOs;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import persistencia.dominio.Pedido;
 import persistencia.excepciones.PersistenciaException;
 
@@ -47,4 +48,12 @@ public interface IPedidoDAO {
     Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException;
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();
+    
+    /**
+     *
+     * @param estado_actual
+     * @return
+     * @throws PersistenciaException
+     */
+    public List<Pedido> consultarEstado(String estado_actual) throws PersistenciaException;
 }

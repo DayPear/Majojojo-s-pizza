@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.conexion.IConexionBD;
@@ -131,9 +133,31 @@ public class PedidoDAO implements IPedidoDAO {
         }
     }
     
-    public Pedido consultarEstado(Pedido pedido) throws PersistenciaException{
+    public List<Pedido> consultarEstado(String estado_actual) throws PersistenciaException{
         String comandoSQL = """
+                            select  numero_pedido, notas, costo, hora_recoleccion,
+                                    id_cliente, estado_actual, estado_viejo
+                            from pedidos
+                            where estado_actual = ?;
                             """;
+        List<Pedido> pedidosEstado = new ArrayList<>();
+        try(Connection cone = this.conexion.crearConexion(); 
+                PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setString(1, estado_actual);
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+                    Pedido p = new Pedido(rs.getInt("numero_pedido"),
+                    rs.getString("notas"), rs.getFloat("costo"),
+                    rs.getString("hora_recoleccion"), rs.getInt("id_cliente"),
+                    rs.getString("estado_actual"), rs.getString("estado_viejo"));
+                    pedidosEstado.add(p);
+                }
+                
+                return pedidosEstado;
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
 
     /**
