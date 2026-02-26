@@ -7,6 +7,8 @@ package presentacion;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -14,12 +16,15 @@ import javax.swing.SwingUtilities;
  */
 public class PanelClienteEntrada extends javax.swing.JPanel {
 
+    private Image imagen;
+    
     /**
      * Creates new form PanelClienteEntrada
      */
     public PanelClienteEntrada(int id) {
         initComponents();
         idUsuario = id;
+        this.imagen = new ImageIcon(getClass().getResource("src/main/java/imagenes/logo.png")).getImage();
     }
 
     /**
