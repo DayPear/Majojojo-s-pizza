@@ -37,4 +37,5 @@ public interface IDetallesPedidoDAO {
      */
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalle)throws PersistenciaException;
     
+    float totalPedido(int numero_pedido) throws PersistenciaException;
 }
