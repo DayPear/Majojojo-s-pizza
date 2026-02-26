@@ -11,14 +11,18 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import negocio.BOs.ClienteBO;
+import negocio.BOs.EmpleadoBO;
 import negocio.BOs.UsuarioBO;
+import negocio.DTOs.EmpleadoNuevoDTO;
 import negocio.DTOs.UsuarioNuevoDTO;
 import negocio.excepciones.NegocioException;
 import persistencia.DAOs.ClienteDAO;
+import persistencia.DAOs.EmpleadoDAO;
 import persistencia.DAOs.IUsuarioDAO;
 import persistencia.DAOs.UsuarioDAO;
 import persistencia.conexion.ConexionBD;
 import persistencia.dominio.Cliente;
+import persistencia.dominio.Empleado;
 import persistencia.dominio.Usuario;
 
 /**
@@ -52,6 +56,9 @@ public class PanelInicioSesion extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 0, 0));
 
@@ -63,7 +70,7 @@ public class PanelInicioSesion extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
-        jButton1.setText("Crear Cliente");
+        jButton1.setText("Crear Usuario");
         jButton1.setActionCommand("InicioSesion");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -81,33 +88,58 @@ public class PanelInicioSesion extends javax.swing.JPanel {
         jButton3.setText("Iniciar Sesión");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
+        jButton4.setBackground(new java.awt.Color(255, 153, 0));
+        jButton4.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButton4.setText("Crear Empleado");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+
+        jButton5.setBackground(new java.awt.Color(255, 153, 0));
+        jButton5.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        jButton5.setText("Crear Cliente");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+
+        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
+        jLabel1.setText("BIENVENIDO!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)))
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(230, 230, 230)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(254, 254, 254)
+                        .addComponent(jLabel1)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(204, 204, 204)
+                .addGap(152, 152, 152)
+                .addComponent(jLabel1)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -122,11 +154,112 @@ public class PanelInicioSesion extends javax.swing.JPanel {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+     // BOTÓN CREAR USUARIO
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelCrearCuenta nuevoPanel = new PanelCrearCuenta();
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+        // BOTÓN PARA SER INVITADO
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Window ventana = SwingUtilities.getWindowAncestor(this);
+
+        if (ventana instanceof JFrame) {
+            JFrame framePrincipal = (JFrame) ventana;
+
+            PanelPedidosExpress nuevoPanel = new PanelPedidosExpress();
+
+            framePrincipal.getContentPane().removeAll();
+            framePrincipal.getContentPane().add(nuevoPanel);
+
+            framePrincipal.revalidate();
+            framePrincipal.repaint();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    // BOTÓN PARA INICIAR SESIÓN
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // aquí haré q si ya tienen un cliente ya no se registren y solo les abra 
+        // la pantalla inicio
+        String correoU = jTextField1.getText().trim();
+        String contra = new String(jPasswordField1.getPassword());
+        if (correoU == null || correoU.isBlank() || correoU.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El usuario no puede estar vacío.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (contra == null || contra.isBlank() || contra.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La contraseña no puede estar vacía.", "Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        UsuarioNuevoDTO usuario = new UsuarioNuevoDTO(correoU, contra);
+        try {
+            Usuario u = usuarioBO.validarUsuario(usuario);
+            if (u.getRol().equals("Empleado")) {
+                Empleado e = empleadoBO.validarAsociadoEmpleado(u.getId());
+                if (e != null) {
+                    Window ventana = SwingUtilities.getWindowAncestor(this);
+                    if (ventana instanceof JFrame) {
+                        JFrame framePrincipal = (JFrame) ventana;
+
+                        PanelEmpleadoEntrada nuevoPanel = new PanelEmpleadoEntrada(e.getId());
+
+                        framePrincipal.getContentPane().removeAll();
+                        framePrincipal.getContentPane().add(nuevoPanel);
+
+                        framePrincipal.revalidate();
+                        framePrincipal.repaint();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No tiene un empleado asociado, favor de registrar uno", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            } else {
+                Cliente c = clienteBO.usuarioAsociadoCliente(u.getId());
+                if (c != null) {
+                    Window ventana = SwingUtilities.getWindowAncestor(this);
+
+                    if (ventana instanceof JFrame) {
+                        JFrame framePrincipal = (JFrame) ventana;
+
+                        PanelClienteEntrada nuevoPanel = new PanelClienteEntrada(c.getId_cliente());
+
+                        framePrincipal.getContentPane().removeAll();
+                        framePrincipal.getContentPane().add(nuevoPanel);
+
+                        framePrincipal.revalidate();
+                        framePrincipal.repaint();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No tiene un cliente asociado, favor de registrar uno", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+        } catch (NegocioException ne) {
+            JOptionPane.showMessageDialog(this, "Fallos para acceder a la base", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+        // BOTÓN PARA CREAR CLIENTE
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String correoU = jTextField1.getText().trim();
         String contra = new String(jPasswordField1.getPassword());
@@ -164,29 +297,11 @@ public class PanelInicioSesion extends javax.swing.JPanel {
         } catch (NegocioException ne) {
             JOptionPane.showMessageDialog(this, "Error al encontrar el usuario.", "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
+        
+    // BOTÓN PARA CREAR EMPLEADO
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Window ventana = SwingUtilities.getWindowAncestor(this);
-
-        if (ventana instanceof JFrame) {
-            JFrame framePrincipal = (JFrame) ventana;
-
-            PanelPedidosExpress nuevoPanel = new PanelPedidosExpress();
-
-            framePrincipal.getContentPane().removeAll();
-            framePrincipal.getContentPane().add(nuevoPanel);
-
-            framePrincipal.revalidate();
-            framePrincipal.repaint();
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        // aquí haré q si ya tienen un cliente ya no se registren y solo les abra 
-        // la pantalla inicio
         String correoU = jTextField1.getText().trim();
         String contra = new String(jPasswordField1.getPassword());
         if (correoU == null || correoU.isBlank() || correoU.isEmpty()) {
@@ -200,34 +315,43 @@ public class PanelInicioSesion extends javax.swing.JPanel {
         UsuarioNuevoDTO usuario = new UsuarioNuevoDTO(correoU, contra);
         try {
             Usuario u = usuarioBO.validarUsuario(usuario);
-            Cliente c = clienteBO.usuarioAsociadoCliente(u.getId());
-            if (c == null) {
-                JOptionPane.showMessageDialog(this, "No tiene un cliente asociado, favor de registrar uno", "Alerta", JOptionPane.WARNING_MESSAGE);
+            if(u == null){
+                JOptionPane.showMessageDialog(this, "No se encontró al usuario.", "Credenciales equivocadas", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Window ventana = SwingUtilities.getWindowAncestor(this);
-
-            if (ventana instanceof JFrame) {
+            if (u != null) {
+                Empleado e = empleadoBO.agregarEmpleado(new EmpleadoNuevoDTO(u.getId()));
+                if(e == null){
+                    JOptionPane.showMessageDialog(this, "No se creó al empleado.", "Error al crear empleado", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Window ventana = SwingUtilities.getWindowAncestor(this);
+    
+                if (ventana instanceof JFrame) {
                 JFrame framePrincipal = (JFrame) ventana;
 
-                PanelClienteEntrada nuevoPanel = new PanelClienteEntrada(c.getId_cliente());
+                PanelEmpleadoEntrada nuevoPanel = new PanelEmpleadoEntrada(e.getId());
 
                 framePrincipal.getContentPane().removeAll();
                 framePrincipal.getContentPane().add(nuevoPanel);
 
                 framePrincipal.revalidate();
                 framePrincipal.repaint();
+                }
             }
         } catch (NegocioException ne) {
-            JOptionPane.showMessageDialog(this, "Fallos para acceder a la base", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al encontrar el usuario.", "Error en la base de datos", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
@@ -235,6 +359,7 @@ public class PanelInicioSesion extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private final UsuarioBO usuarioBO = new UsuarioBO(new UsuarioDAO(new ConexionBD()));
     private ClienteBO clienteBO = new ClienteBO(new ClienteDAO(new ConexionBD()));
+    private EmpleadoBO empleadoBO = new EmpleadoBO(new EmpleadoDAO(new ConexionBD()));
     private Usuario usuario;
 
 } 

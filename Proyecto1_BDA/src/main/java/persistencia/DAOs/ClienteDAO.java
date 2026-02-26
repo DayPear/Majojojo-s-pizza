@@ -22,6 +22,7 @@ import persistencia.excepciones.PersistenciaException;
 public class ClienteDAO implements IClienteDAO{
     private IConexionBD conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
+    
     public ClienteDAO(IConexionBD cone){
         this.conexion = cone;
     }
