@@ -49,6 +49,7 @@ public interface IPedidoDAO {
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();
     
+
     /**
      *
      * @param estado_actual
@@ -56,4 +57,7 @@ public interface IPedidoDAO {
      * @throws PersistenciaException
      */
     public List<Pedido> consultarEstado(String estado_actual) throws PersistenciaException;
+
+    Pedido entregarPedido(Pedido pedido) throws PersistenciaException;
+
 }

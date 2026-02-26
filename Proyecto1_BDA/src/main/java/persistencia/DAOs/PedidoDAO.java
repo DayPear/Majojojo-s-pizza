@@ -135,6 +135,7 @@ public class PedidoDAO implements IPedidoDAO {
     
     public List<Pedido> consultarEstado(String estado_actual) throws PersistenciaException{
         String comandoSQL = """
+
                             select  numero_pedido, notas, costo, hora_recoleccion,
                                     id_cliente, estado_actual, estado_viejo
                             from pedidos
@@ -156,6 +157,7 @@ public class PedidoDAO implements IPedidoDAO {
                 return pedidosEstado;
             }
         } catch (SQLException ex) {
+
             throw new PersistenciaException(ex.getMessage());
         }
     }
@@ -168,7 +170,43 @@ public class PedidoDAO implements IPedidoDAO {
      */
     @Override
     public Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException {
-        return null;
+        String comandoSQL = """
+                            call actualizar_estado_pedido(?, ?)
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, pedido.getNumero_pedido());
+            ps.setString(2, pedido.getEstado_actual());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo cambiar el estado del pedido.");
+                    throw new PersistenciaException("No se cambió el eatado del pedido.");
+                }
+                LOG.log(Level.INFO, "Se canceló el pedido");
+                return extraerPedido(rs);
+            }
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public Pedido entregarPedido(Pedido pedido) throws PersistenciaException {
+        String comandoSQL = """
+                            call actualizar_estado_pedido(?, 'Entregado')
+                            """;
+        try(Connection cone = this.conexion.crearConexion(); PreparedStatement ps = cone.prepareStatement(comandoSQL)){
+            ps.setInt(1, pedido.getNumero_pedido());
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.next()){
+                    LOG.log(Level.WARNING, "No se pudo entregar el pedido.");
+                    throw new PersistenciaException("No se entregó el pedido.");
+                }
+                LOG.log(Level.INFO, "Se canceló el pedido");
+                return extraerPedido(rs);
+            }
+        } catch(SQLException ex){
+            throw new PersistenciaException(ex.getMessage());
+        }
     }
     
     private Pedido extraerPedido(ResultSet rs) throws SQLException {

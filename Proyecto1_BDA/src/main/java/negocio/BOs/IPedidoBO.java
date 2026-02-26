@@ -57,6 +57,7 @@ public interface IPedidoBO {
      */
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalles) throws NegocioException;
     
+
     /**
      *
      * @param estado
@@ -64,4 +65,7 @@ public interface IPedidoBO {
      * @throws NegocioException
      */
     public List<Pedido> consultarEstadoPedido(String estado) throws NegocioException;
+
+    public Pedido entregarPedido(PedidoNuevoDTO pedido) throws NegocioException;
+
 }

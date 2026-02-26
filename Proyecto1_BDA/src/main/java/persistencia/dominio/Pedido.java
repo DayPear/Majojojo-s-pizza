@@ -25,6 +25,10 @@ public class Pedido {
     public Pedido() {
     }
 
+    public Pedido(Integer numero_pedido) {
+        this.numero_pedido = numero_pedido;
+    }
+
     /**
      *
      * @param numero_pedido
