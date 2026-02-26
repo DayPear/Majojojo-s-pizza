@@ -55,4 +55,6 @@ public interface IPedidoBO {
      * @throws NegocioException
      */
     public DetallesPedido actualizarDetallesPedido(DetallesPedido detalles) throws NegocioException;
+    
+    public Pedido entregarPedido(PedidoNuevoDTO pedido) throws NegocioException;
 }

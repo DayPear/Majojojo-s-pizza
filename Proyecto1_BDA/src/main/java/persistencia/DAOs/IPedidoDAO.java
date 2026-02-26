@@ -47,4 +47,6 @@ public interface IPedidoDAO {
     Pedido actualizarEstadoPedido(Pedido pedido) throws PersistenciaException;
     //public boolean cambiarEstado();
     //public Pedido buscarPedidoPorNumero();
+    
+    Pedido entregarPedido(Pedido pedido) throws PersistenciaException;
 }
